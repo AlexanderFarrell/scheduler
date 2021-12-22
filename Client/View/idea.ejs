@@ -1,0 +1,23 @@
+<h1>Ideas</h1>
+<form action="/idea" method="post">
+    <label>
+        Add Idea:
+        <input id="idea_add_text" type="text" name="idea">
+    </label>
+    <input type="submit" value="+">
+</form>
+<div id="Idea"></div>
+
+<% if (locals.ideas != undefined) { %>
+    <% for (var i = 0; i < ideas.length; i++) { %>
+        <div class="Idea"><%- ideas[i].name %></div>
+    <% } %>
+<% } %>
+
+<%  if (locals.error != undefined) { %>
+    <%- error %>
+<% } %>
+
+<script>
+    document.getElementById('idea_add_text').focus();
+</script>

@@ -20,7 +20,7 @@ function IsLoggedIn(req, res, next) {
         next();
     }
     else {
-        res.sendStatus(403);
+        res.redirect('/auth/login');
     }
 }
 exports.IsLoggedIn = IsLoggedIn;
@@ -36,7 +36,7 @@ function SetupSession(app) {
         secret: 'keyboard cat',
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: true }
+        //cookie: { secure: true }
     }));
 }
 exports.SetupSession = SetupSession;

@@ -14,7 +14,7 @@ export function IsLoggedIn(req, res, next) {
     if (req.session.username != undefined) {
         next()
     } else {
-        res.sendStatus(403);
+        res.redirect('/auth/login');
     }
 }
 
@@ -29,6 +29,6 @@ export function SetupSession(app) {
         secret: 'keyboard cat',
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: true }
+        //cookie: { secure: true }
     }))
 }
