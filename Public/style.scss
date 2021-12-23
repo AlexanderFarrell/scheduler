@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  font-size: 20px;
+  font-family: sans-serif;
+  background: #2d2d2d;
+  color: #d2d2d2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.Idea {
+  background-color: rgba(255, 255, 255, 0.05);
+  display: grid;
+  grid-template-columns: 1fr 50px;
+}
+
+.Idea > * {
+  padding: 5px;
+}
+
+.auth {
+  display: grid;
+  grid-gap: 10px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input[type="text"], input[type="number"], input[type="password"], textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: inherit;
+  padding: 5px;
+}
+
+button, input[type="submit"] {
+  background-color: #4a4aea;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 5px;
+  font-size: inherit;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.1s background-color;
+}
+
+button:hover, input[type="submit"]:hover {
+  background-color: #3939ec;
+
+}
+
+#nav {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.navButton {
+  padding: 10px;
+  color: white !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: 0.1s background-color ease-in;
+}
+
+.navButton:hover {
+  background-color: rgba(255, 255, 255, 0.09);
+}
+
+
+a > .navButton {
+  text-decoration: none !important;
+}
+
+header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  background: #5b5ba9;
+}

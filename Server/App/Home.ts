@@ -1,7 +1,7 @@
 import {IApp} from "./App";
 import * as express from 'express';
 import {Router} from "express";
-import {RenderTemplate} from "../Modules/ServerHelper";
+import {IsLoggedIn, RenderTemplate} from "../Modules/ServerHelper";
 
 export class Home implements IApp {
     GetName(): string {

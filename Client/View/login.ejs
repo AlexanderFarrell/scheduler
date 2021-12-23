@@ -1,13 +1,16 @@
 <h1>Login</h1>
-<form action="/auth/login" method="post" autocomplete="on">
+<form class="auth" action="/auth/login" method="post" autocomplete="on">
     <label>
         Username:
-        <input type="text" name="username" autocomplete="username">
+        <input id="a" type="text" name="username" autocomplete="username">
     </label>
     <label>
         Password:
         <input type="password" name="password" autocomplete="current-password">
     </label>
     <input type="submit" value="Login">
+    <div style="text-align: center"><%- m %></div>
 </form>
-<div><%- m %></div>
+<script>
+    document.getElementById('a').focus()
+</script>

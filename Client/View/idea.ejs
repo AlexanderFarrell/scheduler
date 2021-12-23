@@ -1,18 +1,27 @@
 <h1>Ideas</h1>
-<form action="/idea" method="post">
-    <label>
-        Add Idea:
-        <input id="idea_add_text" type="text" name="idea">
-    </label>
-    <input type="submit" value="+">
-</form>
-<div id="Idea"></div>
+<div id="add_idea" style="padding: 20px">
+    <div style="text-align: center">Add Idea</div>
+    <form action="/idea" method="post" style="display: grid; grid-template-columns: 1fr 50px">
+        <label>
+            <input id="idea_add_text" type="text" name="idea">
+        </label>
+        <input type="submit" value="+">
+    </form>
+</div>
 
-<% if (locals.ideas != undefined) { %>
-    <% for (var i = 0; i < ideas.length; i++) { %>
-        <div class="Idea"><%- ideas[i].name %></div>
+<div style="padding: 0px 20px; display: grid; grid-gap: 10px">
+    <% if (locals.ideas != undefined) { %>
+        <% for (var i = 0; i < ideas.length; i++) { %>
+            <div class="Idea" data-id="<%- ideas[i].public_id %>">
+                <div><%- ideas[i].name %></div>
+                <button style="width: 50px">...</button>
+            </div>
+
+        <% } %>
     <% } %>
-<% } %>
+</div>
+
+
 
 <%  if (locals.error != undefined) { %>
     <%- error %>

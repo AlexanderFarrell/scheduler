@@ -1,15 +1,26 @@
+<% var nav = [
+    {a: "/idea", t: "Ideas"},
+    {a: "/auth/create", t: "Create"},
+    {a: "/auth/login", t: "Login"}
+] %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title><%- title %></title>
+    <link rel="stylesheet" href="/style.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <header>
-    <a href="/">Home</a>
-    <a href="/idea">Ideas</a>
-    <a href="/auth/create">Create</a>
-    <a href="/auth/login">Login</a>
+    <a class="navButton" href="/"><div>Home</div></a>
+    <div>&nbsp;</div>
+    <div id="nav">
+        <% for (var i = 0; i < nav.length; i++) { %>
+            <a class="navButton" href="<%- nav[i].a %>"><div><%- nav[i].t%></div></a>
+        <% } %>
+    </div>
 </header>
 <div id="content"><%- include(content) %></div>
 <footer></footer>
