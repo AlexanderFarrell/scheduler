@@ -39,8 +39,9 @@ input[type="text"], input[type="number"], input[type="password"], textarea {
   padding: 5px;
 }
 
-button, input[type="submit"] {
+button, input[type="submit"], .Button {
   background-color: #4a4aea;
+  text-align: center;
   color: white;
   outline: none;
   border: none;
@@ -51,9 +52,12 @@ button, input[type="submit"] {
   transition: 0.1s background-color;
 }
 
-button:hover, input[type="submit"]:hover {
+button:hover, input[type="submit"]:hover, .Button:hover {
   background-color: #3939ec;
+}
 
+a {
+  text-decoration: none;
 }
 
 #nav {

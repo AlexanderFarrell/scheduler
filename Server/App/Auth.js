@@ -55,6 +55,9 @@ var Auth = /** @class */ (function () {
     Auth.prototype.GetRouter = function () {
         var _this = this;
         var router = (0, express_1.Router)();
+        router.get("/", function (req, res) {
+            (0, ServerHelper_1.RenderTemplate)(res, "Scheduler", "auth.ejs", {});
+        });
         router.get('/create', function (req, res) {
             (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Enter a username and password." });
         });
@@ -177,10 +180,10 @@ var Auth = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.Data.Pool.query("\n                select count(*)\n                from account\n                where username=$1\n        ", [username])];
+                        return [4 /*yield*/, Database_1.Data.Pool.query("\n                select *\n                from account\n                where username=$1\n                limit 1\n        ", [username])];
                     case 1:
                         data = _a.sent();
-                        return [2 /*return*/, data.rows[0] == 1];
+                        return [2 /*return*/, data.rows.length > 0];
                     case 2:
                         e_5 = _a.sent();
                         console.log(e_5);

@@ -11,13 +11,14 @@ var Home = /** @class */ (function () {
     };
     Home.prototype.GetRouter = function () {
         var router = (0, express_1.Router)();
+        router.use(ServerHelper_1.IsLoggedIn);
         router.get('/', function (req, res) {
             (0, ServerHelper_1.RenderTemplate)(res, 'Home', "index.ejs");
         });
         return router;
     };
     Home.prototype.GetWebUrl = function () {
-        return "/";
+        return "/home";
     };
     return Home;
 }());

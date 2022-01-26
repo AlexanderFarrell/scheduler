@@ -1,26 +1,28 @@
 import {IApp} from "./App";
 import * as express from 'express';
 import {Router} from "express";
-import {IsLoggedIn, RenderTemplate} from "../Modules/ServerHelper";
 
-export class Home implements IApp {
+export class Index implements IApp {
     GetName(): string {
-        return "Home";
+        return "Index";
     }
 
     GetRouter(): express.Router {
         let router = Router();
 
-        router.use(IsLoggedIn);
         router.get('/', (req, res) => {
-            RenderTemplate(res, 'Home', "index.ejs");
-        }) ;
+            if (req.session['username'] != undefined) {
+                res.redirect('/home/');
+            } else {
+                res.redirect('/auth/');
+            }
+        })
 
         return router;
     }
 
     GetWebUrl(): string {
-        return "/home";
+        return "/";
     }
 
 }

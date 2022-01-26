@@ -20,7 +20,7 @@ function IsLoggedIn(req, res, next) {
         next();
     }
     else {
-        res.redirect('/auth/login');
+        res.redirect('/auth/');
     }
 }
 exports.IsLoggedIn = IsLoggedIn;

@@ -20,6 +20,10 @@ export class Auth implements IApp {
     public GetRouter(): express.Router {
         let router = Router();
 
+        router.get("/", (req, res) => {
+            RenderTemplate(res, "Scheduler", "auth.ejs", {})
+        })
+
         router.get('/create', (req, res) => {
             RenderTemplate(res, 'Create Account', 'create.ejs', {m: "Enter a username and password."})
         });
@@ -133,11 +137,12 @@ export class Auth implements IApp {
     public async UsernameExists(username: string) {
         try {
             let data = await Data.Pool.query(`
-                select count(*)
+                select *
                 from account
                 where username=$1
+                limit 1
         `, [username]);
-            return data.rows[0] == 1;
+            return data.rows.length > 0;
         } catch (e) {
             console.log(e);
             throw new Error("Error connecting to database");
