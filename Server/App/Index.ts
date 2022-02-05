@@ -12,9 +12,9 @@ export class Index implements IApp {
 
         router.get('/', (req, res) => {
             if (req.session['username'] != undefined) {
-                res.redirect('/home/');
+                res.redirect('/home');
             } else {
-                res.redirect('/auth/');
+                res.redirect('/auth');
             }
         })
 

@@ -1,0 +1,35 @@
+01010
+
+
+
+0 - 0 or 1
+
+00 - 1
+01 - 2
+10 - 3
+11 - 4
+
+000 -0 to 7
+
+0000 - 0 to 15
+
+00      x 10 ^      00000'
+
+
+
+
+Unity uses 32 bit
+
+00000000.00000000
+
+
+6 or 7
+
+100,000 or 0.000001
+
+Single precision
+
+Double precision
+Quadruple Precisipn
+
+Then you're pushing it.

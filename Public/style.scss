@@ -32,14 +32,17 @@ h1, h2, h3, h4, h5, h6 {
   margin-right: auto;
 }
 
-input[type="text"], input[type="number"], input[type="password"], textarea {
+input[type="text"], input[type="number"], input[type="date"], input[type="password"], textarea {
   width: 100%;
   box-sizing: border-box;
   font-size: inherit;
   padding: 5px;
+  background-color: #1e1e1e;
+  outline: none;
+  color: white;
 }
 
-button, input[type="submit"], .Button {
+button, input[type="submit"], input[type="reset"], .Button {
   background-color: #4a4aea;
   text-align: center;
   color: white;
@@ -51,9 +54,25 @@ button, input[type="submit"], .Button {
   cursor: pointer;
   transition: 0.1s background-color;
 }
+input[type="date"] {
+  text-align: center;
+}
 
-button:hover, input[type="submit"]:hover, .Button:hover {
+input[type="reset"] {
+  background-color: #49499f;
+}
+
+button:hover, input[type="submit"]:hover, input[type="reset"]:hover, .Button:hover {
   background-color: #3939ec;
+}
+
+button:active, input[type="submit"]:active, input[type="reset"]:active, .Button:active {
+  background-color: #0f0fff;
+  font-weight: bold;
+}
+
+button:focus, input[type="submit"]:focus, input[type="reset"]:focus, .Button:focus {
+  outline: white solid 1px;
 }
 
 a {
@@ -73,6 +92,13 @@ a {
   transition: 0.1s background-color ease-in;
 }
 
+input[type="checkbox"] {
+  font-size: inherit;
+  width: 1em;
+  height: 1em;
+  padding: 10px;
+}
+
 .navButton:hover {
   background-color: rgba(255, 255, 255, 0.09);
 }
@@ -86,4 +112,56 @@ header {
   display: grid;
   grid-template-columns: auto 1fr auto;
   background: #5b5ba9;
+}
+
+#PlannerContent {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-gap: 20px;
+  padding: 10px;
+}
+
+#Goals {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-gap: 20px;
+}
+
+#GoalList{
+  display: grid;
+  grid-gap: 5px;
+  align-content: start;
+}
+
+#AddGoal {
+  display: grid;
+  grid-gap: 5px;
+}
+
+.Goal {
+  display: grid;
+  grid-template-columns: 1.5em 1fr;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#Plans {
+
+}
+
+#PlanList {
+  display: grid;
+  grid-gap: 5px;
+}
+
+.Plan {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-gap: 20px;
+  text-align: right;
+}
+
+.Plan > input {
+  background-color: #1e1e1e;
+  outline: none;
+  color: white;
 }
