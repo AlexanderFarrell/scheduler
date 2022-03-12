@@ -1,0 +1,84 @@
+<section>
+
+</section>
+
+<div class="Row3">
+    <h3 style="background: #345b39" onclick="Toggle(document.getElementById('add_word'))">
+        Add
+    </h3>
+    <a href="/words/browse" style="color: inherit !important;">
+        <h3 style="background: #345b39; color: inherit !important" onclick="Toggle(document.getElementById('Browse'))">
+            Browse
+        </h3>
+    </a>
+    <h3 style="background: #345b39" onclick="Toggle(document.getElementById('Search'))">
+        Search
+    </h3>
+</div>
+<form action="/words" method="post" onload="document.getElementById('word_start').focus()" id="add_word" style="display: none">
+    <label>
+        Word: <input type="text" name="title" tabindex="1" id="word_start">
+    </label>
+    <div class="Row2">
+        <div>
+            <label>
+                Date: <input type="date" name="date" tabindex="2">
+            </label>
+        </div>
+        <div>
+            <label>
+                Number: <input type="number" name="number" tabindex="3" value="-1">
+            </label>
+        </div>
+    </div>
+    <label>
+        Content:
+        <textarea name="content" tabindex="4" rows="5"></textarea>
+    </label>
+    <div class="Row2">
+        <input type="reset" value="Reset">
+        <input type="submit" value="Add" tabindex="5">
+    </div>
+    <% if (message) { %>
+    <div class="Message">
+        <% message %>
+    </div>
+    <% } %>
+</form>
+<div id="Search" style="display: none">
+    <label>
+        Search: <input type="text">
+    </label>
+    <button onclick="Search()"></button>
+</div>
+<div id="Browse" style="display: none">
+
+</div>
+<div class="Words">
+    <% for (var i = 0; i < words.length; i++) { %>
+        <h4 style="color: #48be55">
+            <%- words[i].title %>
+        </h4>
+        <h5>
+            <%- words[i].date.toLocaleDateString()%>
+        </h5>
+        <p>
+            <%- words[i].content %>
+        </p>
+        <br>
+    <hr>
+    <% } %>
+</div>
+<script>
+    function Toggle(ele) {
+        if (ele.style.display == "none") {
+            ele.style.display = "block";
+        } else {
+            ele.style.display = "none";
+        }
+    }
+
+    function Search() {
+
+    }
+</script>

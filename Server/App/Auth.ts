@@ -24,39 +24,39 @@ export class Auth implements IApp {
             RenderTemplate(res, "Scheduler", "auth.ejs", {})
         })
 
-        router.get('/create', (req, res) => {
-            RenderTemplate(res, 'Create Account', 'create.ejs', {m: "Enter a username and password."})
-        });
-
-        router.post('/create', async (req, res) => {
-            if (!ContainsBodyArgs(req, 'username', 'password')) {
-                RenderTemplate(
-                    res,
-                    'Create Account',
-                    'create.ejs',
-                    {m: "Missing username or password."}
-                );
-                //res.render("login", {m: "Missing username or password."})
-            }
-
-            let username = req.body.username;
-            let password = req.body.password;
-
-            try {
-                await this.Create(username, password);
-                // @ts-ignore
-                req.session.username = username;
-                res.redirect('/');
-            } catch (e) {
-                console.log(e);
-                RenderTemplate(
-                    res,
-                    'Create Account',
-                    'create.ejs',
-                    {m: e.message}
-                );
-            }
-        });
+        // router.get('/create', (req, res) => {
+        //     RenderTemplate(res, 'Create Account', 'create.ejs', {m: "Enter a username and password."})
+        // });
+        //
+        // router.post('/create', async (req, res) => {
+        //     if (!ContainsBodyArgs(req, 'username', 'password')) {
+        //         RenderTemplate(
+        //             res,
+        //             'Create Account',
+        //             'create.ejs',
+        //             {m: "Missing username or password."}
+        //         );
+        //         //res.render("login", {m: "Missing username or password."})
+        //     }
+        //
+        //     let username = req.body.username;
+        //     let password = req.body.password;
+        //
+        //     try {
+        //         await this.Create(username, password);
+        //         // @ts-ignore
+        //         req.session.username = username;
+        //         res.redirect('/');
+        //     } catch (e) {
+        //         console.log(e);
+        //         RenderTemplate(
+        //             res,
+        //             'Create Account',
+        //             'create.ejs',
+        //             {m: e.message}
+        //         );
+        //     }
+        // });
 
         router.get('/login', (req, res) => {
             RenderTemplate(res, 'Login', 'login.ejs', {m: "Enter a username and password."})

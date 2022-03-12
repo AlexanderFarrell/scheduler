@@ -2,8 +2,8 @@
   "name": "scheduler",
   "version": "1.0.0",
   "scripts": {
-    "start": "node Server/server.js",
-    "start-dev": "nodemon Server/server.js --debug"
+    "start": "node Server/Server.js",
+    "start-dev": "nodemon Server/Server.js --debug"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

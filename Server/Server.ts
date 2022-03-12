@@ -5,6 +5,7 @@ import {Idea} from "./App/Idea";
 import {Index} from "./App";
 import {Planner} from "./App/Planner";
 import {Projects} from "./App/Projects";
+import {Words} from "./App/Words";
 
 let back = new PaServer();
 
@@ -14,5 +15,6 @@ back.Start(new Home());
 back.Start(new Index());
 back.Start(new Planner());
 back.Start(new Projects());
+back.Start(new Words());
 
 back.Run();

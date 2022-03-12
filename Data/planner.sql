@@ -1,3 +1,7 @@
+create table item (
+    id serial primary key
+);
+
 create table goal (
     id serial primary key,
     title text not null,

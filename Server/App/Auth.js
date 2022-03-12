@@ -58,44 +58,44 @@ var Auth = /** @class */ (function () {
         router.get("/", function (req, res) {
             (0, ServerHelper_1.RenderTemplate)(res, "Scheduler", "auth.ejs", {});
         });
-        router.get('/create', function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Enter a username and password." });
-        });
-        router.post('/create', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            var username, password, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!(0, ServerHelper_1.ContainsBodyArgs)(req, 'username', 'password')) {
-                            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Missing username or password." });
-                            //res.render("login", {m: "Missing username or password."})
-                        }
-                        username = req.body.username;
-                        password = req.body.password;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.Create(username, password)];
-                    case 2:
-                        _a.sent();
-                        // @ts-ignore
-                        req.session.username = username;
-                        res.redirect('/');
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_1 = _a.sent();
-                        console.log(e_1);
-                        (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: e_1.message });
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        }); });
+        // router.get('/create', (req, res) => {
+        //     RenderTemplate(res, 'Create Account', 'create.ejs', {m: "Enter a username and password."})
+        // });
+        //
+        // router.post('/create', async (req, res) => {
+        //     if (!ContainsBodyArgs(req, 'username', 'password')) {
+        //         RenderTemplate(
+        //             res,
+        //             'Create Account',
+        //             'create.ejs',
+        //             {m: "Missing username or password."}
+        //         );
+        //         //res.render("login", {m: "Missing username or password."})
+        //     }
+        //
+        //     let username = req.body.username;
+        //     let password = req.body.password;
+        //
+        //     try {
+        //         await this.Create(username, password);
+        //         // @ts-ignore
+        //         req.session.username = username;
+        //         res.redirect('/');
+        //     } catch (e) {
+        //         console.log(e);
+        //         RenderTemplate(
+        //             res,
+        //             'Create Account',
+        //             'create.ejs',
+        //             {m: e.message}
+        //         );
+        //     }
+        // });
         router.get('/login', function (req, res) {
             (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: "Enter a username and password." });
         });
         router.post('/login', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            var username, password, e_2;
+            var username, password, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -115,9 +115,9 @@ var Auth = /** @class */ (function () {
                         res.redirect('/');
                         return [3 /*break*/, 4];
                     case 3:
-                        e_2 = _a.sent();
-                        console.log(e_2);
-                        (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: e_2.message });
+                        e_1 = _a.sent();
+                        console.log(e_1);
+                        (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: e_1.message });
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -127,7 +127,7 @@ var Auth = /** @class */ (function () {
     };
     Auth.prototype.Create = function (username, password) {
         return __awaiter(this, void 0, void 0, function () {
-            var hash, e_3, e_4;
+            var hash, e_2, e_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -156,7 +156,7 @@ var Auth = /** @class */ (function () {
                         hash = _a.sent();
                         return [3 /*break*/, 5];
                     case 4:
-                        e_3 = _a.sent();
+                        e_2 = _a.sent();
                         throw new Error("Error accepting password. Please supply a different password.");
                     case 5:
                         _a.trys.push([5, 7, , 8]);
@@ -165,8 +165,8 @@ var Auth = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/, true];
                     case 7:
-                        e_4 = _a.sent();
-                        console.log(e_4);
+                        e_3 = _a.sent();
+                        console.log(e_3);
                         throw new Error("Error creating account. Please try again in a few minutes.");
                     case 8: return [2 /*return*/];
                 }
@@ -175,7 +175,7 @@ var Auth = /** @class */ (function () {
     };
     Auth.prototype.UsernameExists = function (username) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, e_5;
+            var data, e_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -185,8 +185,8 @@ var Auth = /** @class */ (function () {
                         data = _a.sent();
                         return [2 /*return*/, data.rows.length > 0];
                     case 2:
-                        e_5 = _a.sent();
-                        console.log(e_5);
+                        e_4 = _a.sent();
+                        console.log(e_4);
                         throw new Error("Error connecting to database");
                     case 3: return [2 /*return*/];
                 }
@@ -195,7 +195,7 @@ var Auth = /** @class */ (function () {
     };
     Auth.prototype.Login = function (username, password) {
         return __awaiter(this, void 0, void 0, function () {
-            var data, e_6, hash;
+            var data, e_5, hash;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -205,8 +205,8 @@ var Auth = /** @class */ (function () {
                         data = _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        e_6 = _a.sent();
-                        console.log(e_6);
+                        e_5 = _a.sent();
+                        console.log(e_5);
                         throw new Error("Error connecting to database");
                     case 3:
                         if (data.rowCount == 0) {
