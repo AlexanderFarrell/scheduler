@@ -1,21 +1,44 @@
+<%
+ var apps = [
+     {
+         url: "/idea",
+         icon: "🌱",
+         name: "Idea"
+     },
+     {
+         url: "/projects",
+         icon: "📙",
+         name: "Projects"
+     },
+     {
+         url: "/planner",
+         icon: "📖",
+         name: "Planner"
+     },
+     {
+         url: "/words",
+         icon: "🌹",
+         name: "Words"
+     },
+     {
+         url: "/tracker",
+         icon: "📊",
+         name: "Tracker"
+     }
+ ]
+ %>
+
 <div id="Home">
     <div class="HomeSection">
         <div class="HomeButtons">
-            <a href="/idea">
-                <div>
-                    Ideas
+            <% for (var i = 0; i < apps.length; i++) { %>
+            <a href="<%- apps[i].url %>">
+                <div class="HomeButton">
+                    <div><%- apps[i].icon %></div>
+                    <div><%- apps[i].name %></div>
                 </div>
             </a>
-            <a href="/projects">
-                <div>
-                    Projects
-                </div>
-            </a>
-            <a href="/planner">
-                <div>
-                    Planner
-                </div>
-            </a>
+            <% } %>
         </div>
     </div>
 </div>

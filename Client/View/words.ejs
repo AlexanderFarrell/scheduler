@@ -45,16 +45,17 @@
     </div>
     <% } %>
 </form>
-<div id="Search" style="display: none">
+<form id="Search" style="display: none" method="post" action="/words/search">
     <label>
-        Search: <input type="text">
+        <input type="text" placeholder="Enter text to search..." name="term">
     </label>
-    <button onclick="Search()"></button>
-</div>
+    <input type="submit" value="Search">
+</form>
 <div id="Browse" style="display: none">
 
 </div>
 <div class="Words">
+    <h4><%- locals.message%></h4>
     <% for (var i = 0; i < words.length; i++) { %>
         <h4 style="color: #48be55">
             <%- words[i].title %>

@@ -32,6 +32,15 @@ p {
   text-indent: 0.5em;
 }
 
+.HomeButtons > a {
+  color: white;
+}
+
+.HomeButtons > a > div {
+  text-align: center;
+  padding: 10px;
+}
+
 .auth {
   display: grid;
   grid-gap: 10px;

@@ -14,9 +14,30 @@ export class Words implements IApp {
 
         router.use(IsLoggedIn);
         router.get("/", async (req, res) => {
-            const words = (await Data.Query("select * from words limit 500")).rows;
+            const words = (await Data.Query("select * from words order by date desc limit 500")).rows;
             const message = "Words (Recent 10)"
             RenderTemplate(res, "Words", "words", {words: words, message: message});
+        })
+
+        router.get("/search/:search_text", async (req, res) => {
+            const words = (await Data.Query("select * from words where content like concat('%', $1::text, '%') limit 500",
+                req.params.search_text)).rows;
+            const message = "Words with " + req.params.search_text;
+            RenderTemplate(res, "Words", "words", {words: words, message: message});
+        })
+
+        router.post("/search", async (req, res) => {
+            if (ContainsBodyArgs(req, res, "term")) {
+                res.redirect('/words/search/' + req.body.term)
+            } else {
+                res.redirect('/words')
+            }
+        })
+
+        router.get('/browse', async (req, res) => {
+            const categories = (await Data.Query(
+                `select title, date from words order by date desc`)).rows;
+            RenderTemplate(res, "Words", "words_browse", {words: categories})
         })
 
         router.post("/", async (req, res) => {
