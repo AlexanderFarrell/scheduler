@@ -1,7 +1,6 @@
 <section>
 
 </section>
-
 <div class="Row3">
     <h3 style="background: #345b39" onclick="Toggle(document.getElementById('add_word'))">
         Add
@@ -15,61 +14,64 @@
         Search
     </h3>
 </div>
-<form action="/words" method="post" onload="document.getElementById('word_start').focus()" id="add_word" style="display: none">
-    <label>
-        Word: <input type="text" name="title" tabindex="1" id="word_start">
-    </label>
-    <div class="Row2">
-        <div>
-            <label>
-                Date: <input type="date" name="date" tabindex="2">
-            </label>
+<div class="CenterContent">
+    <form action="/words" method="post" onload="document.getElementById('word_start').focus()" id="add_word" style="display: none">
+        <label>
+            Word: <input type="text" name="title" tabindex="1" id="word_start">
+        </label>
+        <div class="Row2">
+            <div>
+                <label>
+                    Date: <input type="date" name="date" tabindex="2">
+                </label>
+            </div>
+            <div>
+                <label>
+                    Number: <input type="number" name="number" tabindex="3" value="-1">
+                </label>
+            </div>
         </div>
-        <div>
-            <label>
-                Number: <input type="number" name="number" tabindex="3" value="-1">
-            </label>
+        <label>
+            Content:
+            <textarea name="content" tabindex="4" rows="5"></textarea>
+        </label>
+        <div class="Row2">
+            <input type="reset" value="Reset">
+            <input type="submit" value="Add" tabindex="5">
         </div>
-    </div>
-    <label>
-        Content:
-        <textarea name="content" tabindex="4" rows="5"></textarea>
-    </label>
-    <div class="Row2">
-        <input type="reset" value="Reset">
-        <input type="submit" value="Add" tabindex="5">
-    </div>
-    <% if (message) { %>
-    <div class="Message">
-        <% message %>
-    </div>
-    <% } %>
-</form>
-<form id="Search" style="display: none" method="post" action="/words/search">
-    <label>
-        <input type="text" placeholder="Enter text to search..." name="term">
-    </label>
-    <input type="submit" value="Search">
-</form>
-<div id="Browse" style="display: none">
+        <% if (message) { %>
+            <div class="Message">
+                <% message %>
+            </div>
+        <% } %>
+    </form>
+    <form id="Search" style="display: none" method="post" action="/words/search">
+        <label>
+            <input type="text" placeholder="Enter text to search..." name="term">
+        </label>
+        <input type="submit" value="Search">
+    </form>
+    <div id="Browse" style="display: none">
 
+    </div>
+    <div class="Words">
+        <h4><%- locals.message%></h4>
+        <% for (var i = 0; i < words.length; i++) { %>
+            <h4 style="color: #48be55">
+                <%- words[i].title %>
+            </h4>
+            <h5>
+                <%- words[i].date.toLocaleDateString()%>
+            </h5>
+            <p>
+                <%- words[i].content %>
+            </p>
+            <br>
+            <hr>
+        <% } %>
+    </div>
 </div>
-<div class="Words">
-    <h4><%- locals.message%></h4>
-    <% for (var i = 0; i < words.length; i++) { %>
-        <h4 style="color: #48be55">
-            <%- words[i].title %>
-        </h4>
-        <h5>
-            <%- words[i].date.toLocaleDateString()%>
-        </h5>
-        <p>
-            <%- words[i].content %>
-        </p>
-        <br>
-    <hr>
-    <% } %>
-</div>
+
 <script>
     function Toggle(ele) {
         if (ele.style.display == "none") {

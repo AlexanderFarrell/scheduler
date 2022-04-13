@@ -211,3 +211,33 @@ header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
+
+.HomeButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  place-items: center;
+}
+
+.HomeButton {
+  transform: scale(0.95);
+  transition: 0.2s;
+}
+
+.HomeButton:hover {
+  transform: scale(0.99);
+  background: rgba(86, 196, 42, 0.12);
+}
+
+.HomeIcon {
+  font-size: 100px;
+}
+
+.HomeName {
+  font-size: 20px;
+}
+
+.CenterContent {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}

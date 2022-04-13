@@ -21,7 +21,7 @@
          name: "Words"
      },
      {
-         url: "/tracker",
+         url: "/track",
          icon: "📊",
          name: "Tracker"
      }
@@ -34,8 +34,8 @@
             <% for (var i = 0; i < apps.length; i++) { %>
             <a href="<%- apps[i].url %>">
                 <div class="HomeButton">
-                    <div><%- apps[i].icon %></div>
-                    <div><%- apps[i].name %></div>
+                    <div class="HomeIcon"><%- apps[i].icon %></div>
+                    <div class="HomeName"><%- apps[i].name %></div>
                 </div>
             </a>
             <% } %>
