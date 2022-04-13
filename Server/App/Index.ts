@@ -24,5 +24,4 @@ export class Index implements IApp {
     GetWebUrl(): string {
         return "/";
     }
-
 }
