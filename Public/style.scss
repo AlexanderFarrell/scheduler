@@ -231,10 +231,11 @@ header {
 .Clickable {
   cursor: pointer;
   transition: 0.2s;
+  font-weight: lighter;
 }
 
 .Clickable:hover {
-  font-weight: bolder;
+  font-weight: normal;
 }
 
 .HomeIcon {
