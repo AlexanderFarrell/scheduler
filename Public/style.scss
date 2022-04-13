@@ -228,6 +228,15 @@ header {
   background: rgba(86, 196, 42, 0.12);
 }
 
+.Clickable {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.Clickable:hover {
+  font-weight: bolder;
+}
+
 .HomeIcon {
   font-size: 100px;
 }
