@@ -41,7 +41,8 @@ export class Idea implements IApp {
                 await Data.Pool.query(`call add_idea($1, $2)`, [idea, username]);
                 res.redirect('/idea');
             } catch (e) {
-
+                console.log(e);
+                RenderTemplate(res, 'Ideas', 'idea.ejs', {error: "Error adding idea to server."})
             }
         })
 
