@@ -24,39 +24,39 @@ export class Auth implements IApp {
             RenderTemplate(res, "Scheduler", "auth.ejs", {})
         })
 
-        // router.get('/create', (req, res) => {
-        //     RenderTemplate(res, 'Create Account', 'create.ejs', {m: "Enter a username and password."})
-        // });
-        //
-        // router.post('/create', async (req, res) => {
-        //     if (!ContainsBodyArgs(req, 'username', 'password')) {
-        //         RenderTemplate(
-        //             res,
-        //             'Create Account',
-        //             'create.ejs',
-        //             {m: "Missing username or password."}
-        //         );
-        //         //res.render("login", {m: "Missing username or password."})
-        //     }
-        //
-        //     let username = req.body.username;
-        //     let password = req.body.password;
-        //
-        //     try {
-        //         await this.Create(username, password);
-        //         // @ts-ignore
-        //         req.session.username = username;
-        //         res.redirect('/');
-        //     } catch (e) {
-        //         console.log(e);
-        //         RenderTemplate(
-        //             res,
-        //             'Create Account',
-        //             'create.ejs',
-        //             {m: e.message}
-        //         );
-        //     }
-        // });
+        router.get('/create', (req, res) => {
+            RenderTemplate(res, 'Create Account', 'create.ejs', {m: "Enter a username and password."})
+        });
+
+        router.post('/create', async (req, res) => {
+            if (!ContainsBodyArgs(req, 'username', 'password')) {
+                RenderTemplate(
+                    res,
+                    'Create Account',
+                    'create.ejs',
+                    {m: "Missing username or password."}
+                );
+                //res.render("login", {m: "Missing username or password."})
+            }
+
+            let username = req.body.username;
+            let password = req.body.password;
+
+            try {
+                await this.Create(username, password);
+                // @ts-ignore
+                req.session.username = username;
+                res.redirect('/');
+            } catch (e) {
+                console.log(e);
+                RenderTemplate(
+                    res,
+                    'Create Account',
+                    'create.ejs',
+                    {m: e.message}
+                );
+            }
+        });
 
         router.get('/login', (req, res) => {
             RenderTemplate(res, 'Login', 'login.ejs', {m: "Enter a username and password."})
@@ -124,7 +124,7 @@ export class Auth implements IApp {
 
         try {
             await Data.Pool.query(
-                `insert into account (username, hash) VALUES ($1, $2)`,
+                `insert into account (username, password) VALUES ($1, $2)`,
                 [username, hash]
             )
             return true;
@@ -153,7 +153,7 @@ export class Auth implements IApp {
         let data;
         try {
             data = await Data.Pool.query(`
-                select hash
+                select password
                 from account
                 where username=$1
         `, [username]);
@@ -166,7 +166,7 @@ export class Auth implements IApp {
             throw new Error("Incorrect username or password.");
         }
 
-        let hash = data.rows[0]['hash'];
+        let hash = data.rows[0]['password'];
 
         if (await bcrypt.compare(password, hash)) {
             return true;

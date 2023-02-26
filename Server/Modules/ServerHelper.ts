@@ -10,6 +10,16 @@ export function ContainsBodyArgs(req, res, ...args: string[]): boolean {
     return true;
 }
 
+export function IsNotNull(...args) {
+    args.forEach(a => {
+        if (a == null) {
+            return false;
+        }
+    });
+
+    return true;
+}
+
 export function IsLoggedIn(req, res, next) {
     if (req.session.username != undefined) {
         next()

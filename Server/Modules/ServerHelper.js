@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SetupSession = exports.RenderTemplate = exports.IsLoggedIn = exports.ContainsBodyArgs = void 0;
+exports.SetupSession = exports.RenderTemplate = exports.IsLoggedIn = exports.IsNotNull = exports.ContainsBodyArgs = void 0;
 var session = require("express-session");
 function ContainsBodyArgs(req, res) {
     var args = [];
@@ -15,6 +15,19 @@ function ContainsBodyArgs(req, res) {
     return true;
 }
 exports.ContainsBodyArgs = ContainsBodyArgs;
+function IsNotNull() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
+    }
+    args.forEach(function (a) {
+        if (a == null) {
+            return false;
+        }
+    });
+    return true;
+}
+exports.IsNotNull = IsNotNull;
 function IsLoggedIn(req, res, next) {
     if (req.session.username != undefined) {
         next();

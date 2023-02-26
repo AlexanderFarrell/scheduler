@@ -4,7 +4,7 @@ import {Home} from "./App/Home";
 import {Idea} from "./App/Idea";
 import {Index} from "./App";
 import {Planner} from "./App/Planner";
-import {Projects} from "./App/Projects";
+import {Portfolio} from "./App/Portfolio/Portfolio";
 import {Words} from "./App/Words";
 
 let back = new PaServer();
@@ -14,7 +14,7 @@ back.Start(new Auth());
 back.Start(new Home());
 back.Start(new Index());
 back.Start(new Planner());
-back.Start(new Projects());
+back.Start(new Portfolio());
 back.Start(new Words());
 
 back.Run();

@@ -59,12 +59,12 @@ export class Words implements IApp {
                         req.body['date'],
                         req.body['title'],
                         req.body['content']);
+                    res.redirect("/words")
                 } catch (e) {
                     console.log(e)
                     RenderTemplate(res, "Words", "words", {words: [], message: `Error adding item to database: ${title}. Did not add.`});
                 }
             }
-            res.redirect("/words")
         })
 
         return router;

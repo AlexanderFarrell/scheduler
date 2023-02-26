@@ -1,0 +1,78 @@
+
+
+<h1>Projects</h1>
+<div class="Row4" style="grid-gap: 10px">
+    <a href="/portfolio/create" class="Button">Create Project</a>
+    <a href="/portfolio/objectives" class="Button">Objectives</a>
+    <a href="/portfolio/categories" class="Button">Categories</a>
+    <a href="/portfolio/search" class="Button">Search</a>
+</div>
+<br>
+<% if (locals.projects) { %>
+    <div id="projects" class="CenterContent">
+        <% for (var i = 0; i < projects.length; i++) { %>
+            <div class="project">
+                <h2>
+                    <%= projects[i].title %>
+                </h2>
+                <div class="Row3" style="text-align: center">
+                    <div>
+                        Status: <%= projects[i].status %>
+                    </div>
+                    <div>
+                        Time: <%= projects[i].time %>
+                    </div>
+                    <div>
+                        Priority: <%= projects[i].priority %>
+                    </div>
+                </div>
+                <% if (projects[i].maintenance != null) { %>
+                    <div>
+                        Maintenance: <%= projects[i].maintenance %>
+                    </div>
+                <% } %>
+                <div class="inputField">
+                    <div>
+                        Benefits
+                    </div>
+                    <div>
+                        <%= projects[i].benefits %>
+                    </div>
+                </div>
+                <div class="inputField">
+                    <div>
+                        Risks
+                    </div>
+                    <div>
+                        <%= projects[i].risks %>
+                    </div>
+                </div>
+                <div class="inputField">
+                    <div>
+                        Description
+                    </div>
+                    <div>
+                        <%= projects[i].description %>
+                    </div>
+                </div>
+                <div class="inputField">
+                    <div>
+                        Notes
+                    </div>
+                    <div>
+                        <%= projects[i].notes %>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+<% } else if (locals.error) { %>
+    <div class="Error">
+        <%= error %>
+    </div>
+<% } else { %>
+    <div class="Error">
+        Unknown error occurred when retrieving projects.
+    </div>
+<% }%>

@@ -218,6 +218,11 @@ header {
   place-items: center;
 }
 
+select {
+  background: #1e1e1e;
+  color: white;
+}
+
 .HomeButton {
   transform: scale(0.95);
   transition: 0.2s;
@@ -250,4 +255,32 @@ header {
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.inputField {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.inputField>*:nth-child(1) {
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.08);
+  text-align: center;
+  padding: 5px;
+}
+
+.project {
+  background: rgba(0, 255, 60, 0.06);
+  padding-top: 10px;
+}
+
+#projects {
+  display: grid;
+  grid-gap: 10px;
+  padding: 10px;
 }
