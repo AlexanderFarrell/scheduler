@@ -50,6 +50,19 @@ export class Portfolio implements IApp {
             }
         })
 
+        router.get("/objectives", async (req, res) => {
+            let data = {};
+            try {
+                let username = req.session['username'];
+                let projects = await Data.Query(`select * from objective where account_id=
+                            (select id from account where username=$1) order by created_on desc limit 100`, username);
+                data['projects'] = projects.rows;
+            } catch (e) {
+                data['error'] = "Unable to retrieve projects."
+            }
+            RenderTemplate(res, 'Portfolio', 'portfolio/index.ejs', data)
+        })
+
         return router;
     }
 

@@ -2,13 +2,13 @@
 <form class="auth" action="/auth/login" method="post" autocomplete="on">
     <label>
         Username:
-        <input id="a" type="text" name="username" autocomplete="username">
+        <input id="a" type="text" name="username" autocomplete="username" tabindex="1">
     </label>
     <label>
         Password:
-        <input type="password" name="password" autocomplete="current-password">
+        <input type="password" name="password" autocomplete="current-password" tabindex="2">
     </label>
-    <input type="submit" value="Login">
+    <input type="submit" value="Login" tabindex="3">
     <div style="text-align: center"><%- m %></div>
 </form>
 <script>

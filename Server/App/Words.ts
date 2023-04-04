@@ -14,7 +14,7 @@ export class Words implements IApp {
 
         router.use(IsLoggedIn);
         router.get("/", async (req, res) => {
-            const words = (await Data.Query("select * from words order by date desc limit 500")).rows;
+            const words = (await Data.Query("select * from words order by date limit 500")).rows;
             const message = "Words (Recent 10)"
             RenderTemplate(res, "Words", "words", {words: words, message: message});
         })

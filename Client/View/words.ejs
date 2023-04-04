@@ -1,16 +1,16 @@
 <section>
 
 </section>
-<div class="Row3">
-    <h3 class="Clickable" style="background: #345b39" onclick="Toggle(document.getElementById('add_word'))">
+<div id="subheader" class="Row3">
+    <h3 class="Clickable" onclick="Toggle(document.getElementById('add_word'))">
         Add
     </h3>
     <a href="/words/browse" style="color: inherit !important;">
-        <h3 class="Clickable" style="background: #345b39; color: inherit !important" onclick="Toggle(document.getElementById('Browse'))">
+        <h3 class="Clickable" style="color: inherit !important" onclick="Toggle(document.getElementById('Browse'))">
             Browse
         </h3>
     </a>
-    <h3 class="Clickable" style="background: #345b39" onclick="Toggle(document.getElementById('Search'))">
+    <h3 class="Clickable" onclick="Toggle(document.getElementById('Search'))">
         Search
     </h3>
 </div>
@@ -19,25 +19,25 @@
         <label>
             Word: <input type="text" name="title" tabindex="1" id="word_start">
         </label>
-        <div class="Row2">
-            <div>
-                <label>
-                    Date: <input type="date" name="date" tabindex="2">
-                </label>
-            </div>
-            <div>
-                <label>
-                    Number: <input type="number" name="number" tabindex="3" value="-1">
-                </label>
-            </div>
-        </div>
+        <label>
+            Date: <input type="date" name="date" tabindex="2">
+        </label>
+<!--        <div class="Row2">-->
+<!--            <div>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <label>-->
+<!--                    <input type="hidden" name="number" tabindex="3" value="-1">-->
+<!--                </label>-->
+<!--            </div>-->
+<!--        </div>-->
         <label>
             Content:
-            <textarea name="content" tabindex="4" rows="5"></textarea>
+            <textarea name="content" tabindex="3" rows="5"></textarea>
         </label>
         <div class="Row2">
             <input type="reset" value="Reset">
-            <input type="submit" value="Add" tabindex="5">
+            <input type="submit" value="Add" tabindex="4">
         </div>
         <% if (message) { %>
             <div class="Message">
@@ -57,7 +57,7 @@
     <div class="Words">
         <h4><%- locals.message%></h4>
         <% for (var i = 0; i < words.length; i++) { %>
-            <h4 style="color: #48be55">
+            <h4 class="highlight">
                 <%- words[i].title %>
             </h4>
             <h5>

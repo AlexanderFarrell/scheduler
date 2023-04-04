@@ -1,0 +1,18 @@
+<%- include('subheader.ejs')%>
+<div class="CenterContent">
+    <h1>Recent</h1>
+    <% if (locals.error) { %>
+        <p><%= error %></p>
+    <% } else { %>
+        <div class="Row3">
+            <% for (var i = 0; i < pages.length; i++) { %>
+                <a href="/wiki/page/<%= pages[i].title %>">
+                    <div class="Button">
+                        <%= pages[i].title %>
+                    </div>
+                    <br>
+                </a>
+            <% } %>
+        </div>
+    <% } %>
+</div>

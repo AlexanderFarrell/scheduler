@@ -1,0 +1,11 @@
+
+
+<%- include('subheader.ejs')%>
+<div class="CenterContent">
+    <% if (locals.error) { %>
+        <div><%- error %></div>
+    <% } else { %>
+        <h1><%= title %></h1>
+        <div><%- wiki_page %></div>
+    <% } %>
+</div>

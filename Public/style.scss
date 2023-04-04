@@ -1,8 +1,13 @@
+$theme-color-light: #49b0e5;
+$theme-color: #1e7bab;
+$theme-color-dark: #09405d;
+$background: #001a28;
+
 body {
   margin: 0;
   font-size: 20px;
   font-family: sans-serif;
-  background: #171c17;
+  background: $background;
   color: #d2d2d2;
 }
 
@@ -55,21 +60,23 @@ pre {
 
 label {
   display: block;
+  padding: 5px;
 }
 
 input[type="text"], input[type="number"], input[type="date"], input[type="password"], textarea {
   width: 100% !important;
   display: block;
   box-sizing: border-box;
-  font-size: inherit;
+  font-size: 20px;
   padding: 5px;
   background-color: #1e1e1e;
   outline: none;
+  border: 1px $theme-color-dark solid;
   color: white;
 }
 
 button, input[type="submit"], input[type="reset"], .Button {
-  background-color: #428f4b;
+  background-color: $theme-color;
   text-align: center;
   color: white;
   outline: none;
@@ -79,21 +86,22 @@ button, input[type="submit"], input[type="reset"], .Button {
   width: 100%;
   cursor: pointer;
   transition: 0.1s background-color;
+  border-radius: 3px;
 }
 input[type="date"] {
   text-align: center;
 }
 
 input[type="reset"] {
-  background-color: #4e8053;
+  background-color: $theme-color;
 }
 
 button:hover, input[type="submit"]:hover, input[type="reset"]:hover, .Button:hover {
-  background-color: #48be55;
+  background-color: $theme-color-light;
 }
 
 button:active, input[type="submit"]:active, input[type="reset"]:active, .Button:active {
-  background-color: #26702d;
+  background-color: $theme-color-dark;
   font-weight: bold;
 }
 
@@ -137,7 +145,7 @@ a > .navButton {
 header {
   display: grid;
   grid-template-columns: auto 1fr auto;
-  background: #428f4b;
+  background: $theme-color;
 }
 
 #PlannerContent {
@@ -195,27 +203,32 @@ header {
 .Row2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
 }
 
 .Row3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
 }
 
 .Row4 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
 }
 
 .Row5 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
 }
 
 .HomeButtons {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
   place-items: center;
+  place-content: center;
 }
 
 select {
@@ -230,7 +243,7 @@ select {
 
 .HomeButton:hover {
   transform: scale(0.99);
-  background: rgba(86, 196, 42, 0.12);
+  //background: rgba(42, 86, 196, 0.12);
 }
 
 .Clickable {
@@ -244,7 +257,11 @@ select {
 }
 
 .HomeIcon {
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 5px;
   font-size: 100px;
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .HomeName {
@@ -283,4 +300,12 @@ select {
   display: grid;
   grid-gap: 10px;
   padding: 10px;
+}
+
+#subheader {
+  background: #155779;
+}
+
+.highlight {
+  color: #487fbe;
 }
