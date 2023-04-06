@@ -1,0 +1,172 @@
+<% if (locals.project) { %>
+    <div class="CenterContent">
+        <h1><%= project.title %></h1>
+        <div class="Flex">
+            <div class="Two Container">
+                <h2>Info</h2>
+                <div id="DisplayInfo" class="RowOneTwo">
+                    <div>Status</div>
+                    <div><%= project.status %></div>
+                    <div>Time</div>
+                    <div><%= project.time %></div>
+                    <div>Priority</div>
+                    <div><%= project.priority %></div>
+                </div>
+                <form style="display: none;" id="EditInfo" method="post" action="/portfolio/project/update">
+                    <div class="inputField">
+                        <label for="maintenance">Status: </label>
+                        <select name="maintenance" id="maintenance" required>
+                            <option value="None">Not Started</option>
+                            <option value="Small">In Development</option>
+                            <option value="Medium">Completed</option>
+                            <option value="Large">On-Going</option>
+                            <option value="Large">Retired</option>
+                        </select>
+                    </div>
+                    <div class="inputField">
+                        <label for="time">Time: </label>
+                        <select name="time" id="time" required>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                        </select>
+                    </div>
+                    <div class="inputField">
+                        <label for="maintenance">Maintenance: </label>
+                        <select name="maintenance" id="maintenance" required>
+                            <option value="None">None</option>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                        </select>
+                    </div>
+                    <div class="inputField">
+                        <label for="priority">Priority: </label>
+                        <input type="number" name="priority" id="priority" value="0" step="1" required>
+                    </div>
+                    <input type="submit" value="Save">
+                </form>
+                <br>
+                <button id="Edit" onclick="Toggle('DisplayInfo'); Toggle('EditInfo'); Toggle('Edit');">
+                    Edit
+                </button>
+            </div>
+            <div class="Four Container">
+                <h2>Documents</h2>
+<!--http://localhost:3000/wiki/Documentation%20-%20Test-->
+<!--http://localhost:3000/wiki/page/Documentation%20-%20Test-->
+                <% if (project.documents.length > 0) { %>
+<!--                <div>-->
+<!--                    <a href="/wiki/page/Documentation - <%= project.title %>">Home Wiki Page</a>-->
+<!--                </div>-->
+                <% for (var i = 0; i < project.documents.length; i++) { %>
+                    <div class="Button">
+                        <a style="color: inherit" href="/wiki/page/<%= project.documents[i].title%>">
+                            <%= project.documents[i].title%>
+                        </a>
+                    </div>
+                <% } %>
+                <% } else { %>
+                    <p>Add documents by pressing generate.</p>
+                <% } %>
+                <br>
+                <div id="DocumentGeneration" style="display: none;">
+                    <form action="/portfolio/wiki" method="post">
+                        <input type="hidden" name="project" value="<%= project.title %>">
+                        <input type="hidden" name="title" value="Documentation">
+                        <input type="hidden" name="kind" value="Main">
+                        <input type="submit" value="Generate Wiki">
+                    </form>
+                    <form action="/portfolio/wiki" method="post">
+                        <input type="hidden" name="project" value="<%= project.title %>">
+                        <input type="hidden" name="title" value="Project Charter">
+                        <input type="hidden" name="kind" value="PMP">
+                        <input type="submit" value="Generate Charter">
+                    </form>
+                    <form action="/portfolio/wiki" method="post">
+                        <input type="hidden" name="project" value="<%= project.title %>">
+                        <input type="hidden" name="title" value="Project Management Plan">
+                        <input type="hidden" name="kind" value="PMP">
+                        <input type="submit" value="Generate Project Mgmt. Plan">
+                    </form>
+                    <form action="/portfolio/wiki" method="post">
+                        <input type="hidden" name="project" value="<%= project.title %>">
+                        <input type="hidden" name="title" value="Requirement Specification">
+                        <input type="hidden" name="kind" value="RS">
+                        <input type="submit" value="Generate Requirement Spec.">
+                    </form>
+                    <form action="/portfolio/wiki" method="post">
+                        <input type="hidden" name="project" value="<%= project.title %>">
+                        <input type="hidden" name="title" value="Design Document">
+                        <input type="hidden" name="kind" value="Design">
+                        <input type="submit" value="Generate Design Doc">
+                    </form>
+                    <form action="/portfolio/wiki" method="post">
+                        <input type="hidden" name="project" value="<%= project.title %>">
+                        <input type="hidden" name="title" value="Notes">
+                        <input type="hidden" name="kind" value="Notes">
+                        <input type="submit" value="Generate Notes">
+                    </form>
+                    <button id="A" onclick="Toggle('DocumentGeneration'); Toggle('G')">Hide</button>
+                </div>
+                <button id="G" onclick="Toggle('DocumentGeneration'); Toggle('G')">Generate</button>
+
+            </div>
+        </div>
+        <div class="Flex">
+            <div class="Two Container">
+                <h2>Categories</h2>
+                <% if (project.categories) { %>
+
+                <% } else { %>
+                    <div style="text-align: center">None </div>
+                <% } %>
+                <br><br>
+                <form id="deliverable_add" method="post" action="/portfolio/category">
+                    <input type="hidden" name="project_id" value="<%= project.id %>">
+                    <div class="inputField">
+                        <label for="category">Add Category: </label>
+                        <input type="text" name="title" id="category">
+                    </div>
+                    <input type="submit" value="Add">
+                </form>
+            </div>
+            <div class="Four Container">
+                <h2>Deliverables</h2>
+                <% if (project.deliverables != null && project.deliverables.length > 0) { %>
+                    <% for (var j = 0; j < project.deliverables.length; j++) { %>
+                        <form action="/portfolio/deliverable/track" method="post" id="d<%= j %>">
+                            <input type="hidden" name="project" value="<%= project.title %>">
+                            <input type="hidden" name="title" value="<%= project.deliverables[j].title%>">
+                            <input type="checkbox" name="completed" value="on" <%= project.deliverables[j].completed != null ? 'checked' : '' %>
+                                   onchange="document.getElementById('d<%= j %>').submit()">
+                            <span>
+                                <%= project.deliverables[j].title %>
+                            </span>
+                            <% if (project.deliverables[j].completed != null) { %>
+                                <span>
+                                <%= new Date(project.deliverables[j].completed).toLocaleString()%>
+                            </span>
+                            <% } %>
+                        </form>
+
+                    <% } %>
+                <% } else { %>
+                    <div style="text-align: center">No deliverables yet for this project. </div>
+                <% } %>
+                <br><br>
+                <form id="deliverable_add" method="post" action="/portfolio/deliverable">
+                    <input type="hidden" name="project" value="<%= project.title %>">
+                    <div class="inputField">
+                        <label for="deliverable_title">Add Deliverable: </label>
+                        <input type="text" name="title" id="deliverable_title">
+                    </div>
+                    <input type="submit" value="Add">
+                </form>
+<!--                <button id="add" onclick="Toggle('deliverable_add'); Toggle('add')">Add</button>-->
+            </div>
+        </div>
+    </div>
+<% } else { %>
+    <div class="Error"><%= error %></div>
+<% } %>

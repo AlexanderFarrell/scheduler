@@ -1,11 +1,14 @@
 $theme-color-light: #49b0e5;
 $theme-color: #1e7bab;
 $theme-color-dark: #09405d;
+$theme-color-transparent: rgba(30, 123, 171, 0.24);
 $background: #001a28;
+$shadow: rgb(0, 0, 0);
 
 body {
   margin: 0;
   font-size: 20px;
+  min-height: 100vh;
   font-family: sans-serif;
   background: $background;
   color: #d2d2d2;
@@ -37,6 +40,10 @@ p {
   text-indent: 0.5em;
 }
 
+img {
+  width: 100%;
+}
+
 .HomeButtons > a {
   color: white;
 }
@@ -44,6 +51,8 @@ p {
 .HomeButtons > a > div {
   text-align: center;
   padding: 10px;
+  display: grid;
+  align-items: center;
 }
 
 .auth {
@@ -52,6 +61,11 @@ p {
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
+  //margin-top: auto;
+  //margin-bottom: auto;
+  //height: 100vh;
+  padding-top: 10%;
+  //align-content: center;
 }
 
 pre {
@@ -76,28 +90,28 @@ input[type="text"], input[type="number"], input[type="date"], input[type="passwo
 }
 
 button, input[type="submit"], input[type="reset"], .Button {
-  background-color: $theme-color;
+  background-color: $theme-color-dark;
   text-align: center;
   color: white;
   outline: none;
   border: none;
-  padding: 5px;
+  padding: 10px;
   font-size: inherit;
   width: 100%;
   cursor: pointer;
   transition: 0.1s background-color;
-  border-radius: 3px;
+  border-radius: 5px;
 }
 input[type="date"] {
   text-align: center;
 }
 
 input[type="reset"] {
-  background-color: $theme-color;
+  background-color: $theme-color-dark;
 }
 
 button:hover, input[type="submit"]:hover, input[type="reset"]:hover, .Button:hover {
-  background-color: $theme-color-light;
+  background-color: $theme-color;
 }
 
 button:active, input[type="submit"]:active, input[type="reset"]:active, .Button:active {
@@ -115,7 +129,7 @@ a {
 
 #nav {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto auto auto;
 }
 
 .navButton {
@@ -137,6 +151,46 @@ input[type="checkbox"] {
   background-color: rgba(255, 255, 255, 0.09);
 }
 
+.Flex {
+  display: flex;
+  gap: 10px;
+}
+
+.Container {
+  border: 1px solid $theme-color-dark;
+  //background: $theme-color-transparent;
+  box-shadow: 1px 1px 5px $shadow;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.RowOneTwo {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.One {
+  flex: 1;
+}
+.Two {
+  flex: 2;
+}
+.Three {
+  flex: 3;
+}
+.Four {
+  flex: 4;
+}
+.Five {
+  flex: 5;
+}
+
+@media only screen and (max-width: 700px) {
+  .Flex {
+    display: block;
+  }
+}
 
 a > .navButton {
   text-decoration: none !important;
@@ -144,7 +198,8 @@ a > .navButton {
 
 header {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto auto auto auto;
+  place-content: center;
   background: $theme-color;
 }
 
@@ -276,7 +331,7 @@ select {
 
 .inputField {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  //grid-template-columns: 1fr 4fr;
   grid-gap: 10px;
   padding-bottom: 5px;
   padding-top: 5px;
@@ -286,8 +341,8 @@ select {
 
 .inputField>*:nth-child(1) {
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.08);
-  text-align: center;
+  //background: rgba(255, 255, 255, 0.08);
+  text-align: left;
   padding: 5px;
 }
 
@@ -308,4 +363,14 @@ select {
 
 .highlight {
   color: #487fbe;
+}
+
+.Small {
+  font-size: 10px;
+}
+
+p {
+  text-indent: 0;
+  line-height: 2rem;
+  padding-bottom: 2rem;
 }

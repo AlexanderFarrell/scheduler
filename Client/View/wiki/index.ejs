@@ -4,11 +4,16 @@
     <% if (locals.error) { %>
         <p><%= error %></p>
     <% } else { %>
-        <div class="Row3">
+        <div>
             <% for (var i = 0; i < pages.length; i++) { %>
-                <a href="/wiki/page/<%= pages[i].title %>">
-                    <div class="Button">
-                        <%= pages[i].title %>
+                <a href="/wiki/page/<%= pages[i].title %>" style="color: inherit !important;">
+                    <div style="display: grid; grid-template-columns: 1fr auto">
+                        <div>
+                            <%= pages[i].title %>
+                        </div>
+<!--                        <div class="Small">-->
+<!--                            <%= pages[i].created_on %>-->
+<!--                        </div>-->
                     </div>
                     <br>
                 </a>

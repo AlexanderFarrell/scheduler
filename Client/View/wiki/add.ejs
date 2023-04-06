@@ -1,14 +1,16 @@
 
 <%- include('subheader.ejs')%>
-<h1>Add Wiki Page</h1>
-<form action="/wiki" method="post">
-    <div class="inputField">
-        <label for="title">Title: </label>
-        <input type="text" name="title" id="title" required>
-    </div>
-    <div class="inputField">
-        <label for="content">Content: </label>
-        <textarea name="content" id="content"></textarea>
-    </div>
-    <input type="submit" value="Create Page">
-</form>
+<div class="CenterContent">
+    <h1>Add Wiki Page</h1>
+    <form action="/wiki" method="post">
+        <div class="inputField">
+            <label for="title">Title: </label>
+            <input type="text" name="title" id="title" required>
+        </div>
+        <div class="inputField">
+            <label for="content">Content: </label>
+            <textarea name="content" id="content" rows="20"></textarea>
+        </div>
+        <input type="submit" value="Create Page">
+    </form>
+</div>

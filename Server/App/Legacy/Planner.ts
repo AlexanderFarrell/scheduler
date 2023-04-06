@@ -1,8 +1,8 @@
 import * as express from 'express';
 import {Router} from 'express';
-import {IApp} from "./App";
-import {IsLoggedIn, RenderTemplate} from "../Modules/ServerHelper";
-import {Data} from "../Modules/Database";
+import {IApp} from "../App";
+import {IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
+import {Data} from "../../Modules/Database";
 
 export class Planner implements IApp {
     GetName(): string {

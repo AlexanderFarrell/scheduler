@@ -2,7 +2,8 @@
     // {a: "/idea", t: "Ideas"},
     {a: "/words", t: "Words"},
     {a: "/wiki", t: "Wiki"},
-    {a: "/portfolio", t: "Portfolio"}
+    {a: "/portfolio", t: "Portfolio"},
+    {a: "/auth/logout", t: "Logout"}
    // {a: "/planner", t: "Planner"},
 ] %>
 
@@ -18,16 +19,31 @@
           media="(prefers-color-scheme: dark)">
 </head>
 <body>
-<header>
-    <a class="navButton" href="/"><div>Home</div></a>
-    <div>&nbsp;</div>
-    <div id="nav">
+<% if (locals.hideHeader) { %>
+<!--    <div>&nbsp;</div>-->
+
+<% } else { %>
+    <header>
+        <a class="navButton" href="/">
+            <div>
+                <img src="/images/m02alow.png" style="width: 1em;">
+                <span>Home</span>
+            </div>
+        </a>
         <% for (var i = 0; i < nav.length; i++) { %>
             <a class="navButton" href="<%- nav[i].a %>"><div><%- nav[i].t%></div></a>
         <% } %>
-    </div>
-</header>
+        <!--    <a class="navButton" href="/"><div>Home</div></a>-->
+        <!--    <div>&nbsp;</div>-->
+        <!--    <div id="nav">-->
+        <!--        <% for (var i = 0; i < nav.length; i++) { %>-->
+        <!--            <a class="navButton" href="<%- nav[i].a %>"><div><%- nav[i].t%></div></a>-->
+        <!--        <% } %>-->
+        <!--    </div>-->
+    </header>
+<% } %>
 <div id="content"><%- include(content) %></div>
 <footer></footer>
 </body>
+<script src="/client.js"></script>
 </html>

@@ -12,6 +12,7 @@ export class Auth implements IApp {
     public UsernameMaximum = 20;
     public PasswordMinimum = 8;
     public PasswordMaximum = 71; //Probably will be 72, but just to be safe.
+    public AccountCreation = false;
 
     public GetName(): string {
         return "Auth";
@@ -21,21 +22,32 @@ export class Auth implements IApp {
         let router = Router();
 
         router.get("/", (req, res) => {
-            RenderTemplate(res, "Scheduler", "auth.ejs", {})
+            RenderTemplate(res, "Scheduler", "auth.ejs", {hideHeader: true})
         })
 
         router.get('/create', (req, res) => {
-            RenderTemplate(res, 'Create Account', 'create.ejs', {m: "Enter a username and password."})
+            RenderTemplate(res, 'Create Account', 'create.ejs', {m: "Enter a username and password.", hideHeader: true})
         });
 
         router.post('/create', async (req, res) => {
+            if (!this.AccountCreation) {
+                RenderTemplate(
+                    res,
+                    'Create Account',
+                    'create.ejs',
+                    {m: "Account creation is currently disabled for security reasons.", hideHeader: true}
+                );
+                return;
+            }
+
             if (!ContainsBodyArgs(req, 'username', 'password')) {
                 RenderTemplate(
                     res,
                     'Create Account',
                     'create.ejs',
-                    {m: "Missing username or password."}
+                    {m: "Missing username or password.", hideHeader: true}
                 );
+                return;
                 //res.render("login", {m: "Missing username or password."})
             }
 
@@ -53,13 +65,13 @@ export class Auth implements IApp {
                     res,
                     'Create Account',
                     'create.ejs',
-                    {m: e.message}
+                    {m: e.message, hideHeader: true}
                 );
             }
         });
 
         router.get('/login', (req, res) => {
-            RenderTemplate(res, 'Login', 'login.ejs', {m: "Enter a username and password."})
+            RenderTemplate(res, 'Login', 'login.ejs', {m: "Enter a username and password.", hideHeader: true})
         });
 
         router.post('/login', async (req, res) => {
@@ -68,7 +80,7 @@ export class Auth implements IApp {
                     res,
                     'Login',
                     'login.ejs',
-                    {m: "Missing username or password."}
+                    {m: "Missing username or password.", hideHeader: true}
                 );
             }
 
@@ -86,9 +98,14 @@ export class Auth implements IApp {
                     res,
                     'Login',
                     'login.ejs',
-                    {m: e.message}
+                    {m: e.message, hideHeader: true}
                 );
             }
+        })
+
+        router.get('/logout', async (req, res) => {
+            delete req.session['username']
+            res.redirect('/auth')
         })
 
         return router;

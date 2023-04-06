@@ -5,7 +5,29 @@
     <% if (locals.error) { %>
         <div><%- error %></div>
     <% } else { %>
-        <h1><%= title %></h1>
-        <div><%- wiki_page %></div>
+        <div class="Row2">
+            <a href="/wiki/download/<%= title %>">
+                <div class="Button">
+                    Download
+                </div>
+            </a>
+            <button onclick="Toggle('EditPage'); Toggle('DisplayPage')">
+                Edit
+            </button>
+        </div>
+
+            <form id="EditPage" style="display: none;" action="/wiki/update" method="post">
+                <h2>Edit Page</h2>
+                <input type="hidden" value="<%= title %>" name="title">
+                <textarea rows="15" name="content">
+                    <%= content_page %>
+                </textarea>
+                <input type="submit" value="Save">
+            </form>
+            <div id="DisplayPage">
+                <h1><%= title %></h1>
+                <div><%- wiki_page %></div>
+            </div>
+
     <% } %>
 </div>

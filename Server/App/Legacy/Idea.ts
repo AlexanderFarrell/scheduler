@@ -1,8 +1,8 @@
-import {IApp} from "./App";
+import {IApp} from "../App";
 import * as express from 'express';
 import {Router} from "express";
-import {ContainsBodyArgs, IsLoggedIn, RenderTemplate} from "../Modules/ServerHelper";
-import {Data} from "../Modules/Database";
+import {ContainsBodyArgs, IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
+import {Data} from "../../Modules/Database";
 
 export class Idea implements IApp {
     GetName(): string {

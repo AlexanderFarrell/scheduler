@@ -2,15 +2,15 @@
 
 </section>
 <div id="subheader" class="Row3">
-    <h3 class="Clickable" onclick="Toggle(document.getElementById('add_word'))">
+    <h3 class="Clickable" onclick="Toggle('add_word')">
         Add
     </h3>
     <a href="/words/browse" style="color: inherit !important;">
-        <h3 class="Clickable" style="color: inherit !important" onclick="Toggle(document.getElementById('Browse'))">
+        <h3 class="Clickable" style="color: inherit !important" onclick="Toggle('Browse')">
             Browse
         </h3>
     </a>
-    <h3 class="Clickable" onclick="Toggle(document.getElementById('Search'))">
+    <h3 class="Clickable" onclick="Toggle('Search')">
         Search
     </h3>
 </div>
@@ -71,17 +71,3 @@
         <% } %>
     </div>
 </div>
-
-<script>
-    function Toggle(ele) {
-        if (ele.style.display == "none") {
-            ele.style.display = "block";
-        } else {
-            ele.style.display = "none";
-        }
-    }
-
-    function Search() {
-
-    }
-</script>

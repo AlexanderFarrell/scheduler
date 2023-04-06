@@ -1,4 +1,5 @@
 import * as session from 'express-session';
+import {marked} from 'marked';
 
 export function ContainsBodyArgs(req, res, ...args: string[]): boolean {
     args.forEach(a => {
@@ -10,6 +11,10 @@ export function ContainsBodyArgs(req, res, ...args: string[]): boolean {
     return true;
 }
 
+export function MarkdownToHTML(html: string): string {
+    return marked.parse(html);
+}
+
 export function IsNotNull(...args) {
     args.forEach(a => {
         if (a == null) {
@@ -18,6 +23,12 @@ export function IsNotNull(...args) {
     });
 
     return true;
+}
+
+export function SendAsDownload(res, filename: string, content: string) {
+    res.setHeader('Content-type', 'application/octet-stream');
+    res.setHeader('Content-disposition', `attachment; filename=${filename}`);
+    res.send(content);
 }
 
 export function IsLoggedIn(req, res, next) {

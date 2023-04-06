@@ -48,6 +48,7 @@ var Auth = /** @class */ (function () {
         this.UsernameMaximum = 20;
         this.PasswordMinimum = 8;
         this.PasswordMaximum = 71; //Probably will be 72, but just to be safe.
+        this.AccountCreation = false;
     }
     Auth.prototype.GetName = function () {
         return "Auth";
@@ -56,18 +57,23 @@ var Auth = /** @class */ (function () {
         var _this = this;
         var router = (0, express_1.Router)();
         router.get("/", function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(res, "Scheduler", "auth.ejs", {});
+            (0, ServerHelper_1.RenderTemplate)(res, "Scheduler", "auth.ejs", { hideHeader: true });
         });
         router.get('/create', function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Enter a username and password." });
+            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Enter a username and password.", hideHeader: true });
         });
         router.post('/create', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
             var username, password, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (!this.AccountCreation) {
+                            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Account creation is currently disabled for security reasons.", hideHeader: true });
+                            return [2 /*return*/];
+                        }
                         if (!(0, ServerHelper_1.ContainsBodyArgs)(req, 'username', 'password')) {
-                            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Missing username or password." });
+                            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Missing username or password.", hideHeader: true });
+                            return [2 /*return*/];
                             //res.render("login", {m: "Missing username or password."})
                         }
                         username = req.body.username;
@@ -85,14 +91,14 @@ var Auth = /** @class */ (function () {
                     case 3:
                         e_1 = _a.sent();
                         console.log(e_1);
-                        (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: e_1.message });
+                        (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: e_1.message, hideHeader: true });
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
             });
         }); });
         router.get('/login', function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: "Enter a username and password." });
+            (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: "Enter a username and password.", hideHeader: true });
         });
         router.post('/login', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
             var username, password, e_2;
@@ -100,7 +106,7 @@ var Auth = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         if (!(0, ServerHelper_1.ContainsBodyArgs)(req, 'username', 'password')) {
-                            (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: "Missing username or password." });
+                            (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: "Missing username or password.", hideHeader: true });
                         }
                         username = req.body.username;
                         password = req.body.password;
@@ -117,10 +123,17 @@ var Auth = /** @class */ (function () {
                     case 3:
                         e_2 = _a.sent();
                         console.log(e_2);
-                        (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: e_2.message });
+                        (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: e_2.message, hideHeader: true });
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
+            });
+        }); });
+        router.get('/logout', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                delete req.session['username'];
+                res.redirect('/auth');
+                return [2 /*return*/];
             });
         }); });
         return router;

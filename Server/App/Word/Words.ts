@@ -1,8 +1,9 @@
-import {IApp} from "./App";
+import {IApp} from "../App";
 import * as express from "express";
 import {Router} from "express";
-import {ContainsBodyArgs, IsLoggedIn, RenderTemplate} from "../Modules/ServerHelper";
-import {Data} from "../Modules/Database";
+import {ContainsBodyArgs, IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
+import {Data} from "../../Modules/Database";
+import {Word} from "./Word";
 
 export class Words implements IApp {
     GetName(): string {
@@ -42,27 +43,17 @@ export class Words implements IApp {
 
         router.post("/", async (req, res) => {
             if (ContainsBodyArgs(req, res, "title", "content", "date", "number")) {
-                let num = parseInt(req.body['number']);
-                const date = req.body['date'];
-                const title = req.body['title'];
-                const content = req.body['content'];
-                if (isNaN(num)) {
-                    num = -1;
-                }
-                if (title.length > 30) {
+                if (req.body['title'].length > 30) {
                     RenderTemplate(res, "Words", "words", {words: [], message: "Error: Title too long, must be 30 characters or less."});
                     return;
                 }
+
                 try {
-                    await Data.Execute("insert into words (number, date, title, content) values ($1, $2, $3, $4)",
-                        num,
-                        req.body['date'],
-                        req.body['title'],
-                        req.body['content']);
+                    await Word.Add(req.body['date'], req.body['title'], req.body['content']);
                     res.redirect("/words")
                 } catch (e) {
                     console.log(e)
-                    RenderTemplate(res, "Words", "words", {words: [], message: `Error adding item to database: ${title}. Did not add.`});
+                    RenderTemplate(res, "Words", "words", {words: [], message: `Error adding item to database: ${req.body['title']}. Did not add.`});
                 }
             }
         })
@@ -73,6 +64,4 @@ export class Words implements IApp {
     GetWebUrl(): string {
         return "/words";
     }
-
-
 }
