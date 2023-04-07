@@ -1,29 +1,7 @@
 <div class="CenterContent">
     <%- include('header.ejs')%>
-    <h1>Projects</h1>
 </div>
 <br>
-<% if (locals.projects) { %>
-    <h2>Recent Projects</h2>
-    <div id="projects" class="CenterContent">
-        <% for (var i = 0; i < projects.length; i++) { %>
-        <a href="/portfolio/project/<%= projects[i].title%>">
-            <div class="Button">
-                <h2>
-                    <%= projects[i].title %>
-                </h2>
-            </div>
-        </a>
+<%- include("list_category.ejs")%>
 
-        <% } %>
-    </div>
-
-<% } else if (locals.error) { %>
-    <div class="Error">
-        <%= error %>
-    </div>
-<% } else { %>
-    <div class="Error">
-        Unknown error occurred when retrieving projects.
-    </div>
-<% }%>
+<%- include("list_projects.ejs", {message: "Uncategorized Projects"})%>

@@ -1,0 +1,14 @@
+<div id="Categories" class="CenterContent">
+    <h2><%= (locals.message) ? locals.message : "Categories" %></h2>
+    <% if (locals.categories) { %>
+        <% for (var k = 0; k < categories.length; k++) { %>
+            <a href="/portfolio/project/category/<%= categories[k].title %>">
+                <div class="Button">
+                    <%= categories[k].title %>
+                </div>
+            </a>
+        <% } %>
+    <% } else { %>
+        <div style="text-align: center">No categories. </div>
+    <% } %>
+</div>

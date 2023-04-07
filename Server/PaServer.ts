@@ -75,7 +75,7 @@ export class PaServer {
             this.Express.use(app.GetWebUrl(), app.GetRouter());
         })
 
-        const port = process.env.PORT || 3000;
+        const port = process.env.PORT || 8750;
         this.Express.listen(port, () => {
             console.log(`Listening on ${port}`);
             console.log(`View at http://localhost:${port} if local.`);

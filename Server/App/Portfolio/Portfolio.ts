@@ -1,7 +1,7 @@
 import * as express from 'express';
 import {Router} from 'express';
 import {IApp} from "../App";
-import {IsLoggedIn, IsNotNull, RenderTemplate} from "../../Modules/ServerHelper";
+import {ContainsBodyArgs, IsLoggedIn, IsNotNull, RenderTemplate} from "../../Modules/ServerHelper";
 import {Data} from "../../Modules/Database";
 import {Wiki} from "../Wiki/Wiki";
 import {Project} from "./Project";
@@ -18,7 +18,8 @@ export class Portfolio implements IApp {
         router.get("/", async (req, res) => {
             let data = {};
             try {
-                data['projects'] = await Project.GetByUser(req.session['username']);
+                data['projects'] = await Project.GetProjectsWithoutCategory(req.session['username']);
+                data['categories'] = await Project.GetCategoriesByUser(req.session['username']);
             } catch (e) {
                 data['error'] = "Unable to retrieve projects."
             }
@@ -42,6 +43,36 @@ export class Portfolio implements IApp {
             }
 
             RenderTemplate(res, `${title} - Projects`, 'portfolio/project.ejs', data);
+        })
+
+        router.get('/project/category/:category', async (req, res) => {
+            let projects = await Project.GetByCategory(req.params['category'], req.session['username']);
+            console.log(projects)
+            RenderTemplate(res, "Projects", 'portfolio/list_projects.ejs', {
+                projects
+            })
+        })
+
+        router.post('/project/category', async (req, res) => {
+            let project = await Project.Get(req.body['project'], req.session['username']);
+            if (project != null) {
+                await Project.AddCategoryToProject(project, req.body['category'], req.session['username']);
+            }
+            res.redirect('/portfolio/project/' + req.body['project'])
+        })
+
+        router.post('/project/update', async (req, res) => {
+            try {
+                console.log(req.body)
+                if (ContainsBodyArgs(req, res, 'status', 'time', 'maintenance', 'priority')) {
+                    let project = await Project.Get(req.body['project'], req.session['username'])
+                    await Project.Update(project, req.body['status'], req.body['time'], req.body['maintenance'], req.body['priority'])
+                }
+            } catch (e) {
+                console.error(e)
+            }
+
+            res.redirect('/portfolio/project/' + req.body['project'])
         })
 
         router.get("/create", (req, res) => {
@@ -71,6 +102,10 @@ export class Portfolio implements IApp {
             res.redirect('/portfolio/project/' + req.body['project'])
         })
 
+        router.post('/delete', async (req, res) => {
+            await Project.Delete(req.body['project'], req.session['username'])
+            res.redirect('/portfolio')
+        })
 
         router.post("/deliverable", async (req, res) => {
             let project = await Project.Get(req.body['project'], req.session['username']);

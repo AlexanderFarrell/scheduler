@@ -38,7 +38,7 @@ export class Wiki implements IApp{
             let name: string = req.params["name"];
             try {
                 let page = await this.GetPage(name, req.session['username']);
-                SendAsDownload(res, page['title'] + ".md", page['content'] + "\n\n" + page['created_on']);
+                SendAsDownload(res, page['title'] + ".html", page['content'] + "\n\n" + page['created_on']);
             } catch (e) {
                 console.error(e)
                 res.sendStatus(500);
@@ -62,8 +62,8 @@ export class Wiki implements IApp{
                     page)).rows;
                 if (rows.length > 0) {
                     let data = rows[0];
-                    let wiki_page = MarkdownToHTML(data['content']);
-                    RenderTemplate(res, data['title'], 'wiki/page.ejs', {wiki_page: wiki_page, content_page: data['content']});
+                    // let wiki_page = MarkdownToHTML(data['content']);
+                    RenderTemplate(res, data['title'], 'wiki/page.ejs', {wiki_page: data['content'], content_page: data['content']});
                 } else {
                     RenderTemplate(res, 'Not Found - Wiki', 'wiki/page.ejs', {error: `Could not find page ${page.substring(0, 100)}`});
                 }

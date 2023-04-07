@@ -10,9 +10,12 @@ body {
   margin: 0;
   font-size: 20px;
   min-height: 100vh;
-  font-family: sans-serif;
+  //font-family: sans-serif;
   background: $background;
   color: #d2d2d2;
+  stroke: white;
+  fill: white;
+  font-family: 'Roboto', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -27,6 +30,14 @@ h1, h2, h3, h4, h5, h6 {
 
 a {
   color: $theme-color-light;
+}
+
+span .Button {
+
+}
+
+.Icon {
+  width: 2rem;
 }
 
 .Idea {
@@ -53,6 +64,10 @@ img {
   color: white;
 }
 
+.ql-container {
+  font-size: 20px !important;
+}
+
 .HomeButtons > a > div {
   text-align: center;
   padding: 10px;
@@ -75,6 +90,37 @@ img {
 
 pre {
   width: 100%;
+}
+
+.ql-stroke {
+  stroke: white !important;
+  color: white;
+}
+
+.ql-fill .ql-picker-label {
+  fill: white;
+  color: white;
+}
+
+.ql-picker-item {
+  //fill: #1e1e1e !important;
+  color: white !important;
+  //stroke: #1e1e1e !important;
+  background: #1e1e1e;
+}
+
+.ql-picker-options {
+  background: #1e1e1e;
+
+}
+
+.ql-picker {
+  color: white;
+}
+
+.ql-snow .ql-picker {
+  //color: white;
+  color: white !important;
 }
 
 label {
@@ -110,6 +156,15 @@ button, input[type="submit"], input[type="reset"], .Button {
   margin-bottom: 10px;
   margin-top: 10px;
 }
+
+.SmallButton {
+  width: auto !important;
+  padding: 5px 10px;
+  align-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
 input[type="date"] {
   text-align: center;
 }
@@ -359,9 +414,9 @@ select {
 }
 
 #projects {
-  display: grid;
-  grid-gap: 10px;
-  padding: 10px;
+  //display: grid;
+  //grid-gap: 10px;
+  //padding: 10px;
 }
 
 #subheader {
@@ -393,6 +448,10 @@ p {
   //  display: grid;
   //  grid-template-columns: 1fr;
   //}
+
+  .Container {
+    margin-bottom: 30px;
+  }
 
   .CenterContent {
     padding-left: 10px;
