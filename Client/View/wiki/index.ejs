@@ -1,4 +1,4 @@
-<%- include('subheader.ejs')%>
+<%- include('header.ejs')%>
 <div class="CenterContent">
     <h1>Recent</h1>
     <% if (locals.error) { %>
@@ -7,7 +7,7 @@
         <div>
             <% for (var i = 0; i < pages.length; i++) { %>
                 <a href="/wiki/page/<%= pages[i].title %>" style="color: inherit !important;">
-                    <div style="display: grid; grid-template-columns: 1fr auto">
+                    <div class="Button" style="display: grid; grid-template-columns: 1fr auto">
                         <div>
                             <%= pages[i].title %>
                         </div>
@@ -15,7 +15,6 @@
 <!--                            <%= pages[i].created_on %>-->
 <!--                        </div>-->
                     </div>
-                    <br>
                 </a>
             <% } %>
         </div>

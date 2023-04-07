@@ -1,0 +1,16 @@
+<div class="CenterContent">
+    <%- include("header.ejs")%>
+    <form action="/words/search" class="Container">
+        <h1>Search Words</h1>
+        <div class="inputField">
+            <label for="term">
+                Search Term
+            </label>
+            <input type="text" id="term" name="term">
+        </div>
+        <input type="submit" value="Search">
+    </form>
+    <% if (locals.words) { %>
+        <%- include("list.ejs") %>
+    <% } %>
+</div>

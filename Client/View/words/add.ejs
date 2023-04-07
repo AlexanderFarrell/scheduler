@@ -1,0 +1,33 @@
+
+<div class="CenterContent">
+    <%- include("header.ejs")%>
+    <form action="/words" method="post" onload="" id="add_word" class="Container">
+        <h1>Add Word</h1>
+        <label>
+            Word: <input type="text" name="title" tabindex="1" id="word_start">
+        </label>
+        <label>
+            Date: <input type="date" name="date" tabindex="2">
+        </label>
+        <label>
+            Content:
+            <textarea name="content" tabindex="3" rows="5"></textarea>
+        </label>
+        <div>
+<!--            <input type="reset" value="Reset">-->
+            <input type="submit" value="Add" tabindex="4">
+        </div>
+        <% if (message) { %>
+            <div class="Message">
+                <% message %>
+            </div>
+        <% } %>
+    </form>
+    <div>
+        <h1>Recent</h1>
+        <%- include("list.ejs") %>
+    </div>
+</div>
+<script>
+    document.getElementById('word_start').focus(); console.log('I alive')
+</script>

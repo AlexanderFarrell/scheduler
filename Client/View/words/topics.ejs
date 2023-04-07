@@ -1,0 +1,30 @@
+<div class="CenterContent">
+    <%- include("header.ejs")%>
+    <div class="Container">
+        <h1>Search Words by Topic</h1>
+        <div class="Row2">
+            <a href="/words/topic?sorting=alpha">
+                <div class="Button">
+                    Alphabetical
+                </div>
+            </a>
+            <a href="/words/topic?sorting=freq">
+                <div class="Button">
+                    Frequency
+                </div>
+            </a>
+        </div>
+    </div>
+    <% for (var i = 0; i < topics.length; i++) { %>
+        <a href="/words/topic/<%= topics[i].title%>">
+            <div class="Button" style="display: grid; grid-template-columns: 1fr auto">
+                <div>
+                    <%=  topics[i].title %>
+                </div>
+                <div>
+                    <%=  topics[i].count %>
+                </div>
+            </div>
+        </a>
+    <% } %>
+</div>

@@ -43,8 +43,10 @@ add column created_on timestamptz not null default now();
 
 
 create table project_category (
-    id serial primary key
-)
+    id serial primary key,
+    title varchar(150) not null,
+    account_id int not null references account(id)
+);
 
 create view
 

@@ -1,3 +1,4 @@
+$theme-color-very-light: #93dbff;
 $theme-color-light: #49b0e5;
 $theme-color: #1e7bab;
 $theme-color-dark: #09405d;
@@ -22,6 +23,10 @@ h1, h2, h3, h4, h5, h6 {
 
 * {
   box-sizing: border-box;
+}
+
+a {
+  color: $theme-color-light;
 }
 
 .Idea {
@@ -85,7 +90,8 @@ input[type="text"], input[type="number"], input[type="date"], input[type="passwo
   padding: 5px;
   background-color: #1e1e1e;
   outline: none;
-  border: 1px $theme-color-dark solid;
+  border: 1px $theme-color solid;
+  border-radius: 4px;
   color: white;
 }
 
@@ -101,6 +107,8 @@ button, input[type="submit"], input[type="reset"], .Button {
   cursor: pointer;
   transition: 0.1s background-color;
   border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 input[type="date"] {
   text-align: center;
@@ -125,6 +133,10 @@ button:focus, input[type="submit"]:focus, input[type="reset"]:focus, .Button:foc
 
 a {
   text-decoration: none;
+}
+
+a:hover {
+  color: $theme-color-very-light;
 }
 
 #nav {
@@ -162,6 +174,7 @@ input[type="checkbox"] {
   box-shadow: 1px 1px 5px $shadow;
   border-radius: 10px;
   padding: 10px;
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
@@ -184,12 +197,6 @@ input[type="checkbox"] {
 }
 .Five {
   flex: 5;
-}
-
-@media only screen and (max-width: 700px) {
-  .Flex {
-    display: block;
-  }
 }
 
 a > .navButton {
@@ -373,4 +380,27 @@ p {
   text-indent: 0;
   line-height: 2rem;
   padding-bottom: 2rem;
+}
+
+
+
+@media only screen and (max-width: 700px) {
+  .Flex {
+    display: block;
+  }
+
+  //.Row4 {
+  //  display: grid;
+  //  grid-template-columns: 1fr;
+  //}
+
+  .CenterContent {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  button, input[type="submit"], input[type="reset"], .Button {
+    //padding-top: 30px;
+    //padding-bottom: 30px;
+  }
 }

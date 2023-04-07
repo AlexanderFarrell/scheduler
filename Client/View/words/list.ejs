@@ -1,0 +1,19 @@
+<div class="Words CenterContent">
+    <h4><%- locals.message%></h4>
+    <% for (var i = 0; i < words.length; i++) { %>
+        <a href="/words/id/<%= words[i].id %>">
+            <h4 class="highlight">
+                <%- words[i].title %>
+            </h4>
+        </a>
+
+        <h5>
+            <%- words[i].date.toLocaleDateString()%>
+        </h5>
+        <p>
+            <%- words[i].content %>
+        </p>
+        <br>
+        <hr>
+    <% } %>
+</div>

@@ -1,0 +1,27 @@
+<%- include("header.ejs")%>
+<div class="CenterContent">
+    <h4 class="highlight">
+        <%- word.title %>
+    </h4>
+    <h5>
+        <%- word.date.toLocaleDateString()%>
+    </h5>
+    <p>
+        <%- word.content %>
+    </p>
+    <form action="/words/edit" id="Edit" method="post" style="display: none">
+        <input type="hidden" name="id" value="<%= word.id%>">
+        <label>
+            Word: <input type="text" name="title" tabindex="1" id="word_start" value="<%= word.title%>">
+        </label>
+        <label>
+            Date: <input type="date" name="date" tabindex="2" value="<%= new Date(word.date) %>">
+        </label>
+        <label>
+            Content:
+            <textarea name="content" tabindex="3" rows="5"><%= word.content %></textarea>
+        </label>
+        <input type="submit" value="Save Changes">
+    </form>
+    <button id="EditButton" onclick="Toggle('Edit'); Toggle('EditButton')">Edit</button>
+</div>

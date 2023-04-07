@@ -6,3 +6,9 @@ create table words (
     content text not null,
     item_id int
 );
+
+alter table words
+add column added_on timestamptz not null default now();
+
+alter table words
+drop column added_on;
