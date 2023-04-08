@@ -5,18 +5,16 @@
     <% if (locals.error) { %>
         <p><%= error %></p>
     <% } else { %>
-        <div>
+        <div id="documents">
             <% for (var i = 0; i < pages.length; i++) { %>
-                <a href="/wiki/page/<%= pages[i].title %>" style="color: inherit !important;">
-                    <div class="Button" style="display: grid; grid-template-columns: 1fr auto">
-                        <div>
-                            <%= pages[i].title %>
-                        </div>
-<!--                        <div class="Small">-->
-<!--                            <%= pages[i].created_on %>-->
+                <%- include('doc_icon.ejs', {doc: pages[i]})%>
+<!--                <a href="/wiki/page/<%= pages[i].title %>" style="color: inherit !important;">-->
+<!--                    <div class="Button" style="display: grid; grid-template-columns: 1fr auto">-->
+<!--                        <div>-->
+<!--                            <%= pages[i].title %>-->
 <!--                        </div>-->
-                    </div>
-                </a>
+<!--                    </div>-->
+<!--                </a>-->
             <% } %>
         </div>
     <% } %>

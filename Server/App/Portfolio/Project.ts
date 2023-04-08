@@ -56,7 +56,8 @@ export class Project {
                 from project
                          inner join project_category_link pcl on project.id = pcl.project_id
                 where pcl.category_id = (select id from project_category where title=$1)
-                  and project.account_id=(select id from account where username=$2);`,
+                  and project.account_id=(select id from account where username=$2)
+                order by project.priority desc ;`,
             category, username
         ))).rows
     }

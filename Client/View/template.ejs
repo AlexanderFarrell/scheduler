@@ -3,6 +3,7 @@
     {a: "/portfolio", t: "Portfolio"},
     {a: "/wiki", t: "Wiki"},
     {a: "/words", t: "Words"},
+    //{a: "/day", t: "Day"},
     {a: "/auth/logout", t: "Logout"}
    // {a: "/planner", t: "Planner"},
 ] %>
@@ -28,22 +29,32 @@
 
 <% } else { %>
     <header>
-        <a class="navButton" href="/">
-            <div>
-                <img src="/images/m02alow.png" style="width: 1em;">
-                <span>Home</span>
-            </div>
-        </a>
-        <% for (var i = 0; i < nav.length; i++) { %>
-            <a class="navButton" href="<%- nav[i].a %>"><div><%- nav[i].t%></div></a>
-        <% } %>
-        <!--    <a class="navButton" href="/"><div>Home</div></a>-->
-        <!--    <div>&nbsp;</div>-->
-        <!--    <div id="nav">-->
-        <!--        <% for (var i = 0; i < nav.length; i++) { %>-->
-        <!--            <a class="navButton" href="<%- nav[i].a %>"><div><%- nav[i].t%></div></a>-->
-        <!--        <% } %>-->
-        <!--    </div>-->
+        <div class="CenterContent">
+            <nav>
+                <a class="navButton" href="/">
+                    <div>
+                        <img src="/images/m02alow.png" style="width: 1em;">
+                        <span>Home</span>
+                    </div>
+                </a>
+                <div>&nbsp;</div>
+                <div class="Flex DesktopOnly">
+                    <% for (var i = 0; i < nav.length; i++) { %>
+                        <a class="navButton " href="<%- nav[i].a %>"><div><%- nav[i].t%></div></a>
+                    <% } %>
+
+                </div>
+                <div class="MobileOnly navButton" onclick="Toggle('MobileMenu')" style="padding: 5px;">
+                        <img src="/images/icon/hamburger.svg" style="width: calc(1em + 15px);">
+                    </div>
+            </nav>
+        </div>
+        <div style="display: none;" id="MobileMenu">
+            <% for (var i = 0; i < nav.length; i++) { %>
+                <a href="<%- nav[i].a %>"><div class="navButton"><%- nav[i].t%></div></a>
+            <% } %>
+        </div>
+
     </header>
 <% } %>
 <div id="content"><%- include(content) %></div>

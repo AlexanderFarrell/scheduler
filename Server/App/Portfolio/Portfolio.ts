@@ -48,7 +48,7 @@ export class Portfolio implements IApp {
         router.get('/project/category/:category', async (req, res) => {
             let projects = await Project.GetByCategory(req.params['category'], req.session['username']);
             console.log(projects)
-            RenderTemplate(res, "Projects", 'portfolio/list_projects.ejs', {
+            RenderTemplate(res, "Projects", 'portfolio/results.ejs', {
                 projects
             })
         })
@@ -95,11 +95,16 @@ export class Portfolio implements IApp {
         })
 
         router.post('/wiki', async (req, res) => {
-            let project = await Project.Get(req.body['project'], req.session['username']);
-            if (project != null) {
-                await Project.AddWikiPage(project, req.body['title'], req.session['username'], req.body['kind']);
+            try {
+                let project = await Project.Get(req.body['project'], req.session['username']);
+                if (project != null) {
+                    await Project.AddWikiPage(project, req.body['title'], req.session['username'], req.body['kind']);
+                }
+                res.redirect('/portfolio/project/' + req.body['project'])
+            } catch (e) {
+                console.error(e)
+                res.redirect('/portfolio/project/' + req.body['project'])
             }
-            res.redirect('/portfolio/project/' + req.body['project'])
         })
 
         router.post('/delete', async (req, res) => {
