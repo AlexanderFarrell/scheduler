@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  font-size: 20px;
+  min-height: 100vh;
+  background: $background;
+  color: #d2d2d2;
+  stroke: white;
+  fill: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+* {
+   box-sizing: border-box;
+ }
+
+header {
+  background: $theme-color;
+}
+
+nav {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+}
+
+footer {
+  padding: 10px;
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+  margin: 0;
+  padding: 0.5em;
+}
+
+p {
+  margin: 0;
+  //text-indent: 0.5em;
+  line-height: 2rem;
+  padding: 0 0.8em 2rem;
+}
+
+a {
+  color: $theme-color-light;
+  text-decoration: none;
+}
+
+a:hover {
+  color: $theme-color-very-light;
+}
+
+img {
+  width: 100%;
+}
+
+pre {
+  width: 100%;
+}
+
+label {
+  display: block;
+  padding: 5px;
+}
+
+input[type="text"], input[type="number"], input[type="date"], input[type="password"], textarea {
+  width: 100% !important;
+  display: block;
+  box-sizing: border-box;
+  font-size: 20px;
+  padding: 5px;
+  background-color: #1e1e1e;
+  outline: none;
+  border: 1px $theme-color solid;
+  border-radius: 4px;
+  color: white;
+}
+
+button, input[type="submit"], input[type="reset"], .Button {
+  background-color: $theme-color-dark;
+  text-align: center;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px;
+  font-size: inherit;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.1s background-color;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+input[type="date"] {
+  text-align: center;
+}
+
+input[type="reset"] {
+  background-color: $theme-color-dark;
+}
+
+input[type="checkbox"] {
+  font-size: inherit;
+  width: 1em;
+  height: 1em;
+  padding: 10px;
+}
+
+select {
+  background: #1e1e1e;
+  color: white;
+}
+
+button:hover, input[type="submit"]:hover, input[type="reset"]:hover, .Button:hover {
+  background-color: $theme-color;
+}
+
+button:active, input[type="submit"]:active, input[type="reset"]:active, .Button:active {
+  background-color: $theme-color-dark;
+  font-weight: bold;
+}
+
+button:focus, input[type="submit"]:focus, input[type="reset"]:focus, .Button:focus {
+  outline: white solid 1px;
+}

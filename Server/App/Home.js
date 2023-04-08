@@ -13,7 +13,7 @@ var Home = /** @class */ (function () {
         var router = (0, express_1.Router)();
         router.use(ServerHelper_1.IsLoggedIn);
         router.get('/', function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(res, 'Home', "index.ejs");
+            (0, ServerHelper_1.RenderTemplate)(req, res, 'Home', "index.ejs");
         });
         return router;
     };

@@ -1,0 +1,41 @@
+
+
+.HomeButtons > a {
+  color: white;
+}
+
+.HomeButtons > a > div {
+  text-align: center;
+  padding: 10px;
+  display: grid;
+  align-items: center;
+}
+
+.HomeName {
+  font-size: 20px;
+}
+
+.HomeButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  place-items: center;
+  place-content: center;
+}
+
+.HomeButton {
+  transform: scale(0.95);
+  transition: 0.2s;
+}
+
+.HomeButton:hover {
+  transform: scale(0.99);
+  //background: rgba(42, 86, 196, 0.12);
+}
+
+.HomeIcon {
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 5px;
+  font-size: 100px;
+  padding: 10px;
+  border-radius: 10px;
+}

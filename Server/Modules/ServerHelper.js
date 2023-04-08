@@ -48,10 +48,11 @@ function IsLoggedIn(req, res, next) {
     }
 }
 exports.IsLoggedIn = IsLoggedIn;
-function RenderTemplate(res, title, content, data) {
+function RenderTemplate(req, res, title, content, data) {
     if (data === void 0) { data = {}; }
     data['title'] = title;
     data['content'] = content;
+    data['first_name'] = req.session['first_name'];
     res.render('template.ejs', data);
 }
 exports.RenderTemplate = RenderTemplate;

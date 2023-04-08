@@ -4,7 +4,7 @@ import {Router} from "express";
 import {Data} from "../../Modules/Database";
 import {ContainsBodyArgs, IsLoggedIn, MarkdownToHTML, RenderTemplate, SendAsDownload} from "../../Modules/ServerHelper";
 
-export class Wiki implements IApp{
+export class WikiApp implements IApp{
     GetName(): string {
         return "Wiki";
     }
@@ -16,10 +16,14 @@ export class Wiki implements IApp{
         router.get('/', async (req, res) => {
             try {
                 let rows = (await Data.Query(`
-                    select title, created_on from wiki order by created_on desc limit 30`)).rows;
-                    RenderTemplate(res, 'Wiki', 'wiki/index.ejs', {pages: rows});
+                    select title, created_on
+                    from wiki
+                    where account_id=(select id from account where username=$1)
+                    order by created_on desc limit 30`,
+                    req.session['username'])).rows;
+                    RenderTemplate(req, res, 'WikiApp', 'wiki/index.ejs', {pages: rows});
             } catch (e) {
-                RenderTemplate(res, 'Wiki', 'wiki/index.ejs', {error: 'Unable to retrieve recent wiki pages.'});
+                RenderTemplate(req, res, 'WikiApp', 'wiki/index.ejs', {error: 'Unable to retrieve recent wiki pages.'});
             }
         });
 
@@ -47,35 +51,39 @@ export class Wiki implements IApp{
 
         router.get("/add/title/:title", (req, res) => {
             let title = req.params['title'];
-            RenderTemplate(res, 'Wiki', 'wiki/add.ejs', {title: 'title'});
+            RenderTemplate(req, res, 'WikiApp', 'wiki/add.ejs', {title: 'title'});
         })
 
         router.get("/add", (req, res) => {
-            RenderTemplate(res, 'Wiki', 'wiki/add.ejs', {title: ''});
+            RenderTemplate(req, res, 'WikiApp', 'wiki/add.ejs', {title: ''});
         })
 
         router.get('/page/:name', async (req, res) => {
             let page: string = req.params["name"];
             try {
                 let rows = (await Data.Query(`
-                    select * from wiki where title=$1 limit 1`,
-                    page)).rows;
+                    select * 
+                    from wiki 
+                    where title=$1
+                        and account_id=(select id from account where username=$2)
+                    limit 1`,
+                    page, req.session['username'])).rows;
                 if (rows.length > 0) {
                     let data = rows[0];
                     // let wiki_page = MarkdownToHTML(data['content']);
-                    RenderTemplate(res, data['title'], 'wiki/page.ejs', {wiki_page: data['content'], content_page: data['content']});
+                    RenderTemplate(req, res, data['title'], 'wiki/page.ejs', {wiki_page: data['content'], content_page: data['content']});
                 } else {
-                    RenderTemplate(res, 'Not Found - Wiki', 'wiki/page.ejs', {error: `Could not find page ${page.substring(0, 100)}`});
+                    RenderTemplate(req, res, 'Not Found - WikiApp', 'wiki/page.ejs', {error: `Could not find page ${page.substring(0, 100)}`});
                 }
             } catch (e) {
                 console.error(e)
-                RenderTemplate(res, 'Not Found - Wiki', 'wiki/page.ejs', {error: 'Database error. Please try again later'});
+                RenderTemplate(req, res, 'Not Found - WikiApp', 'wiki/page.ejs', {error: 'Database error. Please try again later'});
             }
         })
 
         router.post('/', async (req, res) => {
             if (!ContainsBodyArgs(req, res, 'title', 'content')) {
-                RenderTemplate(res, 'New Wiki Page', 'wiki/add.ejs', {error: "Need title and content"});
+                RenderTemplate(req, res, 'New WikiApp Page', 'wiki/add.ejs', {error: "Need title and content"});
                 return;
             }
 
@@ -88,18 +96,20 @@ export class Wiki implements IApp{
 
                 // await Data.Execute(`insert into wiki (title, content, account_id)
                 //                     values ($1, $2, (select id from account where username=$3));`, title, content, account);
-                let url = await Wiki.CreatePage(title, content, account);
+                let url = await WikiApp.CreatePage(title, content, account);
                 res.redirect(url);
             } catch (e) {
                 console.error(e);
-                RenderTemplate(res, 'New Wiki Page', 'wiki/add.ejs', {error: "Database error. Could not add."});
+                RenderTemplate(req, res, 'New WikiApp Page', 'wiki/add.ejs', {error: "Database error. Could not add."});
             }
         })
 
         router.post('/update', async (req, res) => {
             let page = await this.GetPage(req.body['title'], req.session['username'])
             if (page != null) {
-                await Data.Execute(`update wiki set content=$1 where id=$2`, req.body['content'], page['id']);
+                await Data.Execute(`update wiki 
+                    set content=$1 
+                    where id=$2`, req.body['content'], page['id']);
                 res.redirect('/wiki/page/' + req.body['title'])
             } else {
                 res.redirect('/wiki')

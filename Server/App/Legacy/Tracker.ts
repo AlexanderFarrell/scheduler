@@ -35,7 +35,7 @@ export class Tracker implements IApp {
                 r[r.length-1] = [row['value'], date.toLocaleString()];
             })
 
-            RenderTemplate(res, "Tracker", "tracker", {types: types, table: r});
+            RenderTemplate(req, res, "Tracker", "tracker", {types: types, table: r});
         })
 
         router.post('/', async (req, res) => {

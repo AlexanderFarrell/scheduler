@@ -1,0 +1,48 @@
+#documents {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 150px);
+  justify-content: space-between;
+  grid-gap: 20px;
+}
+
+.DocIcon>img {
+  width: 100px;
+}
+.DocIcon {
+  text-align: center;
+}
+
+.ql-container {
+  font-size: 20px !important;
+}
+
+.ql-stroke {
+  stroke: white !important;
+  color: white;
+}
+
+.ql-fill .ql-picker-label {
+  fill: white;
+  color: white;
+}
+
+.ql-picker-item {
+  //fill: #1e1e1e !important;
+  color: white !important;
+  //stroke: #1e1e1e !important;
+  background: #1e1e1e;
+}
+
+.ql-picker-options {
+  background: #1e1e1e;
+
+}
+
+.ql-picker {
+  color: white;
+}
+
+.ql-snow .ql-picker {
+  //color: white;
+  color: white !important;
+}

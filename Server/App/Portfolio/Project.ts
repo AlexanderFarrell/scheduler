@@ -1,5 +1,5 @@
 import {Data} from "../../Modules/Database";
-import {Wiki} from "../Wiki/Wiki";
+import {WikiApp} from "../Wiki/WikiApp";
 import {stat} from "fs";
 import {marked} from "marked";
 import use = marked.use;
@@ -156,7 +156,7 @@ export class Project {
     static async AddWikiPage(project, title: string, username: string, kind: string) {
         let content = (Project.DocTemplates.hasOwnProperty(kind)) ? Project.DocTemplates[kind] : "";
         let document_name = title + " - " + project['title'];
-        await Wiki.CreatePage(document_name, content, username);
+        await WikiApp.CreatePage(document_name, content, username);
         await Data.Execute(`insert into project_wiki_link (project_id, wiki_id) VALUES 
                                          (
                                           $1, (select id from wiki where title=$2)

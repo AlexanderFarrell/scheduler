@@ -39,9 +39,10 @@ export function IsLoggedIn(req, res, next) {
     }
 }
 
-export function RenderTemplate(res, title, content, data={}) {
+export function RenderTemplate(req, res, title, content, data={}) {
     data['title'] = title;
     data['content'] = content;
+    data['first_name'] = req.session['first_name']
     res.render('template.ejs', data);
 }
 

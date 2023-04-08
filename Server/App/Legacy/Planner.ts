@@ -15,7 +15,7 @@ export class Planner implements IApp {
 
         router.get("/", async (req, res) => {
             let username = req.session['username'];
-            await this.RenderTemplate(res, username, new Date(Date.now()));
+            await this.RenderTemplate(req, res, username, new Date(Date.now()));
         })
 
         router.get("/by_date/:year/:month/:day", async (req, res) => {
@@ -31,7 +31,7 @@ export class Planner implements IApp {
                 console.log("Worked")
                 let date = new Date(Date.UTC(year, month-1, day));
                 console.log(date);
-                await this.RenderTemplate(res, username, date);
+                await this.RenderTemplate(req, res, username, date);
             }
         })
 
@@ -51,7 +51,7 @@ export class Planner implements IApp {
 
     }
 
-    private async RenderTemplate(res, username, date) {
+    private async RenderTemplate(req, res, username, date) {
 
         try {
             let goals = await this.GetGoalsByDate(username, date);
@@ -59,7 +59,7 @@ export class Planner implements IApp {
 
             console.log(goals);
 
-            RenderTemplate(res, 'Planner', 'planner.ejs', {date: date.toDateString(), goals: goals.rows, plans: plans.rows, dateval: date.toISOString()})
+            RenderTemplate(req, res, 'Planner', 'planner.ejs', {date: date.toDateString(), goals: goals.rows, plans: plans.rows, dateval: date.toISOString()})
         } catch (e) {
             console.log(e);
         }

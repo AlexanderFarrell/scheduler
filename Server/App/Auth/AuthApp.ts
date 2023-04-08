@@ -1,18 +1,18 @@
-import {IApp} from "./App";
+import {IApp} from "../App";
 import {Router} from "express";
 import * as express from 'express';
-import {ContainsBodyArgs, RenderTemplate} from "../Modules/ServerHelper";
+import {ContainsBodyArgs, RenderTemplate} from "../../Modules/ServerHelper";
 import * as bcrypt from 'bcrypt';
-import {Data} from "../Modules/Database";
+import {Data} from "../../Modules/Database";
 
 const saltRounds = 10;
 
-export class Auth implements IApp {
+export class AuthApp implements IApp {
     public UsernameMinimum = 1;
     public UsernameMaximum = 20;
     public PasswordMinimum = 8;
     public PasswordMaximum = 71; //Probably will be 72, but just to be safe.
-    public AccountCreation = false;
+    public AccountCreation = true;
 
     public GetName(): string {
         return "Auth";
@@ -22,19 +22,20 @@ export class Auth implements IApp {
         let router = Router();
 
         router.get("/", (req, res) => {
-            RenderTemplate(res, "Scheduler", "auth.ejs", {hideHeader: true})
+            RenderTemplate(req, res, "Scheduler", "auth/index.ejs", {hideHeader: true})
         })
 
         router.get('/create', (req, res) => {
-            RenderTemplate(res, 'Create Account', 'create.ejs', {m: "Enter a username and password.", hideHeader: true})
+            RenderTemplate(req, res, 'Create Account', 'auth/create.ejs', {m: "Enter a username and password.", hideHeader: true})
         });
 
         router.post('/create', async (req, res) => {
             if (!this.AccountCreation) {
                 RenderTemplate(
+                    req,
                     res,
                     'Create Account',
-                    'create.ejs',
+                    'auth/create.ejs',
                     {m: "Account creation is currently disabled for security reasons.", hideHeader: true}
                 );
                 return;
@@ -42,44 +43,51 @@ export class Auth implements IApp {
 
             if (!ContainsBodyArgs(req, 'username', 'password')) {
                 RenderTemplate(
+                    req,
                     res,
                     'Create Account',
-                    'create.ejs',
+                    'auth/create.ejs',
                     {m: "Missing username or password.", hideHeader: true}
                 );
                 return;
-                //res.render("login", {m: "Missing username or password."})
             }
 
             let username = req.body.username;
             let password = req.body.password;
+            let first_name = req.body['first_name'];
+            let last_name = req.body['last_name'];
 
             try {
-                await this.Create(username, password);
+                await this.Create(username, password, first_name, last_name);
                 // @ts-ignore
                 req.session.username = username;
+                // @ts-ignore
+                req.session.first_name = first_name;
+                // @ts-ignore
+                req.session.last_name = last_name;
                 res.redirect('/');
             } catch (e) {
                 console.log(e);
                 RenderTemplate(
                     res,
                     'Create Account',
-                    'create.ejs',
+                    'auth/create.ejs',
                     {m: e.message, hideHeader: true}
                 );
             }
         });
 
         router.get('/login', (req, res) => {
-            RenderTemplate(res, 'Login', 'login.ejs', {m: "Enter a username and password.", hideHeader: true})
+            RenderTemplate(req, res, 'Login', 'auth/login.ejs', {m: "Enter a username and password.", hideHeader: true})
         });
 
         router.post('/login', async (req, res) => {
             if (!ContainsBodyArgs(req, 'username', 'password')) {
                 RenderTemplate(
+                    req,
                     res,
                     'Login',
-                    'login.ejs',
+                    'auth/login.ejs',
                     {m: "Missing username or password.", hideHeader: true}
                 );
             }
@@ -88,16 +96,21 @@ export class Auth implements IApp {
             let password = req.body.password;
 
             try {
-                await this.Login(username, password);
+                let data = await this.Login(username, password);
                 // @ts-ignore
                 req.session.username = username;
+                // @ts-ignore
+                req.session.first_name = data.first_name;
+                // @ts-ignore
+                req.session.last_name = data.last_name
                 res.redirect('/');
             } catch (e) {
                 console.log(e);
                 RenderTemplate(
+                    req,
                     res,
                     'Login',
-                    'login.ejs',
+                    'auth/login.ejs',
                     {m: e.message, hideHeader: true}
                 );
             }
@@ -111,7 +124,7 @@ export class Auth implements IApp {
         return router;
     }
 
-    public async Create(username: string, password: string) {
+    public async Create(username: string, password: string, first_name: string, last_name: string) {
         if (username.length < this.UsernameMinimum) {
             throw new Error(`Username must be at least ${this.UsernameMinimum} characters long.`);
         }
@@ -128,6 +141,14 @@ export class Auth implements IApp {
             throw new Error(`Password cannot be longer than ${this.PasswordMaximum} characters long.`)
         }
 
+        if (first_name.length == 0) {
+            throw new Error(`Please enter your first name`);
+        }
+
+        if (last_name.length == 0) {
+            throw new Error(`Please enter your last name`)
+        }
+
         if (await this.UsernameExists(username)) {
             throw new Error('Username already exists. Please choose a different username.')
         }
@@ -141,8 +162,8 @@ export class Auth implements IApp {
 
         try {
             await Data.Pool.query(
-                `insert into account (username, password) VALUES ($1, $2)`,
-                [username, hash]
+                `insert into account (username, password, first_name, last_name) VALUES ($1, $2, $3, $4)`,
+                [username, hash, first_name, last_name]
             )
             return true;
         } catch (e) {
@@ -170,7 +191,7 @@ export class Auth implements IApp {
         let data;
         try {
             data = await Data.Pool.query(`
-                select password
+                select password, first_name, last_name
                 from account
                 where username=$1
         `, [username]);
@@ -186,7 +207,7 @@ export class Auth implements IApp {
         let hash = data.rows[0]['password'];
 
         if (await bcrypt.compare(password, hash)) {
-            return true;
+            return data.rows[0];
         } else {
             throw new Error("Incorrect username or password.");
         }

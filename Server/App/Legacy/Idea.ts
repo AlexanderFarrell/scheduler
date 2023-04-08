@@ -20,11 +20,11 @@ export class Idea implements IApp {
                 let username = req.session.username;
                 let ideas = await this.GetIdeas(username);
 
-                RenderTemplate(res, 'Ideas', 'idea.ejs', {ideas: ideas})
+                RenderTemplate(req, res, 'Ideas', 'idea.ejs', {ideas: ideas})
 
             } catch (e) {
                 console.log(e);
-                RenderTemplate(res, 'Ideas', 'idea.ejs', {error: "Error getting ideas from server."})
+                RenderTemplate(req, res, 'Ideas', 'idea.ejs', {error: "Error getting ideas from server."})
             }
         })
 
@@ -42,7 +42,7 @@ export class Idea implements IApp {
                 res.redirect('/idea');
             } catch (e) {
                 console.log(e);
-                RenderTemplate(res, 'Ideas', 'idea.ejs', {error: "Error adding idea to server."})
+                RenderTemplate(req, res, 'Ideas', 'idea.ejs', {error: "Error adding idea to server."})
             }
         })
 

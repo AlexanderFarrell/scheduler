@@ -13,7 +13,7 @@ export class Home implements IApp {
 
         router.use(IsLoggedIn);
         router.get('/', (req, res) => {
-            RenderTemplate(res, 'Home', "index.ejs");
+            RenderTemplate(req, res, 'Home', "index.ejs");
         }) ;
 
         return router;

@@ -1,0 +1,142 @@
+
+.Icon {
+  width: 2rem;
+}
+
+.SmallButton {
+  width: auto !important;
+  padding: 5px 10px;
+  align-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.Small {
+  font-size: 10px;
+}
+
+.highlight {
+  color: #487fbe;
+}
+
+.navButton {
+  padding: 10px;
+  color: white !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: 0.1s background-color ease-in;
+}
+
+.Flex {
+  display: flex;
+  gap: 10px;
+}
+
+.Container {
+  border: 1px solid $theme-color-dark;
+  //background: $theme-color-transparent;
+  box-shadow: 1px 1px 5px $shadow;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.RowOneTwo {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.One {
+  flex: 1;
+}
+.Two {
+  flex: 2;
+}
+.Three {
+  flex: 3;
+}
+.Four {
+  flex: 4;
+}
+.Five {
+  flex: 5;
+}
+
+.DesktopOnly {
+
+}
+
+.MobileOnly {
+  display: none;
+}
+
+.Row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.Row3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.Row4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.Row5 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.CenterContent {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inputField {
+  display: grid;
+  //grid-template-columns: 1fr 4fr;
+  grid-gap: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.inputField>*:nth-child(1) {
+  font-weight: bold;
+  //background: rgba(255, 255, 255, 0.08);
+  text-align: left;
+  padding: 5px;
+}
+
+@media only screen and (max-width: 700px) {
+  .Flex {
+    display: block;
+  }
+
+  .DesktopOnly {
+    display: none;
+  }
+
+  .MobileOnly {
+    display: initial;
+  }
+
+  .Container {
+    margin-bottom: 30px;
+  }
+
+  .CenterContent {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

@@ -36,77 +36,82 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Auth = void 0;
+exports.AuthApp = void 0;
 var express_1 = require("express");
-var ServerHelper_1 = require("../Modules/ServerHelper");
+var ServerHelper_1 = require("../../Modules/ServerHelper");
 var bcrypt = require("bcrypt");
-var Database_1 = require("../Modules/Database");
+var Database_1 = require("../../Modules/Database");
 var saltRounds = 10;
-var Auth = /** @class */ (function () {
-    function Auth() {
+var AuthApp = /** @class */ (function () {
+    function AuthApp() {
         this.UsernameMinimum = 1;
         this.UsernameMaximum = 20;
         this.PasswordMinimum = 8;
         this.PasswordMaximum = 71; //Probably will be 72, but just to be safe.
-        this.AccountCreation = false;
+        this.AccountCreation = true;
     }
-    Auth.prototype.GetName = function () {
+    AuthApp.prototype.GetName = function () {
         return "Auth";
     };
-    Auth.prototype.GetRouter = function () {
+    AuthApp.prototype.GetRouter = function () {
         var _this = this;
         var router = (0, express_1.Router)();
         router.get("/", function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(res, "Scheduler", "auth.ejs", { hideHeader: true });
+            (0, ServerHelper_1.RenderTemplate)(req, res, "Scheduler", "auth/index.ejs", { hideHeader: true });
         });
         router.get('/create', function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Enter a username and password.", hideHeader: true });
+            (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Enter a username and password.", hideHeader: true });
         });
         router.post('/create', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            var username, password, e_1;
+            var username, password, first_name, last_name, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!this.AccountCreation) {
-                            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Account creation is currently disabled for security reasons.", hideHeader: true });
+                            (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Account creation is currently disabled for security reasons.", hideHeader: true });
                             return [2 /*return*/];
                         }
                         if (!(0, ServerHelper_1.ContainsBodyArgs)(req, 'username', 'password')) {
-                            (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: "Missing username or password.", hideHeader: true });
+                            (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Missing username or password.", hideHeader: true });
                             return [2 /*return*/];
-                            //res.render("login", {m: "Missing username or password."})
                         }
                         username = req.body.username;
                         password = req.body.password;
+                        first_name = req.body['first_name'];
+                        last_name = req.body['last_name'];
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.Create(username, password)];
+                        return [4 /*yield*/, this.Create(username, password, first_name, last_name)];
                     case 2:
                         _a.sent();
                         // @ts-ignore
                         req.session.username = username;
+                        // @ts-ignore
+                        req.session.first_name = first_name;
+                        // @ts-ignore
+                        req.session.last_name = last_name;
                         res.redirect('/');
                         return [3 /*break*/, 4];
                     case 3:
                         e_1 = _a.sent();
                         console.log(e_1);
-                        (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'create.ejs', { m: e_1.message, hideHeader: true });
+                        (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'auth/create.ejs', { m: e_1.message, hideHeader: true });
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
             });
         }); });
         router.get('/login', function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: "Enter a username and password.", hideHeader: true });
+            (0, ServerHelper_1.RenderTemplate)(req, res, 'Login', 'auth/login.ejs', { m: "Enter a username and password.", hideHeader: true });
         });
         router.post('/login', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            var username, password, e_2;
+            var username, password, data, e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!(0, ServerHelper_1.ContainsBodyArgs)(req, 'username', 'password')) {
-                            (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: "Missing username or password.", hideHeader: true });
+                            (0, ServerHelper_1.RenderTemplate)(req, res, 'Login', 'auth/login.ejs', { m: "Missing username or password.", hideHeader: true });
                         }
                         username = req.body.username;
                         password = req.body.password;
@@ -115,15 +120,19 @@ var Auth = /** @class */ (function () {
                         _a.trys.push([1, 3, , 4]);
                         return [4 /*yield*/, this.Login(username, password)];
                     case 2:
-                        _a.sent();
+                        data = _a.sent();
                         // @ts-ignore
                         req.session.username = username;
+                        // @ts-ignore
+                        req.session.first_name = data.first_name;
+                        // @ts-ignore
+                        req.session.last_name = data.last_name;
                         res.redirect('/');
                         return [3 /*break*/, 4];
                     case 3:
                         e_2 = _a.sent();
                         console.log(e_2);
-                        (0, ServerHelper_1.RenderTemplate)(res, 'Login', 'login.ejs', { m: e_2.message, hideHeader: true });
+                        (0, ServerHelper_1.RenderTemplate)(req, res, 'Login', 'auth/login.ejs', { m: e_2.message, hideHeader: true });
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
                 }
@@ -138,7 +147,7 @@ var Auth = /** @class */ (function () {
         }); });
         return router;
     };
-    Auth.prototype.Create = function (username, password) {
+    AuthApp.prototype.Create = function (username, password, first_name, last_name) {
         return __awaiter(this, void 0, void 0, function () {
             var hash, e_3, e_4;
             return __generator(this, function (_a) {
@@ -155,6 +164,12 @@ var Auth = /** @class */ (function () {
                         }
                         if (password.length > this.PasswordMaximum) {
                             throw new Error("Password cannot be longer than ".concat(this.PasswordMaximum, " characters long."));
+                        }
+                        if (first_name.length == 0) {
+                            throw new Error("Please enter your first name");
+                        }
+                        if (last_name.length == 0) {
+                            throw new Error("Please enter your last name");
                         }
                         return [4 /*yield*/, this.UsernameExists(username)];
                     case 1:
@@ -173,7 +188,7 @@ var Auth = /** @class */ (function () {
                         throw new Error("Error accepting password. Please supply a different password.");
                     case 5:
                         _a.trys.push([5, 7, , 8]);
-                        return [4 /*yield*/, Database_1.Data.Pool.query("insert into account (username, password) VALUES ($1, $2)", [username, hash])];
+                        return [4 /*yield*/, Database_1.Data.Pool.query("insert into account (username, password, first_name, last_name) VALUES ($1, $2, $3, $4)", [username, hash, first_name, last_name])];
                     case 6:
                         _a.sent();
                         return [2 /*return*/, true];
@@ -186,7 +201,7 @@ var Auth = /** @class */ (function () {
             });
         });
     };
-    Auth.prototype.UsernameExists = function (username) {
+    AuthApp.prototype.UsernameExists = function (username) {
         return __awaiter(this, void 0, void 0, function () {
             var data, e_5;
             return __generator(this, function (_a) {
@@ -206,14 +221,14 @@ var Auth = /** @class */ (function () {
             });
         });
     };
-    Auth.prototype.Login = function (username, password) {
+    AuthApp.prototype.Login = function (username, password) {
         return __awaiter(this, void 0, void 0, function () {
             var data, e_6, hash;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.Data.Pool.query("\n                select password\n                from account\n                where username=$1\n        ", [username])];
+                        return [4 /*yield*/, Database_1.Data.Pool.query("\n                select password, first_name, last_name\n                from account\n                where username=$1\n        ", [username])];
                     case 1:
                         data = _a.sent();
                         return [3 /*break*/, 3];
@@ -229,7 +244,7 @@ var Auth = /** @class */ (function () {
                         return [4 /*yield*/, bcrypt.compare(password, hash)];
                     case 4:
                         if (_a.sent()) {
-                            return [2 /*return*/, true];
+                            return [2 /*return*/, data.rows[0]];
                         }
                         else {
                             throw new Error("Incorrect username or password.");
@@ -239,17 +254,17 @@ var Auth = /** @class */ (function () {
             });
         });
     };
-    Auth.prototype.Delete = function (username, password) {
+    AuthApp.prototype.Delete = function (username, password) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/];
             });
         });
     };
-    Auth.prototype.GetWebUrl = function () {
+    AuthApp.prototype.GetWebUrl = function () {
         return "/auth";
     };
-    return Auth;
+    return AuthApp;
 }());
-exports.Auth = Auth;
-//# sourceMappingURL=Auth.js.map
+exports.AuthApp = AuthApp;
+//# sourceMappingURL=AuthApp.js.map

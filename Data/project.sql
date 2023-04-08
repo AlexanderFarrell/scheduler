@@ -27,6 +27,28 @@ create table project (
 --     notes text not null default ''
 );
 
+update project p
+set account_id=11
+where p.account_id=10;
+
+update project_category c
+set account_id=11
+where c.account_id=10;
+
+update wiki w
+set account_id=11
+where w.account_id=10;
+
+update words
+    set account_id=11;
+
+select * from words;
+
+alter table words
+add column account_id int references account(id);
+
+select * from wiki;
+
 create table deliverable (
     id serial primary key,
     title varchar(150) not null,
@@ -107,7 +129,7 @@ inner join project p on p.id = pcl.project_id;
 select *
 from project
          inner join project_category_link pcl on project.id = pcl.project_id
-where pcl.category_id = (select id from project_category where title='Wiki')
+where pcl.category_id = (select id from project_category where title='WikiApp')
 and project.account_id=(select id from account where username='test');
 
 
@@ -116,7 +138,7 @@ and project.account_id=(select id from account where username='test');
 
 -- where pcl.project_id=(select id
 --                       from project
---                       where title='Wiki'
+--                       where title='WikiApp'
 --                         and account_id=
 --                             (select id
 --                              from account
@@ -130,8 +152,8 @@ create table project_wiki_link(
 
 drop table project;
 
-alter table project
-drop column wiki_page;
+-- alter table project
+-- drop column wiki_page;
 
 create table project_link (
     id serial primary key,

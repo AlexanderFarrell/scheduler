@@ -5,7 +5,7 @@ import {ContainsBodyArgs, IsLoggedIn, RenderTemplate} from "../../Modules/Server
 import {Data} from "../../Modules/Database";
 import {Word} from "./Word";
 
-export class Words implements IApp {
+export class WordApp implements IApp {
     GetName(): string {
         return "Words";
     }
@@ -15,34 +15,39 @@ export class Words implements IApp {
 
         router.use(IsLoggedIn);
         router.get("/", async (req, res) => {
-            const words = (await Data.Query("select * from words order by date desc limit 3")).rows;
+            const words = (await Data.Query(`select * 
+                                                    from words
+                                                    where account_id=
+                                                        (select id from account where username=$1)
+                                                    order by date desc limit 3`, req.session['username'])).rows;
             const message = "Words (Recent 10)"
-            RenderTemplate(res, "Words", "words/index", {words: words, message: message});
+            RenderTemplate(req, res, "Words", "words/index", {words: words, message: message});
         })
 
         router.get("/add", async (req, res) => {
-            const words = await Word.GetRecentAdded();
+            const words = await Word.GetRecentAdded(req.session['username']);
             const message = "Words (Recent 10)"
-            RenderTemplate(res, "Words", "words/add", {words: words, message: message});
+            RenderTemplate(req, res, "Words", "words/add", {words: words, message: message});
         })
 
         router.get("/topic", async (req, res) => {
             // const words = (await Data.Query("select * from words order by date desc limit 10")).rows;
-            const topics = await Word.GetWordCounts(req.query['sorting'] || "none");
+            const topics = await Word.GetWordCounts(req.query['sorting'] || "none",
+                req.session['username']);
             const message = "Words (Recent 10)"
-            RenderTemplate(res, "Words", "words/topics", {topics: topics, message: message});
+            RenderTemplate(req, res, "Words", "words/topics", {topics: topics, message: message});
         })
 
         router.get("/topic/:topic", async (req, res) => {
             // const words = (await Data.Query("select * from words order by date desc limit 10")).rows;
-            const words = await Word.GetByTopic(req.params['topic']);
+            const words = await Word.GetByTopic(req.params['topic'], req.session['username']);
             const message = "Words (Recent 10)"
-            RenderTemplate(res, "Words", "words/list", {words: words, message: message});
+            RenderTemplate(req, res, "Words", "words/list", {words: words, message: message});
         })
 
         router.get('/id/:id', async (req, res) => {
-            const word = await Word.Get(parseInt(req.params['id']));
-            RenderTemplate(res, "Words", "words/word", {word: word})
+            const word = await Word.Get(parseInt(req.params['id']), req.session['username']);
+            RenderTemplate(req, res, "Words", "words/word", {word: word})
         })
 
         router.post('/edit', async (req, res) => {
@@ -61,45 +66,49 @@ export class Words implements IApp {
             if (req.query['start'] != null && req.query['end'] != null) {
                 let start = new Date(req.query['start'] as string);
                 let end = new Date(req.query['end'] as string);
-                const words = await Word.GetRange(start, end);
+                const words = await Word.GetRange(start, end, req.session['username']);
                 let message = `Words between ${start.toLocaleDateString()} and ${end.toLocaleDateString()}`
-                RenderTemplate(res, "Words", "words/range", {words: words, message: message})
+                RenderTemplate(req, res, "Words", "words/range", {words: words, message: message})
             } else {
-                RenderTemplate(res, "Words", "words/range")
+                RenderTemplate(req, res, "Words", "words/range")
             }
         })
 
         router.get('/search', async (req, res) => {
             if (req.query['term'] != null) {
                 const term = (req.query['term'] as string).toLowerCase();
-                const words = await Word.Search(term);
+                const words = await Word.Search(term, req.session['username']);
                 let message = `Words with ${req.query['term']}`;
-                RenderTemplate(res, "Words", "words/search",
+                RenderTemplate(req, res, "Words", "words/search",
                     {words: words, message: message})
             } else {
-                RenderTemplate(res, "Words", "words/search")
+                RenderTemplate(req, res, "Words", "words/search")
             }
         })
 
         router.get('/browse', async (req, res) => {
             const categories = (await Data.Query(
                 `select title, date from words order by date desc`)).rows;
-            RenderTemplate(res, "Words", "words_browse", {words: categories})
+            RenderTemplate(req, res, "Words", "words_browse", {words: categories})
         })
 
         router.post("/", async (req, res) => {
             if (ContainsBodyArgs(req, res, "title", "content", "date", "number")) {
                 if (req.body['title'].length > 30) {
-                    RenderTemplate(res, "Words", "words/words", {words: [], message: "Error: Title too long, must be 30 characters or less."});
+                    RenderTemplate(req, res, "Words", "words/words", {words: [], message: "Error: Title too long, must be 30 characters or less."});
                     return;
                 }
 
                 try {
-                    await Word.Add(req.body['date'], req.body['title'], req.body['content']);
+                    await Word.Add(
+                        req.body['date'],
+                        req.body['title'],
+                        req.body['content'],
+                        req.session['username']);
                     res.redirect("/words/add")
                 } catch (e) {
                     console.log(e)
-                    RenderTemplate(res, "Words", "words/words", {words: [], message: `Error adding item to database: ${req.body['title']}. Did not add.`});
+                    RenderTemplate(req, res, "Words", "words/words", {words: [], message: `Error adding item to database: ${req.body['title']}. Did not add.`});
                 }
             }
         })

@@ -77,7 +77,7 @@
                     <!--http://localhost:3000/wiki/page/Documentation%20-%20Test-->
                     <% if (project.documents.length > 0) { %>
                         <!--                <div>-->
-                        <!--                    <a href="/wiki/page/Documentation - <%= project.title %>">Home Wiki Page</a>-->
+                        <!--                    <a href="/wiki/page/Documentation - <%= project.title %>">Home WikiApp Page</a>-->
                         <!--                </div>-->
                         <div id="documents">
                             <% for (var i = 0; i < project.documents.length; i++) { %>
@@ -99,7 +99,7 @@
                             <input type="hidden" name="project" value="<%= project.title %>">
                             <input type="hidden" name="title" value="Documentation">
                             <input type="hidden" name="kind" value="Main">
-                            <input type="submit" value="Generate Wiki">
+                            <input type="submit" value="Generate WikiApp">
                         </form>
                         <form action="/portfolio/wiki" method="post">
                             <input type="hidden" name="project" value="<%= project.title %>">

@@ -3,7 +3,7 @@ import {Router} from 'express';
 import {IApp} from "../App";
 import {ContainsBodyArgs, IsLoggedIn, IsNotNull, RenderTemplate} from "../../Modules/ServerHelper";
 import {Data} from "../../Modules/Database";
-import {Wiki} from "../Wiki/Wiki";
+import {WikiApp} from "../Wiki/WikiApp";
 import {Project} from "./Project";
 
 export class Portfolio implements IApp {
@@ -23,7 +23,7 @@ export class Portfolio implements IApp {
             } catch (e) {
                 data['error'] = "Unable to retrieve projects."
             }
-            RenderTemplate(res, 'Portfolio', 'portfolio/index.ejs', data)
+            RenderTemplate(req, res, 'Portfolio', 'portfolio/index.ejs', data)
         })
 
         router.get('/project/:name', async (req, res) => {
@@ -42,13 +42,13 @@ export class Portfolio implements IApp {
                 data['error'] = "Error loading project";
             }
 
-            RenderTemplate(res, `${title} - Projects`, 'portfolio/project.ejs', data);
+            RenderTemplate(req, res, `${title} - Projects`, 'portfolio/project.ejs', data);
         })
 
         router.get('/project/category/:category', async (req, res) => {
             let projects = await Project.GetByCategory(req.params['category'], req.session['username']);
             console.log(projects)
-            RenderTemplate(res, "Projects", 'portfolio/results.ejs', {
+            RenderTemplate(req, res, "Projects", 'portfolio/results.ejs', {
                 projects
             })
         })
@@ -76,13 +76,13 @@ export class Portfolio implements IApp {
         })
 
         router.get("/create", (req, res) => {
-            RenderTemplate(res, 'Portfolio', 'portfolio/create.ejs', {})
+            RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', {})
         })
 
         router.post('/create', async (req, res) => {
             let {title} = req.body;
             if (!IsNotNull(req, res, title)) {
-                RenderTemplate(res, 'Portfolio', 'portfolio/create.ejs', {error: "Please enter all fields"})
+                RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', {error: "Please enter all fields"})
             }
 
             try {
@@ -90,7 +90,7 @@ export class Portfolio implements IApp {
                 res.redirect('/portfolio')
             } catch (e) {
                 console.error(e);
-                RenderTemplate(res, 'Portfolio', 'portfolio/create.ejs', {error: "Error saving new project."})
+                RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', {error: "Error saving new project."})
             }
         })
 
@@ -130,18 +130,18 @@ export class Portfolio implements IApp {
             res.redirect("/portfolio/project/" + req.body['project'])
         })
 
-        router.get("/objectives", async (req, res) => {
-            let data = {};
-            try {
-                let username = req.session['username'];
-                let projects = await Data.Query(`select * from objective where account_id=
-                            (select id from account where username=$1) order by created_on desc limit 100`, username);
-                data['projects'] = projects.rows;
-            } catch (e) {
-                data['error'] = "Unable to retrieve projects."
-            }
-            RenderTemplate(res, 'Portfolio', 'portfolio/index.ejs', data)
-        })
+        // router.get("/objectives", async (req, res) => {
+        //     let data = {};
+        //     try {
+        //         let username = req.session['username'];
+        //         let projects = await Data.Query(`select * from objective where account_id=
+        //                     (select id from account where username=$1) order by created_on desc limit 100`, username);
+        //         data['projects'] = projects.rows;
+        //     } catch (e) {
+        //         data['error'] = "Unable to retrieve projects."
+        //     }
+        //     RenderTemplate(req, res, 'Portfolio', 'portfolio/index.ejs', data)
+        // })
 
         return router;
     }
