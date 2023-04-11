@@ -1,15 +1,18 @@
 import {IApp} from "../App";
 import e = require("express");
+import {RenderTemplate} from "../../Modules/ServerHelper";
 
-class DayApp implements IApp {
+export class DayApp implements IApp {
     GetName(): string {
-        return "Day App";
+        return "Day";
     }
 
     GetRouter(): e.Router {
         let router = e.Router();
 
-
+        router.get('/', (req, res) => {
+            RenderTemplate(req, res, "Day", "day/index.ejs")
+        })
 
         return router;
     }
@@ -17,5 +20,4 @@ class DayApp implements IApp {
     GetWebUrl(): string {
         return "/day";
     }
-
 }

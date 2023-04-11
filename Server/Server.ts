@@ -5,6 +5,7 @@ import {Index} from "./App";
 import {Portfolio} from "./App/Portfolio/Portfolio";
 import {WordApp} from "./App/Word/WordApp";
 import {WikiApp} from "./App/Wiki/WikiApp";
+import {DayApp} from "./App/Day/DayApp";
 
 let back = new PaServer();
 
@@ -14,5 +15,6 @@ back.Start(new Index());
 back.Start(new Portfolio());
 back.Start(new WordApp());
 back.Start(new WikiApp());
+back.Start(new DayApp());
 
 back.Run();

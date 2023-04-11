@@ -40,16 +40,32 @@
 
 <div id="Home" class="CenterContent">
     <h1>Welcome <%= first_name %></h1>
-    <div class="HomeSection">
-        <div class="HomeButtons">
-            <% for (var i = 0; i < apps.length; i++) { %>
-            <a href="<%- apps[i].url %>">
-                <div class="HomeButton">
-                    <div class="HomeIcon"><%- apps[i].icon %></div>
-                    <div class="HomeName"><%- apps[i].name %></div>
-                </div>
-            </a>
-            <% } %>
+    <div class="Flex">
+        <div class="Two Container">
+            <h2>Projects</h2>
+            <div style="text-align: center">By Category</div>
+
+        </div>
+        <div class="Four Container">
+            <h2>Recent Documents</h2>
+
         </div>
     </div>
+    <div class="Container">
+        <h2>Recent Word</h2>
+    </div>
+
+
+<!--    <div class="HomeSection">-->
+<!--        <div class="HomeButtons">-->
+<!--            <% for (var i = 0; i < apps.length; i++) { %>-->
+<!--            <a href="<%- apps[i].url %>">-->
+<!--                <div class="HomeButton">-->
+<!--                    <div class="HomeIcon"><%- apps[i].icon %></div>-->
+<!--                    <div class="HomeName"><%- apps[i].name %></div>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--            <% } %>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>

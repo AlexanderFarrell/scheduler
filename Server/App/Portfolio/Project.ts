@@ -1,8 +1,6 @@
 import {Data} from "../../Modules/Database";
-import {WikiApp} from "../Wiki/WikiApp";
-import {stat} from "fs";
 import {marked} from "marked";
-import use = marked.use;
+import {WikiDao} from "../Wiki/WikiDao";
 
 export class Project {
     static async GetByUser(username: string) {
@@ -23,21 +21,90 @@ export class Project {
         return categories.rows;
     }
 
+    static async SetParent(project, username: string, parent: string) {
+        if (parent == project.title) {
+            throw new Error("Project cannot be its own parent")
+        }
+
+        if (project == null) {
+            throw new Error("Project is invalid")
+        }
+
+        await Data.Execute(
+            `update project
+                set parent_id=(select id
+                               from project
+                               where title=$1
+                                and account_id=(select id from account where username=$2))
+                where id=$3`,
+            parent, username, project['id']
+        );
+    }
+
+    static async RemoveParent(project) {
+        await Data.Execute(
+            `update project
+                 set parent_id=null
+                 where id=$1`,
+            project['id']
+        )
+    }
+
+    static async GetProjectAnalysis(username: string, options) {
+        let priority = parseInt(options['min_priority'])
+        let sort = "priority";
+        if (options['sort'] === 'Time' || options['sort'] === 'Status' || options['sort'] === "Maintenance") {
+            sort = options['sort'];
+            sort += ", priority"
+        }
+        let params = [
+            username,
+            (!isNaN(priority)) ? priority : 0,
+        ];
+        if (options['category'] != 'All' && options['category'] != null) params.push(options['category'])
+        let data = await Data.Pool.query(`
+            select p.title as project,
+                        c.title as category,
+                        time,
+                        status,
+                        maintenance,
+                        priority
+                 from project p
+                 inner join project_category_link pcl on p.id = pcl.project_id
+                 inner join project_category c on c.id = pcl.category_id
+                 where p.account_id=(select id from account where username=$1)
+                     and p.priority>=$2
+                 ${((options['category'] != 'All' && options['category'] != null) ? "and c.title=$3" : "")}
+                 order by ${sort} desc;`,
+            params
+            );
+
+        // let data = await Data.Query(
+        //     `select p.title as project,
+        //                c.title as category,
+        //                time,
+        //                status,
+        //                maintenance,
+        //                priority
+        //         from project p
+        //         inner join project_category_link pcl on p.id = pcl.project_id
+        //         inner join project_category c on c.id = pcl.category_id
+        //         where p.account_id=(select id from account where username=$1)
+        //             and p.priority>=$2
+        //         order by ${sort} desc;`,
+        //     username,
+        //     (!isNaN(priority)) ? priority : 0,
+        //     options['category']
+        // );
+        return data.rows;
+    }
+
     static async Delete(project: string, username: string) {
         let data = await Project.Get(project, username);
         if (data != null) {
             // language=PostgreSQL
             await Data.Execute(`call delete_project($1)`, data['id']);
         }
-        // await Data.Execute(
-        //     `delete from project
-        //         where title=$1
-        //         and account_id=
-        //             (select id
-        //              from account
-        //              where username=$2)`,
-        //     project, username
-        // )
     }
 
     static async GetCategoriesByUser(username: string) {
@@ -48,6 +115,8 @@ export class Project {
             username);
         return categories.rows;
     }
+
+
 
     static async GetByCategory(category: string, username: string) {
         return (await (Data.Query(
@@ -81,26 +150,6 @@ export class Project {
         // language=PostgreSQL
         await Data.Execute(`call add_category_to_project($1, $2, $3)`,
             username, category, project.id);
-        /*await (Data.Execute(`
-            begin;
-
-            insert into project_category (title, account_id)
-            select $1, (select id from account where username=$2)
-            where not exists(
-                select 1 from project_category where title=$1 and account_id=
-                       (select id from account where username=$2)
-            );
-
-            insert into project_category_link (category_id, project_id) 
-            values ((select id from project_category where title=$1),
-                    (select id from account where username=$2)
-                   );
-
-            commit;
-            `, category, username
-        ));*/
-        // await Project.AddCategory(category, username);
-        // await Data.Execute(``)
     }
 
     static async AddCategory(category: string, username: string) {
@@ -112,8 +161,6 @@ export class Project {
                        (select id from account where username=$2)
             );`, category, username
         ))
-        // await (Data.Execute(`insert into project_category (title, account_id) values ($1,
-        //                                                  (select id from account where username=$2))`));
     }
 
     static async Get(title: string, username: string) {
@@ -136,16 +183,10 @@ export class Project {
                                                                 from deliverable d
                                                                 where project_id=$1
                                                                 order by d.completed desc, d.created_on`, project['id'])).rows
-            console.log(project)
             return project;
         } else {
             return null;
         }
-    }
-
-    static async AddDeliverable(project, deliverable) {
-        await Data.Execute(`insert into deliverable (title, project_id) values ($1, $2);`, deliverable,
-            project['id']);
     }
 
     static async Add(title: string, username: string) {
@@ -156,7 +197,7 @@ export class Project {
     static async AddWikiPage(project, title: string, username: string, kind: string) {
         let content = (Project.DocTemplates.hasOwnProperty(kind)) ? Project.DocTemplates[kind] : "";
         let document_name = title + " - " + project['title'];
-        await WikiApp.CreatePage(document_name, content, username);
+        await WikiDao.CreatePage(document_name, content, username);
         await Data.Execute(`insert into project_wiki_link (project_id, wiki_id) VALUES 
                                          (
                                           $1, (select id from wiki where title=$2)

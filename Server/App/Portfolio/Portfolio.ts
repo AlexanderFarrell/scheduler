@@ -5,6 +5,7 @@ import {ContainsBodyArgs, IsLoggedIn, IsNotNull, RenderTemplate} from "../../Mod
 import {Data} from "../../Modules/Database";
 import {WikiApp} from "../Wiki/WikiApp";
 import {Project} from "./Project";
+import {Deliverable} from "./Deliverable";
 
 export class Portfolio implements IApp {
     GetName(): string {
@@ -24,6 +25,43 @@ export class Portfolio implements IApp {
                 data['error'] = "Unable to retrieve projects."
             }
             RenderTemplate(req, res, 'Portfolio', 'portfolio/index.ejs', data)
+        })
+
+        router.get('/analysis', async (req, res) => {
+            req.query['min_priority'] = req.query['min_priority'] || "0"
+            let projects = await Project.GetProjectAnalysis(req.session['username'], req.query);
+            let category_data = await Project.GetCategoriesByUser(req.session['username']);
+            let categories = category_data.map(c => c['title']);
+            categories.push('All');
+            RenderTemplate(req, res, 'Portfolio Analysis', 'portfolio/analysis.ejs', {projects, priority: req.query['min_priority'] || 0, sort: req.query['sort'] || 'Only Priority', categories, category: req.query['category'] || "All"})
+        })
+
+        router.get('/deliver', async (req, res) => {
+
+            let deliverables = await Deliverable.GetDeliverables(req.session['username'], req.query);
+            RenderTemplate(req, res, 'Portfolio Analysis', 'portfolio/deliver.ejs', {deliverables})
+        })
+
+        router.post('/portfolio/project/parent', async (req, res) => {
+            let project = Project.Get(req.body['project'], req.session['username']);
+            try {
+                await Project.SetParent(project, req.session['username'], req.body['parent']);
+                res.redirect('/portfolio/project/' + project['title'])
+            } catch (e) {
+                console.log(e)
+                res.redirect('/portfolio')
+            }
+        })
+
+        router.post('/portfolio/project/delete', async (req, res) => {
+            let project = Project.Get(req.body['project'], req.session['username']);
+            try {
+                await Project.RemoveParent(project);
+                res.redirect('/portfolio/project/' + project['title'])
+            } catch (e) {
+                console.log(e)
+                res.redirect('/portfolio')
+            }
         })
 
         router.get('/project/:name', async (req, res) => {
@@ -48,8 +86,8 @@ export class Portfolio implements IApp {
         router.get('/project/category/:category', async (req, res) => {
             let projects = await Project.GetByCategory(req.params['category'], req.session['username']);
             console.log(projects)
-            RenderTemplate(req, res, "Projects", 'portfolio/results.ejs', {
-                projects
+            RenderTemplate(req, res, req.params['category'] + " Projects", 'portfolio/results.ejs', {
+                projects, message: req.params['category'] + " Projects"
             })
         })
 
@@ -115,7 +153,7 @@ export class Portfolio implements IApp {
         router.post("/deliverable", async (req, res) => {
             let project = await Project.Get(req.body['project'], req.session['username']);
             if (project != null) {
-                await Project.AddDeliverable(project, req.body['title']);
+                await Deliverable.AddDeliverable(project, req.body['title']);
             }
             res.redirect('/portfolio/project/' + project['title'])
         })

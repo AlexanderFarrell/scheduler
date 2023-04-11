@@ -60,9 +60,9 @@ export class PaServer {
 
     Start(app: IApp) {
         this.Apps.set(app.GetName(), app);
-        console.log(`Setting Up App: ${app.GetName()}`);
+        // console.log(`Setting Up App: ${app.GetName()}`);
         //app.SetupModule(this.Express);
-        console.log(`\t App "${app.GetName()}" is running.`)
+        console.log(`"${app.GetName()}" is running.`)
     }
 
     Use(on: (req, res, next) => void){

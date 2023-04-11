@@ -24,7 +24,7 @@
                         <input type="hidden" name="project" value="<%= project.title%>">
                         <div class="inputField">
                             <label for="status">Status: </label>
-                            <%- include('../select.ejs', {name: "status", val: project.status, items: ["Not Started", "In Development", "Completed", "On-Going", "Retired"]})%>
+                            <%- include('../select.ejs', {name: "status", val: project.status, items: ["Not Started", "In Development", "On Hold", "Completed", "On-Going", "Retired"]})%>
                         </div>
                         <div class="inputField">
                             <label for="time">Time: </label>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="inputField">
                             <label for="priority">Priority: </label>
-                            <input type="number" name="priority" id="priority" value="0" step="1" required>
+                            <input type="number" name="priority" id="priority" value="<%= project.priority%>" step="1" required>
                         </div>
                         <input type="submit" value="Save">
                     </form>
@@ -123,7 +123,7 @@
                             <input type="hidden" name="project" value="<%= project.title %>">
                             <input type="hidden" name="title" value="Design Document">
                             <input type="hidden" name="kind" value="Design">
-                            <input type="submit" value="Generate Design Doc">
+                            <input type="submit" value="Generate Design WikiDao">
                         </form>
                         <form action="/portfolio/wiki" method="post">
                             <input type="hidden" name="project" value="<%= project.title %>">

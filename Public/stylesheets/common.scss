@@ -19,6 +19,23 @@
   color: #487fbe;
 }
 
+.table {
+  display: grid;
+  border-radius: 2px;
+}
+
+.table > * {
+  padding: 5px;
+}
+
+//.table > *:nth-child(6n+1), .table > *:nth-child(6n+2), .table > *:nth-child(6n+3) {
+//  background: $theme-color-transparent;
+//}
+
+.tableHeader {
+  background: $theme-color !important;
+}
+
 .navButton {
   padding: 10px;
   color: white !important;

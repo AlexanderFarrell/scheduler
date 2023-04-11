@@ -24,7 +24,9 @@ export class Word {
 
     static async Get(id: number, username: string) {
         let data = (await Data.Query(`select * from words
-                                      where id=$1 and account_id=(select id from account where username=$2) limit 1`,
+                                      where id=$1 and account_id=
+                                                      (select id from account where username=$2) 
+                                      limit 1`,
             id, username)).rows;
         if (data.length > 0) {
             return data[0];

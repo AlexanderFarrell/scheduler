@@ -43,12 +43,13 @@
                         <a class="navButton " href="<%- nav[i].a %>"><div><%- nav[i].t%></div></a>
                     <% } %>
                         <div class="navButton">
-                            <%= first_name %>
+                            <img src="/images/icon/account.svg"  style="width: calc(1em);">
+                            <!--                    <%= first_name %>-->
                         </div>
 
                 </div>
                 <div class="MobileOnly navButton" onclick="Toggle('MobileMenu')" style="padding: 5px;">
-                        <img src="/images/icon/hamburger.svg" style="width: calc(1em + 15px);">
+                        <img src="/images/icon/hamburger.svg" style="width: calc(1em);">
                     </div>
             </nav>
         </div>
@@ -56,9 +57,10 @@
             <% for (var i = 0; i < nav.length; i++) { %>
                 <a href="<%- nav[i].a %>"><div class="navButton"><%- nav[i].t%></div></a>
             <% } %>
-                <button class="navButton">
-                    <%= first_name %>
+                <button class="navButton" style="text-align: left; margin: 0">
+                    Account
                 </button>
+                <a href="/auth/logout"><div class="navButton">Logout</div></a>
         </div>
 
     </header>

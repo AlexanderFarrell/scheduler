@@ -46,3 +46,45 @@
   //color: white;
   color: white !important;
 }
+
+#DisplayPage > div > p {
+  //padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
+}
+
+#DisplayPage > div > ul > li {
+  padding-bottom: 0.5em !important;
+}
+
+#DisplayPage > div > ul {
+  margin-left: 2em;
+}
+
+
+#DisplayPage > div > ul > .ql-indent-1 {
+  margin-left: 2em;
+}
+
+#DisplayPage > div > ul > .ql-indent-2 {
+  margin-left: 4em;
+}
+
+#DisplayPage > div > ul > .ql-indent-3 {
+  margin-left: 6em;
+}
+
+#DisplayPage > div > ul > .ql-indent-4 {
+  margin-left: 8em;
+}
+
+#DisplayPage > div > ul > .ql-indent-5 {
+  margin-left: 10em;
+}
+
+#DisplayPage > div > ul > .ql-indent-6 {
+  margin-left: 12em;
+}
+
+#DisplayPage > div > ul > .ql-indent-7 {
+  margin-left: 14em;
+}

@@ -1,0 +1,23 @@
+<div class="CenterContent">
+    <%- include("header.ejs")%>
+    <form action="/wiki/search" class="Container">
+        <h1>Search Wiki</h1>
+        <div class="inputField">
+            <label for="term">
+                Search Term
+            </label>
+            <input type="text" id="term" name="term">
+        </div>
+        <input type="submit" value="Search">
+    </form>
+    <div id="documents">
+        <% if (locals.results) { %>
+            <% for (var i = 0; i < results.length; i++) { %>
+                <%- include("doc_icon.ejs", {doc: results[i]}) %>
+            <% } %>
+        <% } else { %>
+    </div>
+
+
+    <% } %>
+</div>

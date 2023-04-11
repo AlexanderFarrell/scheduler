@@ -12,3 +12,6 @@ add column added_on timestamptz not null default now();
 
 alter table words
 drop column added_on;
+
+select count(*)
+from words;
