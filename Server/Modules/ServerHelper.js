@@ -58,7 +58,7 @@ function RenderTemplate(req, res, title, content, data) {
 exports.RenderTemplate = RenderTemplate;
 function SetupSession(app) {
     app.use(session({
-        secret: 'keyboard cat',
+        secret: app.get('config')['session']['secret'],
         resave: false,
         saveUninitialized: true,
         //cookie: { secure: true }

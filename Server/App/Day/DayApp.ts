@@ -1,6 +1,7 @@
 import {IApp} from "../App";
 import e = require("express");
-import {RenderTemplate} from "../../Modules/ServerHelper";
+import {IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
+import {DayDao} from "./DayDao";
 
 export class DayApp implements IApp {
     GetName(): string {
@@ -9,9 +10,15 @@ export class DayApp implements IApp {
 
     GetRouter(): e.Router {
         let router = e.Router();
+        router.use(IsLoggedIn);
 
-        router.get('/', (req, res) => {
-            RenderTemplate(req, res, "Day", "day/index.ejs")
+        router.get('/', async (req, res) => {
+            let scores = await DayDao.GetScoresByDay(req.session['username']);
+            RenderTemplate(req, res, "Day", "day/index.ejs", {scores: scores})
+        })
+
+        router.get('/day/:day', async (req, res) => {
+
         })
 
         return router;

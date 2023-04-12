@@ -31,6 +31,10 @@ create table project (
 --     notes text not null default ''
 );
 
+alter table project
+add column created_on  timestamptz not null default now();
+
+
 select * from project;
 
 alter table project

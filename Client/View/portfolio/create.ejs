@@ -5,6 +5,9 @@
     </h1>
 
     <form action="/portfolio/create" method="post" class="CenterContent">
+        <% if (locals.parent) { %>
+            <input type="hidden" value="<%= parent %>" name="parent">
+        <% } %>
         <div class="inputField">
             <label for="title">Title: </label>
             <input type="text" name="title" id="title" required>

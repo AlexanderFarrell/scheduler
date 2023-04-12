@@ -39,16 +39,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthApp = void 0;
 var express_1 = require("express");
 var ServerHelper_1 = require("../../Modules/ServerHelper");
-var bcrypt = require("bcrypt");
-var Database_1 = require("../../Modules/Database");
-var saltRounds = 10;
+var Account_1 = require("./Account");
 var AuthApp = /** @class */ (function () {
     function AuthApp() {
-        this.UsernameMinimum = 1;
-        this.UsernameMaximum = 20;
-        this.PasswordMinimum = 8;
-        this.PasswordMaximum = 71; //Probably will be 72, but just to be safe.
-        this.AccountCreation = true;
     }
     AuthApp.prototype.GetName = function () {
         return "Auth";
@@ -67,7 +60,7 @@ var AuthApp = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!this.AccountCreation) {
+                        if (!Account_1.Account.CreationEnabled) {
                             (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Account creation is currently disabled for security reasons.", hideHeader: true });
                             return [2 /*return*/];
                         }
@@ -82,7 +75,7 @@ var AuthApp = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.Create(username, password, first_name, last_name)];
+                        return [4 /*yield*/, Account_1.Account.Create(username, password, first_name, last_name)];
                     case 2:
                         _a.sent();
                         // @ts-ignore
@@ -118,7 +111,7 @@ var AuthApp = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, this.Login(username, password)];
+                        return [4 /*yield*/, Account_1.Account.Login(username, password)];
                     case 2:
                         data = _a.sent();
                         // @ts-ignore
@@ -146,120 +139,6 @@ var AuthApp = /** @class */ (function () {
             });
         }); });
         return router;
-    };
-    AuthApp.prototype.Create = function (username, password, first_name, last_name) {
-        return __awaiter(this, void 0, void 0, function () {
-            var hash, e_3, e_4;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (username.length < this.UsernameMinimum) {
-                            throw new Error("Username must be at least ".concat(this.UsernameMinimum, " characters long."));
-                        }
-                        if (username.length > this.UsernameMaximum) {
-                            throw new Error("Username cannot be longer than ".concat(this.UsernameMaximum, " characters long."));
-                        }
-                        if (password.length < this.PasswordMinimum) {
-                            throw new Error("Password must be at least ".concat(this.PasswordMinimum, " characters long."));
-                        }
-                        if (password.length > this.PasswordMaximum) {
-                            throw new Error("Password cannot be longer than ".concat(this.PasswordMaximum, " characters long."));
-                        }
-                        if (first_name.length == 0) {
-                            throw new Error("Please enter your first name");
-                        }
-                        if (last_name.length == 0) {
-                            throw new Error("Please enter your last name");
-                        }
-                        return [4 /*yield*/, this.UsernameExists(username)];
-                    case 1:
-                        if (_a.sent()) {
-                            throw new Error('Username already exists. Please choose a different username.');
-                        }
-                        _a.label = 2;
-                    case 2:
-                        _a.trys.push([2, 4, , 5]);
-                        return [4 /*yield*/, bcrypt.hash(password, saltRounds)];
-                    case 3:
-                        hash = _a.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
-                        e_3 = _a.sent();
-                        throw new Error("Error accepting password. Please supply a different password.");
-                    case 5:
-                        _a.trys.push([5, 7, , 8]);
-                        return [4 /*yield*/, Database_1.Data.Pool.query("insert into account (username, password, first_name, last_name) VALUES ($1, $2, $3, $4)", [username, hash, first_name, last_name])];
-                    case 6:
-                        _a.sent();
-                        return [2 /*return*/, true];
-                    case 7:
-                        e_4 = _a.sent();
-                        console.log(e_4);
-                        throw new Error("Error creating account. Please try again in a few minutes.");
-                    case 8: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    AuthApp.prototype.UsernameExists = function (username) {
-        return __awaiter(this, void 0, void 0, function () {
-            var data, e_5;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.Data.Pool.query("\n                select *\n                from account\n                where username=$1\n                limit 1\n        ", [username])];
-                    case 1:
-                        data = _a.sent();
-                        return [2 /*return*/, data.rows.length > 0];
-                    case 2:
-                        e_5 = _a.sent();
-                        console.log(e_5);
-                        throw new Error("Error connecting to database");
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    AuthApp.prototype.Login = function (username, password) {
-        return __awaiter(this, void 0, void 0, function () {
-            var data, e_6, hash;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, Database_1.Data.Pool.query("\n                select password, first_name, last_name\n                from account\n                where username=$1\n        ", [username])];
-                    case 1:
-                        data = _a.sent();
-                        return [3 /*break*/, 3];
-                    case 2:
-                        e_6 = _a.sent();
-                        console.log(e_6);
-                        throw new Error("Error connecting to database");
-                    case 3:
-                        if (data.rowCount == 0) {
-                            throw new Error("Incorrect username or password.");
-                        }
-                        hash = data.rows[0]['password'];
-                        return [4 /*yield*/, bcrypt.compare(password, hash)];
-                    case 4:
-                        if (_a.sent()) {
-                            return [2 /*return*/, data.rows[0]];
-                        }
-                        else {
-                            throw new Error("Incorrect username or password.");
-                        }
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    AuthApp.prototype.Delete = function (username, password) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                return [2 /*return*/];
-            });
-        });
     };
     AuthApp.prototype.GetWebUrl = function () {
         return "/auth";

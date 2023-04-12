@@ -114,7 +114,8 @@ export class Portfolio implements IApp {
         })
 
         router.get("/create", (req, res) => {
-            RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', {})
+            let data = (req.query['parent'] ? {parent: req.query['parent']} : {})
+            RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', data)
         })
 
         router.post('/create', async (req, res) => {
@@ -125,7 +126,15 @@ export class Portfolio implements IApp {
 
             try {
                 await Project.Add(title, req.session['username']);
-                res.redirect('/portfolio')
+
+                if (req.body['parent'] != null) {
+                    let child = await Project.Get(title, req.session['username']);
+                    await Project.SetParent(child, req.session['username'], req.body['parent'] as string);
+                    res.redirect('/portfolio/project/' + req.body['parent'])
+                } else {
+                    res.redirect('/portfolio')
+                }
+
             } catch (e) {
                 console.error(e);
                 RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', {error: "Error saving new project."})

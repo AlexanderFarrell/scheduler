@@ -115,11 +115,7 @@ var Database = /** @class */ (function () {
             });
         });
     };
-    Database.prototype.Query = function (sql) {
-        var args = [];
-        for (var _i = 1; _i < arguments.length; _i++) {
-            args[_i - 1] = arguments[_i];
-        }
+    Database.prototype.QueryRows = function (sql, args) {
         return __awaiter(this, void 0, void 0, function () {
             var e_3;
             return __generator(this, function (_a) {
@@ -127,10 +123,52 @@ var Database = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         return [4 /*yield*/, this.Pool.query(sql, args)];
-                    case 1: return [2 /*return*/, _a.sent()];
+                    case 1: return [2 /*return*/, (_a.sent()).rows];
                     case 2:
                         e_3 = _a.sent();
                         console.error("Database Error: " + e_3.message);
+                        throw new Error("Unable to retrieve Data from database");
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Database.prototype.QueryFirst = function (sql, args) {
+        return __awaiter(this, void 0, void 0, function () {
+            var data, e_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.Pool.query(sql, args)];
+                    case 1:
+                        data = (_a.sent()).rows;
+                        return [2 /*return*/, (data.length > 0) ? data[0] : null];
+                    case 2:
+                        e_4 = _a.sent();
+                        console.error("Database Error: " + e_4.message);
+                        throw new Error("Unable to retrieve Data from database");
+                    case 3: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Database.prototype.Query = function (sql) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        return __awaiter(this, void 0, void 0, function () {
+            var e_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this.Pool.query(sql, args)];
+                    case 1: return [2 /*return*/, _a.sent()];
+                    case 2:
+                        e_5 = _a.sent();
+                        console.error("Database Error: " + e_5.message);
                         throw new Error("Unable to retrieve Data from database");
                     case 3: return [2 /*return*/];
                 }
@@ -143,7 +181,7 @@ var Database = /** @class */ (function () {
             args[_i - 1] = arguments[_i];
         }
         return __awaiter(this, void 0, void 0, function () {
-            var e_4;
+            var e_6;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -153,8 +191,8 @@ var Database = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        e_4 = _a.sent();
-                        console.error("Database Error: " + e_4.message);
+                        e_6 = _a.sent();
+                        console.error("Database Error: " + e_6.message);
                         throw new Error("Unable to retrieve Data from database");
                     case 3: return [2 /*return*/];
                 }

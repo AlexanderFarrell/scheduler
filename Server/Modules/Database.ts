@@ -63,6 +63,25 @@ class Database {
         }
     }
 
+    public async QueryRows(sql, args) {
+        try {
+            return (await this.Pool.query(sql, args)).rows;
+        } catch (e) {
+            console.error("Database Error: " + e.message);
+            throw new Error("Unable to retrieve Data from database");
+        }
+    }
+
+    public async QueryFirst(sql, args) {
+        try {
+            let data = (await this.Pool.query(sql, args)).rows;
+            return (data.length > 0) ? data[0] : null;
+        } catch (e) {
+            console.error("Database Error: " + e.message);
+            throw new Error("Unable to retrieve Data from database");
+        }
+    }
+
     public async Query(sql, ...args) {
         try {
             return await this.Pool.query(sql, args);

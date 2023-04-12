@@ -50,6 +50,7 @@ export class PaServer {
             case 'development':
                 // @ts-ignore
                 const config = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'Server.config.json')));
+                this.Express.set('config', config)
                 SetupDatabaseDevelopment(config);
                 SetupSession(this.Express);
                 break;

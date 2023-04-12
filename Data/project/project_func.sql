@@ -24,6 +24,10 @@ create or replace procedure delete_project(
 )
     language plpgsql
 as $$BEGIN
+    update project
+        set parent_id=null
+    where parent_id=project_id_in;
+
     delete from project_category_link
     where project_id=project_id_in;
 

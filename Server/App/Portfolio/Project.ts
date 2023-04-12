@@ -15,7 +15,8 @@ export class Project {
                 from project
                 left join project_category_link pcl on project.id = pcl.project_id
                 where account_id=(select id from account where username=$1)
-                and pcl.project_id is null
+                    and (pcl.project_id is null
+                        and parent_id is null)
                 `,
             username);
         return categories.rows;
@@ -50,6 +51,16 @@ export class Project {
         )
     }
 
+    static async GetChildren(project) {
+        let children = await Data.Query(
+            `select * 
+                  from project
+                    where parent_id=$1
+             `, project['id']
+        );
+        return children.rows;
+    }
+
     static async GetProjectAnalysis(username: string, options) {
         let priority = parseInt(options['min_priority'])
         let sort = "priority";
@@ -74,6 +85,7 @@ export class Project {
                  inner join project_category c on c.id = pcl.category_id
                  where p.account_id=(select id from account where username=$1)
                      and p.priority>=$2
+                         and p.parent_id is null
                  ${((options['category'] != 'All' && options['category'] != null) ? "and c.title=$3" : "")}
                  order by ${sort} desc;`,
             params
@@ -118,7 +130,7 @@ export class Project {
 
 
 
-    static async GetByCategory(category: string, username: string) {
+    static async GetByCategory(category: string, username: string, filter_children = true) {
         return (await (Data.Query(
             `
                 select *
@@ -126,6 +138,7 @@ export class Project {
                          inner join project_category_link pcl on project.id = pcl.project_id
                 where pcl.category_id = (select id from project_category where title=$1)
                   and project.account_id=(select id from account where username=$2)
+                and project.parent_id is null
                 order by project.priority desc ;`,
             category, username
         ))).rows
@@ -183,6 +196,14 @@ export class Project {
                                                                 from deliverable d
                                                                 where project_id=$1
                                                                 order by d.completed desc, d.created_on`, project['id'])).rows
+            project['children'] = await Project.GetChildren(project);
+            if (project['parent_id'] != null) {
+                project['parent_title'] = (await Data.Query(
+                    'select title from project where id=$1', project['parent_id']
+                )).rows[0]['title'];
+            }
+            console.log(project)
+
             return project;
         } else {
             return null;

@@ -1,0 +1,14 @@
+<div class="CenterContent">
+    <h1>Days</h1>
+    <div class="table" style="grid-template-columns: auto auto auto">
+        <div class="tableHeader">Date</div>
+        <div class="tableHeader">Completed</div>
+        <div class="tableHeader">Score</div>
+
+        <% for (var i = 0; i < scores.length; i++) { %>
+            <div><%= scores[i].date.toLocaleDateString()%></div>
+            <div><%= scores[i].completed_count%></div>
+            <div><%= scores[i].score%></div>
+        <% } %>
+    </div>
+</div>
