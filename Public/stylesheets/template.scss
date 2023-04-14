@@ -11,3 +11,15 @@ a > .navButton {
 #MobileMenu {
   background: $theme-color-dark;
 }
+
+#AccountDropdown {
+  position: relative;;
+}
+
+#AccountMenu {
+  position: absolute;
+  right: 0;
+  bottom: calc(-1.5rem - 20px);
+  background: $theme-color;
+  padding: 10px;
+}

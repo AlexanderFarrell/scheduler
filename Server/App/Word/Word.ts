@@ -35,6 +35,16 @@ export class Word {
         }
     }
 
+    static async GetYears(username: string) {
+        return (await Data.Query(`select extract('year' from date) as year
+                                        from words
+                                        where account_id=(select id from account where username=$1)
+                                        group by extract('year' from date)
+                                        order by extract('year' from date);
+                                        `, username))
+            .rows.map(row => row['year']);
+    }
+
     static async GetRange(start: Date, end: Date, username: string) {
         return (await Data.Query(`select * 
                                         from words 

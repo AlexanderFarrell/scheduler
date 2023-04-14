@@ -15,3 +15,13 @@ drop column added_on;
 
 select count(*)
 from words;
+
+
+select extract('year' from date)
+from words
+group by extract('year' from date)
+order by extract('year' from date);
+
+select *
+from words
+where extract('year' from date) = 21;

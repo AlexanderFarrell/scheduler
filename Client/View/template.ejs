@@ -42,9 +42,12 @@
                     <% for (var i = 0; i < nav.length; i++) { %>
                         <a class="navButton " href="<%- nav[i].a %>"><div><%- nav[i].t%></div></a>
                     <% } %>
-                        <div class="navButton">
+                        <div class="navButton" id="AccountDropdown" onclick="Toggle('AccountMenu')">
                             <img src="/images/icon/account.svg"  style="width: calc(1em);">
                             <!--                    <%= first_name %>-->
+                            <div id="AccountMenu" style="display: none">
+                                <a href="/auth/logout">Logout</a>
+                            </div>
                         </div>
 
                 </div>

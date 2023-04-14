@@ -47,8 +47,8 @@ export class WikiDao {
         return (await Data.Query(
             `select * 
                  from wiki w
-                 where (w.content like concat('%', $1::text, '%') 
-                    or w.title like concat('%', $1::text, '%'))
+                 where (lower(w.content) like lower(concat('%', $1::text, '%')) 
+                    or lower(w.title) like lower(concat('%', $1::text, '%')))
                         and account_id=(select id from account where username=$2)`,
             term, username
         )).rows;

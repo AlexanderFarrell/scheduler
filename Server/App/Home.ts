@@ -22,5 +22,4 @@ export class Home implements IApp {
     GetWebUrl(): string {
         return "/home";
     }
-
 }

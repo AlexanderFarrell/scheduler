@@ -15,6 +15,16 @@
             <input type="date" id="end" name="end">
         </div>
         <input type="submit" value="Search">
+        <div style="padding: 5px; display: flex; gap: 5px">
+            <% for (var i = 0; i < years.length; i++) { %>
+                <% var start = new Date(years[i], 0, 1)
+                    var end = new Date(years[i], 11, 31)
+                %>
+                <a class="Button" href="/words/range?start=<%= start.toLocaleDateString()%>&end=<%= end.toLocaleDateString()%>">
+                    <%= years[i] %>
+                </a>
+            <% } %>
+        </div>
     </form>
     <% if (locals.words) { %>
         <%- include("list.ejs") %>

@@ -63,14 +63,15 @@ export class WordApp implements IApp {
         })
 
         router.get('/range', async (req, res) => {
+            const years = await Word.GetYears(req.session['username']);
             if (req.query['start'] != null && req.query['end'] != null) {
                 let start = new Date(req.query['start'] as string);
                 let end = new Date(req.query['end'] as string);
                 const words = await Word.GetRange(start, end, req.session['username']);
                 let message = `Words between ${start.toLocaleDateString()} and ${end.toLocaleDateString()}`
-                RenderTemplate(req, res, "Words", "words/range", {words: words, message: message})
+                RenderTemplate(req, res, "Words", "words/range", {words: words, message: message, years: years})
             } else {
-                RenderTemplate(req, res, "Words", "words/range")
+                RenderTemplate(req, res, "Words", "words/range", {years: years})
             }
         })
 
