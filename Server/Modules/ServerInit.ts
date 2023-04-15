@@ -8,6 +8,7 @@ import * as enforce from 'express-sslify';
 import {SetupDatabaseDevelopment, SetupDatabaseProduction} from "./Database";
 import * as fs from "fs";
 import {SetupSession} from "./ServerHelper";
+import {DayDao} from "../App/Day/DayDao";
 
 export class ServerInit {
     public static GetExpressApp(): Application {
@@ -15,14 +16,14 @@ export class ServerInit {
 
         const app = express()
 
-        app.set('views', path.join(__dirname, '../Client/View'));
+        app.set('views', path.join(__dirname, '../../Client/View'));
         app.set('view engine', 'ejs');
 
         app.use(logger('dev'));
         app.use(express.json());
         app.use(express.urlencoded({ extended: false }));
         app.use(cookieParser());
-        app.use(express.static(path.join(__dirname, '../Public')));
+        app.use(express.static(path.join(__dirname, '../../Public')));
 
         switch (runtime_mode) {
             case 'production':
@@ -56,7 +57,9 @@ export class ServerInit {
 
     public static Run(app: Application) {
         const port = process.env.PORT || app.get('config')?.port || 8750;
-        console.log(`Listening on ${port}`);
-        console.log(`View at http://localhost:${port} if local.`);
+        app.listen(port, () => {
+            console.log(`Listening on ${port}`);
+            console.log(`View at http://localhost:${port} if local.`);
+        })
     }
 }

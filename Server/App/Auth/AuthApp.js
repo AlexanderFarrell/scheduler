@@ -36,114 +36,214 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthApp = void 0;
+exports.auth_api = void 0;
 var express_1 = require("express");
 var ServerHelper_1 = require("../../Modules/ServerHelper");
 var Account_1 = require("./Account");
-var AuthApp = /** @class */ (function () {
-    function AuthApp() {
-    }
-    AuthApp.prototype.GetName = function () {
-        return "Auth";
-    };
-    AuthApp.prototype.GetRouter = function () {
-        var _this = this;
-        var router = (0, express_1.Router)();
-        router.get("/", function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(req, res, "Scheduler", "auth/index.ejs", { hideHeader: true });
-        });
-        router.get('/create', function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Enter a username and password.", hideHeader: true });
-        });
-        router.post('/create', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            var username, password, first_name, last_name, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!Account_1.Account.CreationEnabled) {
-                            (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Account creation is currently disabled for security reasons.", hideHeader: true });
-                            return [2 /*return*/];
-                        }
-                        if (!(0, ServerHelper_1.ContainsBodyArgs)(req, 'username', 'password')) {
-                            (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Missing username or password.", hideHeader: true });
-                            return [2 /*return*/];
-                        }
-                        username = req.body.username;
-                        password = req.body.password;
-                        first_name = req.body['first_name'];
-                        last_name = req.body['last_name'];
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, Account_1.Account.Create(username, password, first_name, last_name)];
-                    case 2:
-                        _a.sent();
-                        // @ts-ignore
-                        req.session.username = username;
-                        // @ts-ignore
-                        req.session.first_name = first_name;
-                        // @ts-ignore
-                        req.session.last_name = last_name;
-                        res.redirect('/');
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_1 = _a.sent();
-                        console.log(e_1);
-                        (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'auth/create.ejs', { m: e_1.message, hideHeader: true });
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+exports.auth_api = (0, express_1.Router)();
+exports.auth_api.get("/", function (req, res) {
+    (0, ServerHelper_1.RenderTemplate)(req, res, "Scheduler", "auth/index.ejs", { hideHeader: true });
+});
+exports.auth_api.get('/create', function (req, res) {
+    (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Enter a username and password.", hideHeader: true });
+});
+exports.auth_api.post('/create', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var username, password, first_name, last_name, e_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!Account_1.Account.CreationEnabled) {
+                    (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Account creation is currently disabled for security reasons.", hideHeader: true });
+                    return [2 /*return*/];
                 }
-            });
-        }); });
-        router.get('/login', function (req, res) {
-            (0, ServerHelper_1.RenderTemplate)(req, res, 'Login', 'auth/login.ejs', { m: "Enter a username and password.", hideHeader: true });
-        });
-        router.post('/login', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            var username, password, data, e_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!(0, ServerHelper_1.ContainsBodyArgs)(req, 'username', 'password')) {
-                            (0, ServerHelper_1.RenderTemplate)(req, res, 'Login', 'auth/login.ejs', { m: "Missing username or password.", hideHeader: true });
-                        }
-                        username = req.body.username;
-                        password = req.body.password;
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, Account_1.Account.Login(username, password)];
-                    case 2:
-                        data = _a.sent();
-                        // @ts-ignore
-                        req.session.username = username;
-                        // @ts-ignore
-                        req.session.first_name = data.first_name;
-                        // @ts-ignore
-                        req.session.last_name = data.last_name;
-                        res.redirect('/');
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_2 = _a.sent();
-                        console.log(e_2);
-                        (0, ServerHelper_1.RenderTemplate)(req, res, 'Login', 'auth/login.ejs', { m: e_2.message, hideHeader: true });
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
+                if (!(0, ServerHelper_1.ContainsBodyArgs)(req, 'username', 'password')) {
+                    (0, ServerHelper_1.RenderTemplate)(req, res, 'Create Account', 'auth/create.ejs', { m: "Missing username or password.", hideHeader: true });
+                    return [2 /*return*/];
                 }
-            });
-        }); });
-        router.get('/logout', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                delete req.session['username'];
-                res.redirect('/auth');
-                return [2 /*return*/];
-            });
-        }); });
-        return router;
-    };
-    AuthApp.prototype.GetWebUrl = function () {
-        return "/auth";
-    };
-    return AuthApp;
-}());
-exports.AuthApp = AuthApp;
+                username = req.body.username;
+                password = req.body.password;
+                first_name = req.body['first_name'];
+                last_name = req.body['last_name'];
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, Account_1.Account.Create(username, password, first_name, last_name)];
+            case 2:
+                _a.sent();
+                // @ts-ignore
+                req.session.username = username;
+                // @ts-ignore
+                req.session.first_name = first_name;
+                // @ts-ignore
+                req.session.last_name = last_name;
+                res.redirect('/');
+                return [3 /*break*/, 4];
+            case 3:
+                e_1 = _a.sent();
+                console.log(e_1);
+                (0, ServerHelper_1.RenderTemplate)(res, 'Create Account', 'auth/create.ejs', { m: e_1.message, hideHeader: true });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+exports.auth_api.get('/login', function (req, res) {
+    (0, ServerHelper_1.RenderTemplate)(req, res, 'Login', 'auth/login.ejs', { m: "Enter a username and password.", hideHeader: true });
+});
+exports.auth_api.post('/login', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var username, password, data, e_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!(0, ServerHelper_1.ContainsBodyArgs)(req, 'username', 'password')) {
+                    (0, ServerHelper_1.RenderTemplate)(req, res, 'Login', 'auth/login.ejs', { m: "Missing username or password.", hideHeader: true });
+                }
+                username = req.body.username;
+                password = req.body.password;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, Account_1.Account.Login(username, password)];
+            case 2:
+                data = _a.sent();
+                // @ts-ignore
+                req.session.username = username;
+                // @ts-ignore
+                req.session.first_name = data.first_name;
+                // @ts-ignore
+                req.session.last_name = data.last_name;
+                res.redirect('/');
+                return [3 /*break*/, 4];
+            case 3:
+                e_2 = _a.sent();
+                console.log(e_2);
+                (0, ServerHelper_1.RenderTemplate)(req, res, 'Login', 'auth/login.ejs', { m: e_2.message, hideHeader: true });
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+exports.auth_api.get('/logout', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        delete req.session['username'];
+        res.redirect('/auth');
+        return [2 /*return*/];
+    });
+}); });
+// export class AuthApp implements IApp {
+//
+//     public GetName(): string {
+//         return "Auth";
+//     }
+//
+//     public GetRouter(): express.Router {
+//         let router = Router();
+//
+//         router.get("/", (req, res) => {
+//             RenderTemplate(req, res, "Scheduler", "auth/index.ejs", {hideHeader: true})
+//         })
+//
+//         router.get('/create', (req, res) => {
+//             RenderTemplate(req, res, 'Create Account', 'auth/create.ejs', {m: "Enter a username and password.", hideHeader: true})
+//         });
+//
+//         router.post('/create', async (req, res) => {
+//             if (!Account.CreationEnabled) {
+//                 RenderTemplate(
+//                     req,
+//                     res,
+//                     'Create Account',
+//                     'auth/create.ejs',
+//                     {m: "Account creation is currently disabled for security reasons.", hideHeader: true}
+//                 );
+//                 return;
+//             }
+//
+//             if (!ContainsBodyArgs(req, 'username', 'password')) {
+//                 RenderTemplate(
+//                     req,
+//                     res,
+//                     'Create Account',
+//                     'auth/create.ejs',
+//                     {m: "Missing username or password.", hideHeader: true}
+//                 );
+//                 return;
+//             }
+//
+//             let username = req.body.username;
+//             let password = req.body.password;
+//             let first_name = req.body['first_name'];
+//             let last_name = req.body['last_name'];
+//
+//             try {
+//                 await Account.Create(username, password, first_name, last_name);
+//                 // @ts-ignore
+//                 req.session.username = username;
+//                 // @ts-ignore
+//                 req.session.first_name = first_name;
+//                 // @ts-ignore
+//                 req.session.last_name = last_name;
+//                 res.redirect('/');
+//             } catch (e) {
+//                 console.log(e);
+//                 RenderTemplate(
+//                     res,
+//                     'Create Account',
+//                     'auth/create.ejs',
+//                     {m: e.message, hideHeader: true}
+//                 );
+//             }
+//         });
+//
+//         router.get('/login', (req, res) => {
+//             RenderTemplate(req, res, 'Login', 'auth/login.ejs', {m: "Enter a username and password.", hideHeader: true})
+//         });
+//
+//         router.post('/login', async (req, res) => {
+//             if (!ContainsBodyArgs(req, 'username', 'password')) {
+//                 RenderTemplate(
+//                     req,
+//                     res,
+//                     'Login',
+//                     'auth/login.ejs',
+//                     {m: "Missing username or password.", hideHeader: true}
+//                 );
+//             }
+//
+//             let username = req.body.username;
+//             let password = req.body.password;
+//
+//             try {
+//                 let data = await Account.Login(username, password);
+//                 // @ts-ignore
+//                 req.session.username = username;
+//                 // @ts-ignore
+//                 req.session.first_name = data.first_name;
+//                 // @ts-ignore
+//                 req.session.last_name = data.last_name
+//                 res.redirect('/');
+//             } catch (e) {
+//                 console.log(e);
+//                 RenderTemplate(
+//                     req,
+//                     res,
+//                     'Login',
+//                     'auth/login.ejs',
+//                     {m: e.message, hideHeader: true}
+//                 );
+//             }
+//         })
+//
+//         router.get('/logout', async (req, res) => {
+//             delete req.session['username']
+//             res.redirect('/auth')
+//         })
+//
+//         return router;
+//     }
+//
+//     GetWebUrl(): string {
+//         return "/auth";
+//     }
+// }
 //# sourceMappingURL=AuthApp.js.map
