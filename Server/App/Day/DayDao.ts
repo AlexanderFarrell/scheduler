@@ -33,8 +33,7 @@ export class DayDao {
                           pc.title as category
                    from deliverable d
                             inner join project p on p.id = d.project_id
-                            inner join project_category_link pcl on p.id = pcl.project_id
-                            inner join project_category pc on pc.id = pcl.category_id
+                            inner join project_category pc on pc.id = p.category_id
 -- where pc.title='Education'
                        and d.completed is not null
                    where p.account_id=(select id from account where username=$1)

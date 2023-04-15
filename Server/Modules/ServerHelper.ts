@@ -35,7 +35,7 @@ export function IsLoggedIn(req, res, next) {
     if (req.session.username != undefined) {
         next()
     } else {
-        res.redirect('/auth/');
+        res.redirect('/auth/login');
     }
 }
 

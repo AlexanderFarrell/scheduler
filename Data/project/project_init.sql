@@ -34,11 +34,35 @@ create table project (
 alter table project
 add column created_on  timestamptz not null default now();
 
+alter table project
+add column category varchar(30);
+
+update project p
+set category=(select c.title
+              from project_category c
+              inner join project_category_link pcl on c.id = pcl.category_id
+              where pcl.project_id = p.id);
 
 select * from project;
 
+select * from project;
+
+select * from project p
+    inner join project_category c on p.category_id = c.id;
+
 alter table project
 add column parent_id int references project(id);
+
+alter table project
+    add column category_id int references project_category(id);
+
+update project p
+set category_id=(select pcl.category_id
+                 from project_category_link pcl
+              where pcl.project_id = p.id);
+
+alter table project
+drop column category;
 
 create table deliverable (
                              id serial primary key,
@@ -47,8 +71,6 @@ create table deliverable (
                              completed timestamptz,
                              project_id int not null references project(id)
 );
-
-
 
 create table project_category (
                                   id serial primary key,

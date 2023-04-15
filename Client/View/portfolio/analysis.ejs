@@ -1,63 +1,66 @@
-<div class="CenterContent">
-    <%- include('header.ejs')%>
-    <div class="Container">
-        <h1>Sort Projects</h1>
-        <form action="/portfolio/analysis">
-            <div class="Row3">
-                <div class="inputField">
-                    <label>Sort By:</label>
-                    <%- include('../select.ejs', {name: "sort", val: locals.sort || "time" , items: ["Only Priority", "Time", "Status", "Maintenance"]})%>
+<div class="SideContent">
+    <%- include('sidebar.ejs')%>
+    <div>
+        <div class="">
+            <h1>Analysis</h1>
+            <form action="/portfolio/analysis">
+                <div class="Row3">
+                    <div class="inputField">
+                        <label>Sort By:</label>
+                        <%- include('../select.ejs', {name: "sort", val: locals.sort || "time" , items: ["Only Priority", "Time", "Status", "Maintenance"]})%>
+                    </div>
+                    <div class="inputField">
+                        <label>Categories:</label>
+                        <%- include('../select.ejs', {name: "category", val: locals.category || "All" , items: categories})%> %>
+                    </div>
+                    <div class="inputField">
+                        <label>Min Priority</label>
+                        <input type="number" name="min_priority" value="<%= locals.priority || "0" %>">
+                    </div>
                 </div>
-                <div class="inputField">
-                    <label>Categories:</label>
-                     <%- include('../select.ejs', {name: "category", val: locals.category || "All" , items: categories})%> %>
-                </div>
-                <div class="inputField">
-                    <label>Min Priority</label>
-                    <input type="number" name="min_priority" value="<%= locals.priority || "0" %>">
-                </div>
-            </div>
 
-            <input type="submit" value="Assess">
-        </form>
-    </div>
-    <% if (locals.projects) { %>
-    <div class="table" style="grid-template-columns: auto auto auto auto auto auto">
-        <div class="tableHeader">Project</div>
-        <div class="tableHeader">Category</div>
-        <div class="tableHeader">Time</div>
-        <div class="tableHeader">Status</div>
-        <div class="tableHeader">Maint.</div>
-        <div class="tableHeader">Priority</div>
-        <% for (var i = 0; i < projects.length; i++) { %>
-        <a href="/portfolio/project/<%= projects[i].project%>">
-            <div>
-                <%= projects[i].project %>
-            </div>
-        </a>
-        <a href="/portfolio/project/category/<%= projects[i].category%>">
-            <div>
-                <%= projects[i].category %>
-            </div>
-        </a>
-            <div>
-                <%= projects[i].time %>
-            </div>
-            <div>
-                <%= projects[i].status %>
-            </div>
-            <div>
-                <%= projects[i].maintenance %>
-            </div>
-        <div>
-            <%= projects[i].priority%>
+                <input type="submit" value="Assess">
+            </form>
         </div>
+        <% if (locals.projects) { %>
+            <div class="table scrollViewHorizontal" style="grid-template-columns: auto auto auto auto auto auto">
+                <div class="tableHeader">Project</div>
+                <div class="tableHeader">Category</div>
+                <div class="tableHeader">Time</div>
+                <div class="tableHeader">Status</div>
+                <div class="tableHeader">Maint.</div>
+                <div class="tableHeader">Priority</div>
+                <% for (var i = 0; i < projects.length; i++) { %>
+                    <a href="/portfolio/project/<%= projects[i].project%>">
+                        <div>
+                            <%= projects[i].project %>
+                        </div>
+                    </a>
+                    <a href="/portfolio/project/category/<%= projects[i].category%>">
+                        <div>
+                            <%= projects[i].category %>
+                        </div>
+                    </a>
+                    <div>
+                        <%= projects[i].time %>
+                    </div>
+                    <div>
+                        <%= projects[i].status %>
+                    </div>
+                    <div>
+                        <%= projects[i].maintenance %>
+                    </div>
+                    <div>
+                        <%= projects[i].priority%>
+                    </div>
 
+                <% } %>
+            </div>
+
+        <% } else { %>
+            No Results
         <% } %>
     </div>
 
-    <% } else { %>
-        No Results
-    <% } %>
 
 </div>

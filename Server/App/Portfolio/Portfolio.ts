@@ -19,7 +19,10 @@ export class Portfolio implements IApp {
         router.get("/", async (req, res) => {
             let data = {};
             try {
-                data['projects'] = await Project.GetProjectsWithoutCategory(req.session['username']);
+                // data['projects'] = await Project.Get(req.session['username']);
+                data['unsorted'] = await Project.GetProjectsWithoutCategory(req.session['username']);
+                data['projects'] = await Project.GetProjectsInProgress(req.session['username']);
+                data['on_going'] = await Project.GetProjectsOnGoing(req.session['username']);
                 data['categories'] = await Project.GetCategoriesByUser(req.session['username']);
             } catch (e) {
                 data['error'] = "Unable to retrieve projects."
@@ -42,8 +45,8 @@ export class Portfolio implements IApp {
             RenderTemplate(req, res, 'Portfolio Analysis', 'portfolio/deliver.ejs', {deliverables})
         })
 
-        router.post('/portfolio/project/parent', async (req, res) => {
-            let project = Project.Get(req.body['project'], req.session['username']);
+        router.post('/parent', async (req, res) => {
+            let project = await Project.Get(req.body['project'], req.session['username']);
             try {
                 await Project.SetParent(project, req.session['username'], req.body['parent']);
                 res.redirect('/portfolio/project/' + project['title'])
@@ -84,8 +87,16 @@ export class Portfolio implements IApp {
         })
 
         router.get('/project/category/:category', async (req, res) => {
+            // let projects = await Project.GetProjectAnalysis(req.session['username'], {
+            //     min_priority: 0,
+            //     sort: 'priority',
+            //     category: req.params['category']
+            // });
+            // let category_data = await Project.GetCategoriesByUser(req.session['username']);
+            // let categories = category_data.map(c => c['title']);
+            // categories.push('All');
+            // RenderTemplate(req, res, 'Portfolio Analysis', 'portfolio/analysis.ejs', {projects, priority: 0, sort: 'Only Priority', categories, category: req.params['category']})
             let projects = await Project.GetByCategory(req.params['category'], req.session['username']);
-            console.log(projects)
             RenderTemplate(req, res, req.params['category'] + " Projects", 'portfolio/results.ejs', {
                 projects, message: req.params['category'] + " Projects"
             })
@@ -102,15 +113,17 @@ export class Portfolio implements IApp {
         router.post('/project/update', async (req, res) => {
             try {
                 console.log(req.body)
-                if (ContainsBodyArgs(req, res, 'status', 'time', 'maintenance', 'priority')) {
+                if (ContainsBodyArgs(req, res, 'status', 'time', 'maintenance', 'priority', 'category', 'title')) {
                     let project = await Project.Get(req.body['project'], req.session['username'])
-                    await Project.Update(project, req.body['status'], req.body['time'], req.body['maintenance'], req.body['priority'])
+                    await Project.Update(project, req.body['title'], req.body['status'], req.body['time'], req.body['maintenance'], req.body['priority'])
+                    await Project.AddCategoryToProject(project, req.body['category'], req.session['username'])
+                    res.redirect('/portfolio/project/' + req.body['title'])
                 }
             } catch (e) {
                 console.error(e)
+                res.redirect('/portfolio/project/' + req.body['project'])
             }
 
-            res.redirect('/portfolio/project/' + req.body['project'])
         })
 
         router.get("/create", (req, res) => {
@@ -175,6 +188,22 @@ export class Portfolio implements IApp {
                 await Data.Execute(`update deliverable set completed=null where project_id=(select id from project where project.title=$1 and account_id=(select id from account where username=$2)) and title=$3;`, req.body['project'], req.session['username'], req.body['title'])
             }
             res.redirect("/portfolio/project/" + req.body['project'])
+        })
+
+        router.get('/stakeholder', async (req, res) => {
+            RenderTemplate(req, res, 'Stakeholders', 'portfolio/stakeholder.ejs')
+        })
+
+        router.get('/resources', async (req, res) => {
+            RenderTemplate(req, res, 'Stakeholders', 'portfolio/resources.ejs')
+        })
+
+        router.get('/search', async (req, res) => {
+            RenderTemplate(req, res, 'Stakeholders', 'portfolio/search.ejs')
+        })
+
+        router.get('/track', async (req, res) => {
+            RenderTemplate(req, res, 'Stakeholders', 'portfolio/track.ejs')
         })
 
         // router.get("/objectives", async (req, res) => {

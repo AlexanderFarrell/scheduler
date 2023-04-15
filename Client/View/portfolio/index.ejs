@@ -1,6 +1,23 @@
-<div class="CenterContent">
-    <%- include('header.ejs')%>
-</div>
-<%- include("list_category.ejs")%>
+<div class="SideContent">
+    <%- include('sidebar.ejs')%>
+    <div>
+        <div class="CenterContent">
+            <h1>Portfolio</h1>
+            <%- include("list_category.ejs")%>
+            <div>
+                <% if (locals.unsorted && unsorted.length > 0) { %>
+                    <%- include("list_projects.ejs", {message: "Unsorted Projects", projects: unsorted})%>
+                <% } %>
+            </div>
+            <div class="Flex">
+                <div class="One">
+                    <%- include("list_projects.ejs", {message: "In Progress"})%>
+                </div>
+                <div class="One">
+                    <%- include("list_projects.ejs", {message: "On-Going", projects: on_going})%>
+                </div>
+            </div>
+        </div>
 
-<%- include("list_projects.ejs", {message: "Uncategorized Projects"})%>
+    </div>
+</div>

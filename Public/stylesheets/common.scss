@@ -11,6 +11,42 @@
   font-size: 1.5rem;
 }
 
+.SideContent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: 100%;
+  max-height: calc(100vh);
+  grid-gap: 10px;
+}
+
+.BigButton {
+  padding: 20px;
+}
+
+.SideContent>*:nth-child(3) {
+  //overflow-y: scroll;
+}
+
+.SideBar {
+  //padding: 10px;
+  font-size: 0.8rem;
+}
+
+.SideBar > div > a {
+  display: block;
+  width: 100%;
+
+}
+
+.SideBar > div > a > button {
+  width: 100%;
+  text-align: left;
+}
+
+.SideBar > div > a > button > .Icon {
+  width: 0.8rem;
+}
+
 .Small {
   font-size: 10px;
 }
@@ -28,6 +64,18 @@
   padding: 5px;
 }
 
+.scrollViewHorizontal {
+  overflow-x: auto;
+}
+
+.scrollView {
+  overflow: auto;
+}
+
+.DarkBackground {
+  background: $theme-color-dark;
+}
+
 //.table > *:nth-child(6n+1), .table > *:nth-child(6n+2), .table > *:nth-child(6n+3) {
 //  background: $theme-color-transparent;
 //}
@@ -42,6 +90,12 @@
   text-decoration: none !important;
   cursor: pointer;
   transition: 0.1s background-color ease-in;
+}
+
+.disabledButton {
+  background: #3d3d3d;
+  //pointer-events: none;
+  cursor: not-allowed;
 }
 
 .Flex {
@@ -113,7 +167,13 @@
 }
 
 .CenterContent {
-  max-width: 900px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.CenterReading {
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -155,5 +215,13 @@
   .CenterContent {
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  .SideContent {
+    display: block;
+  }
+
+  .BigButton {
+    padding: 10px;
   }
 }

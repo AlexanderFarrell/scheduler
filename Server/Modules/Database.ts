@@ -63,7 +63,7 @@ class Database {
         }
     }
 
-    public async QueryRows(sql, args) {
+    public async QueryRows(sql, args = []) {
         try {
             return (await this.Pool.query(sql, args)).rows;
         } catch (e) {
@@ -72,7 +72,7 @@ class Database {
         }
     }
 
-    public async QueryFirst(sql, args) {
+    public async QueryFirst(sql, args = []) {
         try {
             let data = (await this.Pool.query(sql, args)).rows;
             return (data.length > 0) ? data[0] : null;

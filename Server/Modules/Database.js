@@ -116,6 +116,7 @@ var Database = /** @class */ (function () {
         });
     };
     Database.prototype.QueryRows = function (sql, args) {
+        if (args === void 0) { args = []; }
         return __awaiter(this, void 0, void 0, function () {
             var e_3;
             return __generator(this, function (_a) {
@@ -134,6 +135,7 @@ var Database = /** @class */ (function () {
         });
     };
     Database.prototype.QueryFirst = function (sql, args) {
+        if (args === void 0) { args = []; }
         return __awaiter(this, void 0, void 0, function () {
             var data, e_4;
             return __generator(this, function (_a) {

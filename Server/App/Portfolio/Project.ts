@@ -12,11 +12,12 @@ export class Project {
     static async GetProjectsWithoutCategory(username: string) {
         let categories = await Data.Query(
             `select title
-                from project
-                left join project_category_link pcl on project.id = pcl.project_id
+                from project p
+--                 left join project_category_link pcl on project.id = pcl.project_id
                 where account_id=(select id from account where username=$1)
-                    and (pcl.project_id is null
-                        and parent_id is null)
+                        and category_id is null   
+--                     and (pcl.project_id is null
+                        and parent_id is null
                 `,
             username);
         return categories.rows;
@@ -61,6 +62,36 @@ export class Project {
         return children.rows;
     }
 
+    static async GetProjectsInProgress(username: string) {
+        return await Data.QueryRows(
+            `select p.title as title,
+                        c.title as category,
+                        status
+                from project p
+                left join project_category c on p.category_id = c.id
+                where c.account_id=(select id from account where username=$1)
+                    and p.status='In Development'
+                    and parent_id is null
+                    order by priority desc `,
+            [username]
+        );
+    }
+
+    static async GetProjectsOnGoing(username: string) {
+        return await Data.QueryRows(
+            `select p.title as title,
+                        c.title as category,
+                        status
+                from project p
+                left join project_category c on p.category_id = c.id
+                where c.account_id=(select id from account where username=$1)
+                    and p.status='On-Going'
+                and parent_id is null
+                    order by priority desc `,
+            [username]
+        );
+    }
+
     static async GetProjectAnalysis(username: string, options) {
         let priority = parseInt(options['min_priority'])
         let sort = "priority";
@@ -81,11 +112,11 @@ export class Project {
                         maintenance,
                         priority
                  from project p
-                 inner join project_category_link pcl on p.id = pcl.project_id
-                 inner join project_category c on c.id = pcl.category_id
+--                  inner join project_category_link pcl on p.id = pcl.project_id
+                 left join project_category c on c.id = p.category_id
                  where p.account_id=(select id from account where username=$1)
                      and p.priority>=$2
-                         and p.parent_id is null
+--                          and p.parent_id is null
                  ${((options['category'] != 'All' && options['category'] != null) ? "and c.title=$3" : "")}
                  order by ${sort} desc;`,
             params
@@ -133,35 +164,48 @@ export class Project {
     static async GetByCategory(category: string, username: string, filter_children = true) {
         return (await (Data.Query(
             `
-                select *
-                from project
-                         inner join project_category_link pcl on project.id = pcl.project_id
-                where pcl.category_id = (select id from project_category where title=$1)
-                  and project.account_id=(select id from account where username=$2)
-                and project.parent_id is null
-                order by project.priority desc ;`,
+                select p.title as title,
+                       pc.title as category,
+                       status
+                from project p
+                inner join project_category pc on pc.id = p.category_id
+--                          inner join project_category_link pcl on project.id = pcl.project_id
+                where p.category_id = (select id from project_category where title=$1)
+                  and p.account_id=(select id from account where username=$2)
+                and p.parent_id is null
+                order by p.priority desc ;`,
             category, username
         ))).rows
     }
 
-    static async Update(project, status: string, time: string, maintenance: string, priority: number) {
+    // static async UpdateCategory(project, username: string, category: string) {
+    //     if (project['category'] != category) {
+    //         await (Data.Execute(
+    //             `update project
+    //             set category_id=(select id from )`
+    //         ))
+    //     }
+    // }
+
+    static async Update(project, title: string, status: string, time: string, maintenance: string, priority: number) {
         if (maintenance == "None") {
             maintenance = null;
         }
         await (Data.Execute(
             `update project
-                set status=$1,
-                    time=$2,
-                    maintenance=$3,
-                    priority=$4
-                    where id=$5`,
-                status, time, maintenance, priority, project['id']
+                set title=$1,
+                    status=$2,
+                    time=$3,
+                    maintenance=$4,
+                    priority=$5
+                    where id=$6`,
+                title, status, time, maintenance, priority, project['id']
             ));
     }
 
     static async AddCategoryToProject(project, category: string, username: string) {
         // language=PostgreSQL
-        await Data.Execute(`call add_category_to_project($1, $2, $3)`,
+        await Data.Execute(`call set_category_to_project($1, $2, $3)`,
             username, category, project.id);
     }
 
@@ -177,17 +221,35 @@ export class Project {
     }
 
     static async Get(title: string, username: string) {
-        let data = await Data.Query(`select * from project where title=$1 and account_id=
+        let data = await Data.Query(`select p.id as id,
+                                                p.title as title,
+                                                time,
+                                                status,
+                                                maintenance, 
+                                                priority,
+                                                p.account_id as account_id,
+                                                parent_id,
+                                                created_on,
+                                                pc.id as category_id,
+                                                case 
+                                                    when category_id is not null then pc.title
+                                                    else null
+                                                end as category
+                                        from project p
+                                        left join project_category pc on pc.id = p.category_id
+                                        where p.title=$1 and p.account_id=
                             (select id from account where username=$2) order by priority desc limit 1`, title, username);
         if (data.rows.length > 0) {
             let project = data.rows[0];
-            project['categories'] = (await Data.Query(
-                `select c.title 
-                    from project_category c
-                    inner join project_category_link pcl 
-                        on c.id = pcl.category_id
-                    where pcl.project_id=$1
-                    order by c.title`, project['id'])).rows;
+
+//             project['category'] = (await Data.Query(
+//                 `select c.title
+//                     from project_category c
+//                     inner join project p on c.id = p.category_id
+// --                     inner join project_category_link pcl
+// --                         on c.id = pcl.category_id
+//                     where p.id=$1
+//                     order by c.title`, project['id'])).rows;
             project['documents'] = (await Data.Query(`select w.title  
                                                     from wiki w
                                                     inner join project_wiki_link pwl on w.id = pwl.wiki_id
@@ -202,7 +264,6 @@ export class Project {
                     'select title from project where id=$1', project['parent_id']
                 )).rows[0]['title'];
             }
-            console.log(project)
 
             return project;
         } else {

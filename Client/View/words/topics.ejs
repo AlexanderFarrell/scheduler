@@ -15,16 +15,19 @@
             </a>
         </div>
     </div>
-    <% for (var i = 0; i < topics.length; i++) { %>
-        <a href="/words/topic/<%= topics[i].title%>">
-            <div class="Button" style="display: grid; grid-template-columns: 1fr auto">
-                <div>
-                    <%=  topics[i].title %>
+    <div class="Row3">
+        <% for (var i = 0; i < topics.length; i++) { %>
+            <a href="/words/topic/<%= topics[i].title%>">
+                <div class="Button" style="display: grid; grid-template-columns: 1fr auto">
+                    <div>
+                        <%=  topics[i].title %>
+                    </div>
+                    <div>
+                        <%=  topics[i].count %>
+                    </div>
                 </div>
-                <div>
-                    <%=  topics[i].count %>
-                </div>
-            </div>
-        </a>
-    <% } %>
+            </a>
+        <% } %>
+    </div>
+
 </div>

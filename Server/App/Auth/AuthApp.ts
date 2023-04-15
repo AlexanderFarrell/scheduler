@@ -2,8 +2,6 @@ import {IApp} from "../App";
 import {Router} from "express";
 import * as express from 'express';
 import {ContainsBodyArgs, RenderTemplate} from "../../Modules/ServerHelper";
-import * as bcrypt from 'bcrypt';
-import {Data} from "../../Modules/Database";
 import {Account} from "./Account";
 
 export class AuthApp implements IApp {

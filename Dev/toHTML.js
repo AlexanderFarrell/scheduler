@@ -1,4 +1,4 @@
-const {MarkdownToHTML} = require("./Server/Modules/ServerHelper")
+const {MarkdownToHTML} = require("../Server/Modules/ServerHelper")
 
 function ToHTML(md) {
     return MarkdownToHTML(md)

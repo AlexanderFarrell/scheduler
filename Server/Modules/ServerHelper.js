@@ -44,7 +44,7 @@ function IsLoggedIn(req, res, next) {
         next();
     }
     else {
-        res.redirect('/auth/');
+        res.redirect('/auth/login');
     }
 }
 exports.IsLoggedIn = IsLoggedIn;

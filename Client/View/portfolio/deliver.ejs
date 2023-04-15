@@ -1,60 +1,63 @@
-<div class="CenterContent">
-    <%- include('header.ejs')%>
-    <div class="Container">
-        <h1>Deliverables</h1>
-        <details>
-            <summary>Search Options</summary>
-            <form>
-                <div class="Row2">
-                    <div class="inputField">
-                        <label>Min Priority</label>
-                        <input type="number" name="min_priority" value="0">
+<div class="SideContent">
+    <%- include('sidebar.ejs')%>
+    <div class="CenterContent">
+        <div class="Container">
+            <h1>Deliverables</h1>
+            <details>
+                <summary>Search Options</summary>
+                <form>
+                    <div class="Row2">
+                        <div class="inputField">
+                            <label>Min Priority</label>
+                            <input type="number" name="min_priority" value="0">
+                        </div>
+                        <div class="inputField">
+                            <label>Min Urgency</label>
+                            <input type="number" name="min_priority" value="0">
+                        </div>
                     </div>
                     <div class="inputField">
-                        <label>Min Urgency</label>
-                        <input type="number" name="min_priority" value="0">
+                        <label>Min Urgency</label><%-
+                        include('../select.ejs', {name: "time", val: "Small", items: ["Small", "Medium", "Large"]})
+                        %>
                     </div>
-                </div>
-                <div class="inputField">
-                    <label>Min Urgency</label><%-
-                    include('../select.ejs', {name: "time", val: "Small", items: ["Small", "Medium", "Large"]})
-                    %>
-                </div>
-            </form>
-        </details>
+                </form>
+            </details>
 
-    </div>
-    <div class="table" style="grid-template-columns: auto auto auto">
-        <div class="tableHeader">Completed</div>
-        <div class="tableHeader">Deliverable</div>
-        <div class="tableHeader">Project</div>
-        <% if (locals.deliverables) { %>
-            <% for (var i = 0; i < deliverables.length; i++) { %>
-                <div class="Deliverable">
-<!--                    <%= deliverables[i].completed || "TODO" %>-->
-                    <form action="/portfolio/deliverable/track" method="post" id="d<%= i %>">
-                        <input type="hidden" name="project" value="<%= deliverables[i].project %>">
-                        <input type="hidden" name="title" value="<%= deliverables[i].title%>">
-                        <input type="checkbox" name="completed" value="on" <%= deliverables[i].completed != null ? 'checked' : '' %>
-                               onchange="document.getElementById('d<%= i %>').submit()">
-                    </form>
-                </div>
-                <div class="Deliverable">
-                    <%= deliverables[i].title %>
-                </div>
-                <a href="/portfolio/project/<%= deliverables[i].project %>">
+        </div>
+        <div class="table" style="grid-template-columns: auto auto auto">
+            <div class="tableHeader">Completed</div>
+            <div class="tableHeader">Deliverable</div>
+            <div class="tableHeader">Project</div>
+            <% if (locals.deliverables) { %>
+                <% for (var i = 0; i < deliverables.length; i++) { %>
                     <div class="Deliverable">
-                        <%= deliverables[i].project %>
+                        <!--                    <%= deliverables[i].completed || "TODO" %>-->
+                        <form action="/portfolio/deliverable/track" method="post" id="d<%= i %>">
+                            <input type="hidden" name="project" value="<%= deliverables[i].project %>">
+                            <input type="hidden" name="title" value="<%= deliverables[i].title%>">
+                            <input type="checkbox" name="completed" value="on" <%= deliverables[i].completed != null ? 'checked' : '' %>
+                                   onchange="document.getElementById('d<%= i %>').submit()">
+                        </form>
                     </div>
-                </a>
+                    <div class="Deliverable">
+                        <%= deliverables[i].title %>
+                    </div>
+                    <a href="/portfolio/project/<%= deliverables[i].project %>">
+                        <div class="Deliverable">
+                            <%= deliverables[i].project %>
+                        </div>
+                    </a>
 
-            <% } %>
-        <% } else { %>
-            <div style="text-align: center">
-                <br>
-                No deliverables within this priorty level.
-            </div>
-        <%} %>
+                <% } %>
+            <% } else { %>
+                <div style="text-align: center">
+                    <br>
+                    No deliverables within this priorty level.
+                </div>
+            <%} %>
+        </div>
     </div>
+
 
 </div>

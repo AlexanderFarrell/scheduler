@@ -2,11 +2,7 @@
     <h2><%= (locals.message) ? locals.message : "Projects" %></h2>
     <div id="projects" class="CenterContent">
         <% for (var i = 0; i < projects.length; i++) { %>
-            <a href="/portfolio/project/<%= projects[i].title%>">
-                <div class="Button">
-                    <%= projects[i].title %>
-                </div>
-            </a>
+            <%- include('project_item.ejs', {project: projects[i]})%>
         <% } %>
     </div>
 
