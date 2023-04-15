@@ -1,8 +1,4 @@
 import {Data} from "../../Modules/Database";
-import {marked} from "marked";
-import {WikiApp} from "./WikiApp";
-import use = marked.use;
-
 
 export class WikiDao {
     static async CreatePage(title: string, content: string, username: string) {

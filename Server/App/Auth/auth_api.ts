@@ -1,4 +1,3 @@
-import {IApp} from "../App";
 import {Router} from "express";
 import {ContainsBodyArgs, RenderTemplate} from "../../Modules/ServerHelper";
 import {Account} from "./Account";

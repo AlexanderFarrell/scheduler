@@ -1,5 +1,3 @@
-import {IApp} from "./App";
-import * as express from 'express';
 import {Router} from "express";
 import {IsLoggedIn, RenderTemplate} from "../Modules/ServerHelper";
 

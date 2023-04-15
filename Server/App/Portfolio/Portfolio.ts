@@ -1,9 +1,7 @@
-import * as express from 'express';
+
 import {Router} from 'express';
-import {IApp} from "../App";
 import {ContainsBodyArgs, IsLoggedIn, IsNotNull, RenderTemplate} from "../../Modules/ServerHelper";
 import {Data} from "../../Modules/Database";
-import {WikiApp} from "../Wiki/WikiApp";
 import {Project} from "./Project";
 import {Deliverable} from "./Deliverable";
 

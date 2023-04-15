@@ -4,7 +4,7 @@ import {portfolio_api} from "./App/Portfolio/Portfolio";
 import {word_api} from "./App/Word/WordApp";
 import {wiki_api} from "./App/Wiki/WikiApp";
 import {day_api} from "./App/Day/DayApp";
-import {auth_api} from "./App/Auth/AuthApp";
+import {auth_api} from "./App/Auth/auth_api";
 
 // let back = new PaServer();
 
