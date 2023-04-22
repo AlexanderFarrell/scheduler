@@ -31,6 +31,12 @@ create table project (
 --     notes text not null default ''
 );
 
+create table analysis (
+    id serial primary key,
+    maintenance size
+
+);
+
 alter table project
 add column created_on  timestamptz not null default now();
 

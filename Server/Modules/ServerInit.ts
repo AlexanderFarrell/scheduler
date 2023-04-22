@@ -59,7 +59,7 @@ export class ServerInit {
         const port = process.env.PORT || app.get('config')?.port || 8750;
         app.listen(port, () => {
             console.log(`Listening on ${port}`);
-            console.log(`View at http://localhost:${port} if local.`);
+            console.log(`View at http://localhost:${port} to connect locally.\n`);
         })
     }
 }

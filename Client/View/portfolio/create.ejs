@@ -6,7 +6,7 @@
                 Create a New Project
             </h1>
 
-            <form action="/portfolio/create" method="post" class="CenterContent">
+            <form action="/portfolio/project/create" method="post" class="CenterContent">
                 <% if (locals.parent) { %>
                     <input type="hidden" value="<%= parent %>" name="parent">
                 <% } %>

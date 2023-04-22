@@ -171,9 +171,8 @@
 
                         </div>
                         <div class="Container">
-                            <h2>Sub-Projects</h2>
-                            <%- include('list_projects.ejs', {projects: project.children, message: ' '})%>
-                            <form action="/portfolio/parent" id="link" method="post" style="display: none">
+<!--                            <h2>Sub-Projects</h2>-->
+                            <form action="/portfolio/project/parent" id="link" method="post" style="display: none">
                                 <h3>Link Project</h3>
                                 <input type="hidden" value="<%= project.title %>" name="parent">
                                 <div class="inputField">
@@ -187,18 +186,24 @@
                             </form>
                             <div class="Row2" id="options">
                                 <button onclick="Toggle('link'); Toggle('options')">Link</button>
-                                <a href="/portfolio/create?parent=<%= project.title %>">
+                                <a href="/portfolio/project/create?parent=<%= project.title %>">
                                     <div class="Button">
                                         Create
                                     </div>
                                 </a>
+                            </div>
+                            <div>
+                                <%- include('list_projects.ejs', {projects: project.children.todo, message: 'In Progress'})%>
+                            </div>
+                            <div>
+                                <%- include('list_projects.ejs', {projects: project.children.completed, message: 'Completed'})%>
                             </div>
                         </div>
                     </div>
 
                 </div>
                 <div>
-                    <form method="post" id="delete" action="/portfolio/delete" style="display: none;">
+                    <form method="post" id="delete" action="/portfolio/project/delete" style="display: none;">
                         <input type="hidden" name="project" value="<%= project.title %>">
                         <input type="submit" value="Confirm Delete">
                         <button id="delete_button" onclick="Toggle('delete'); Toggle('delete_button')">

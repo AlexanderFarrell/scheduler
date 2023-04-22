@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.index_api = void 0;
 var express_1 = require("express");
-var ServerHelper_1 = require("../Modules/ServerHelper");
+var ServerHelper_1 = require("../../Modules/ServerHelper");
 exports.index_api = (0, express_1.Router)();
 exports.index_api.use(ServerHelper_1.IsLoggedIn);
 exports.index_api.get('/', function (req, res) {
@@ -36,4 +36,4 @@ exports.index_api.get('/home', function (req, res) {
 //         return "/home";
 //     }
 // }
-//# sourceMappingURL=Home.js.map
+//# sourceMappingURL=index_api.js.map

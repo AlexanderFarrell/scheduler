@@ -1,4 +1,3 @@
-
 <div class="CenterContent">
     <%- include('header.ejs')%>
     <h1>Add WikiApp Page</h1>
@@ -13,4 +12,9 @@
         </div>
         <input type="submit" value="Create Page">
     </form>
+    <% if (locals.error) { %>
+        <div class="Error">
+            <%= error %>
+        </div>
+    <% } %>
 </div>

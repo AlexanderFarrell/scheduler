@@ -200,6 +200,11 @@
     display: block;
   }
 
+  .FlexMobile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
   .DesktopOnly {
     display: none;
   }

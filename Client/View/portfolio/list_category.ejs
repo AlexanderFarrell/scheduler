@@ -2,7 +2,7 @@
 <!--    <h2><%= (locals.message) ? message : "Categories" %></h2>-->
 
     <% if (locals.categories) { %>
-        <div class="Flex" style="justify-content: center">
+        <div class="Flex FlexMobile" style="justify-content: center">
 <!--        <div class="Row3" style="grid-row-gap: 0">-->
             <% for (var k = 0; k < categories.length; k++) { %>
                 <a href="/portfolio/project/category/<%= categories[k].title %>" class="One">

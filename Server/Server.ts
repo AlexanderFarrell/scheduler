@@ -1,9 +1,9 @@
 import {ServerInit} from "./Modules/ServerInit";
-import {index_api} from "./App/Home";
-import {portfolio_api} from "./App/Portfolio/Portfolio";
-import {word_api} from "./App/Word/WordApp";
-import {wiki_api} from "./App/Wiki/WikiApp";
-import {day_api} from "./App/Day/DayApp";
+import {index_api} from "./App/Index/index_api";
+import {portfolio_api} from "./App/Portfolio/portfolio_api";
+import {word_api} from "./App/Word/word_api";
+import {wiki_api} from "./App/Wiki/wiki_api";
+import {day_api} from "./App/Day/day_api";
 import {auth_api} from "./App/Auth/auth_api";
 
 // let back = new PaServer();

@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {IsLoggedIn, RenderTemplate} from "../Modules/ServerHelper";
+import {IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
 
 export const index_api = Router();
 
