@@ -5,19 +5,24 @@ import * as cookieParser from "cookie-parser";
 import * as logger from 'morgan';
 import * as helmet from "helmet";
 import * as enforce from 'express-sslify';
-import {SetupDatabaseDevelopment, SetupDatabaseProduction} from "./Database";
+import {SetupDatabaseDevelopment, SetupDatabaseProduction, SetupDatabaseProductionHeroku} from "./Database";
 import * as fs from "fs";
 import {SetupSession} from "./ServerHelper";
-import {DayDao} from "../App/Day/DayDao";
 
 export class ServerInit {
     public static GetExpressApp(): Application {
-        const runtime_mode = process.env.RUNTIME_MODE || 'development';
+        let runtime_mode = process.env.RUNTIME_MODE || 'production';
+        if (process.argv.includes("--debug")) {
+            runtime_mode = "development";
+        }
+        console.log(runtime_mode)
 
         const app = express()
 
         app.set('views', path.join(__dirname, '../../Client/View'));
         app.set('view engine', 'ejs');
+
+        app.set("runtime_mode", runtime_mode)
 
         app.use(logger('dev'));
         app.use(express.json());
@@ -26,7 +31,7 @@ export class ServerInit {
         app.use(express.static(path.join(__dirname, '../../Public')));
 
         switch (runtime_mode) {
-            case 'production':
+            case 'production_heroku':
                 app.use(enforce.HTTPS({trustProtoHeader: true}));
                 app.use(helmet({
                     contentSecurityPolicy: {
@@ -39,7 +44,14 @@ export class ServerInit {
                         }
                     }
                 }))
-                SetupDatabaseProduction();
+                SetupDatabaseProductionHeroku();
+                break;
+            case 'production':
+                // @ts-ignore
+                const config = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'Server.config.json')));
+                app.set('config', config)
+                SetupDatabaseProduction(config);
+                SetupSession(app);
                 break;
             case 'development':
                 // @ts-ignore
@@ -56,7 +68,18 @@ export class ServerInit {
     }
 
     public static Run(app: Application) {
-        const port = process.env.PORT || app.get('config')?.port || 8750;
+        let port = process.env.PORT || app.get('config')?.port || 8750;
+        switch (app.get('runtime_mode')) {
+            case "development":
+                port = process.env.PORT || app.get('config')?.port_dev || 3000;
+                break
+            case "production":
+                port = process.env.PORT || app.get('config')?.port || 8750;
+                break;
+        }
+        if (app.get("config") != null) {
+
+        }
         app.listen(port, () => {
             console.log(`Listening on ${port}`);
             console.log(`View at http://localhost:${port} to connect locally.\n`);

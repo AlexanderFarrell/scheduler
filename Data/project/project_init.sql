@@ -25,7 +25,9 @@ create table project (
                          maintenance Size,
                          priority decimal not null default 0,
                          account_id int not null references account(id),
-                         created_on timestamptz default now()
+                         created_on timestamptz default now(),
+                         parent_id int references project(id),
+                         category_id int references project_category(id)
 
 --     wiki_page int references wiki(id)
 --     notes text not null default ''

@@ -36,15 +36,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SetupDatabaseProduction = exports.SetupDatabaseDevelopment = exports.Data = void 0;
+exports.SetupDatabaseProduction = exports.SetupDatabaseProductionHeroku = exports.SetupDatabaseDevelopment = exports.Data = void 0;
 var pg_1 = require("pg");
 exports.Data = null;
 function SetupDatabaseDevelopment(config) {
-    exports.Data = new Database(Database.ConstructUri(config.database.username, config.database.password, config.database.host, config.database.port, config.database.database));
+    exports.Data = new Database(Database.ConstructUri(config.database_dev.username, config.database_dev.password, config.database_dev.host, config.database_dev.port, config.database_dev.database));
 }
 exports.SetupDatabaseDevelopment = SetupDatabaseDevelopment;
-function SetupDatabaseProduction() {
+function SetupDatabaseProductionHeroku() {
     exports.Data = new Database(process.env.DATABASE_URL, true);
+}
+exports.SetupDatabaseProductionHeroku = SetupDatabaseProductionHeroku;
+function SetupDatabaseProduction(config) {
+    exports.Data = new Database(Database.ConstructUri(config.database.username, config.database.password, config.database.host, config.database.port, config.database.database));
 }
 exports.SetupDatabaseProduction = SetupDatabaseProduction;
 var Database = /** @class */ (function () {

@@ -11,6 +11,9 @@ alter table words
 add column added_on timestamptz not null default now();
 
 alter table words
+    add column account_id int not null references account(id);
+
+alter table words
 drop column added_on;
 
 select count(*)

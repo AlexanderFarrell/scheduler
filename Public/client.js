@@ -26,6 +26,8 @@ function CreateTabs(starting_id, ids, tab_ids) {
 
     // Show the initial ID
     active.style.display = "initial";
+
+    console.log("Set Up Tabs!")
 }
 
 function Search() {

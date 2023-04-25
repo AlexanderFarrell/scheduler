@@ -4,19 +4,29 @@ export let Data: Database = null;
 
 export function SetupDatabaseDevelopment(config) {
     Data = new Database(Database.ConstructUri(
+        config.database_dev.username,
+        config.database_dev.password,
+        config.database_dev.host,
+        config.database_dev.port,
+        config.database_dev.database
+    ));
+}
+
+export function SetupDatabaseProductionHeroku() {
+    Data = new Database(
+        process.env.DATABASE_URL,
+        true
+    )
+}
+
+export function SetupDatabaseProduction(config) {
+    Data = new Database(Database.ConstructUri(
         config.database.username,
         config.database.password,
         config.database.host,
         config.database.port,
         config.database.database
     ));
-}
-
-export function SetupDatabaseProduction() {
-    Data = new Database(
-        process.env.DATABASE_URL,
-        true
-    )
 }
 
 class Database {
