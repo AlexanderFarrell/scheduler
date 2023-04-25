@@ -60,9 +60,27 @@ export const Project = {
         }
     },
 
-    async add(title: string, username: string) {
+    async get_last_24_hours(username: string) {
+        return await Data.QueryRows(
+            `select p.title as title,
+                        c.title as category,
+                        status
+                from project p
+                left join project_category c on p.category_id = c.id
+                where p.account_id=(select id from account where username=$1)
+--                     and p.status='In Development'
+--                     and parent_id is null
+                    order by created_on desc `,
+            [username]
+        );
+    },
+
+    async add(title: string, username: string, category: string) {
         await Data.Execute(`insert into project (title, account_id) values ($1,                                                             (select id from account where username=$2))`,
             title, username)
+        let project = await Project.get(title, username);
+
+        await Project.set_category(project, category, username);
     },
 
     async update(project, title: string, status: string, time: string, maintenance: string, priority: number) {

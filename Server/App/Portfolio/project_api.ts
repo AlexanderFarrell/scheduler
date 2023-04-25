@@ -4,27 +4,35 @@ import {Project} from "./project_data";
 
 export const project_router = Router()
 
-project_router.get("/create", (req, res) => {
+project_router.get("/create", async (req, res) => {
     let data = (req.query['parent'] ? {parent: req.query['parent']} : {})
+    if (req.query['category']) {
+        data['category'] = req.query['category']
+    }
+    data['projects'] = await Project.get_last_24_hours(req.session['username'])
     RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', data)
 })
 
 project_router.post('/create', async (req, res) => {
-    let {title} = req.body;
-    if (!IsNotNull(req, res, title)) {
+    let {title, category} = req.body;
+    if (!IsNotNull(req, res, title, category)) {
         RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', {error: "Please enter all fields"})
     }
 
     try {
-        await Project.add(title, req.session['username']);
+        await Project.add(title, req.session['username'], category);
 
         if (req.body['parent'] != null) {
             let child = await Project.get(title, req.session['username']);
             await Project.set_parent(child, req.session['username'], req.body['parent'] as string);
+
+            // res.redirect('/portfolio/project/create?category=' + category)
+
             res.redirect('/portfolio/project/' + req.body['parent'])
         } else {
-            res.redirect('/portfolio')
+            // res.redirect('/portfolio')
         }
+        res.redirect('/portfolio/project/create?category=' + category)
 
     } catch (e) {
         console.error(e);

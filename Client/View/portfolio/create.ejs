@@ -1,7 +1,7 @@
 <div class="SideContent">
     <%- include('sidebar.ejs')%>
     <div>
-        <div class="CenterContent">
+        <div class="CenterReading">
             <h1>
                 Create a New Project
             </h1>
@@ -14,6 +14,10 @@
                     <label for="title">Title: </label>
                     <input type="text" name="title" id="title" required>
                 </div>
+                    <div class="inputField">
+                        <label for="category">Category: </label>
+                        <input type="text" name="category" id="category" required value="<%= locals.category || "" %>">
+                    </div>
                 <!--    <div class="inputField">-->
                 <!--        <label for="priority">Priority: </label>-->
                 <!--        <input type="number" name="priority" id="priority" value="0" step="1" required>-->
@@ -63,10 +67,16 @@
                         <%= locals.error %>
                     </div>
                 <% } %>
+                <% if (locals.projects) { %>
+                    <%- include("list_projects.ejs", {projects: projects, message: "Recently Created Projects (24 hrs)"})%>
+                <% } %>
             </form>
         </div>
 
     </div>
 
 </div>
+<script>
+    document.getElementById("title").focus()
+</script>
 
