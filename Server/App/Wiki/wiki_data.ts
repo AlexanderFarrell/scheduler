@@ -21,12 +21,14 @@ export const Wiki = {
             title, content, username);
     },
 
-    async update(title: string, username: string, new_content: string) {
+    async update(title: string, username: string, new_content: string, new_title: string) {
         await Data.Execute(
-            `update wiki set content=$1 
+            `update wiki 
+                set content=$1,
+                    title=$4
                 where title=$2
                     and account_id=(select id from account where username=$3)`,
-            new_content, title, username
+            new_content, title, username, new_title
         );
     },
 
@@ -40,14 +42,16 @@ export const Wiki = {
         );
     },
 
-    async search(term: string, username: string) {
+    async search(term: string, username: string, limit: number = 100) {
         return await Data.QueryRows(
             `select * 
                  from wiki w
                  where (lower(w.content) like lower(concat('%', $1::text, '%')) 
                     or lower(w.title) like lower(concat('%', $1::text, '%')))
-                        and account_id=(select id from account where username=$2)`,
-            [term, username]
+                        and account_id=(select id from account where username=$2)
+                    order by created_on desc 
+                    limit $3`,
+            [term, username, limit]
         );
     }
 }

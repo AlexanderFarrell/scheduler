@@ -1,0 +1,2 @@
+./end.sh;
+./start.sh;

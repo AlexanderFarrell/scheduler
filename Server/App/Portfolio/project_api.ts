@@ -27,12 +27,12 @@ project_router.post('/create', async (req, res) => {
             await Project.set_parent(child, req.session['username'], req.body['parent'] as string);
 
             // res.redirect('/portfolio/project/create?category=' + category)
-
-            res.redirect('/portfolio/project/' + req.body['parent'])
+            res.redirect(`/portfolio/project/create?category=${category}&parent=${req.body['parent'] as string}` )
+            // res.redirect('/portfolio/project/' + req.body['parent'])
         } else {
             // res.redirect('/portfolio')
+            res.redirect('/portfolio/project/create?category=' + category)
         }
-        res.redirect('/portfolio/project/create?category=' + category)
 
     } catch (e) {
         console.error(e);

@@ -95,8 +95,10 @@ wiki_api.post('/', async (req, res) => {
 wiki_api.post('/update', async (req, res) => {
     await Wiki.update(req.body['title'],
         req.session['username'],
-        req.body['content']);
-    res.redirect('/wiki/page/' + req.body['title'])
+        req.body['content'],
+        req.body['new_title']);
+    let url = '/wiki/page/' + req.body['new_title']
+    res.redirect(url)
 })
 
 wiki_api.get('/search', async (req, res) => {

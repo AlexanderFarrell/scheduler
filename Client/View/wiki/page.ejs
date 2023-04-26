@@ -17,16 +17,18 @@
     <% } else { %>
             <div id="EditPage" style="display: none;">
                 <button onclick="Save()">Save</button>
+                <div class="inputField">
+                    <label>Title</label>
+                    <input type="text" id="TitleInput" value="<%= title %>">
+                </div>
                 <div id="Editor">
                     <%- page %>
                 </div>
-
             </div>
             <div id="DisplayPage">
                 <h1><%= title %></h1>
                 <div><%- page %></div>
             </div>
-
     <% } %>
 </div>
 <script src="/quill.js"></script>
@@ -61,6 +63,7 @@
 
     async function Save() {
         let text = document.getElementsByClassName('ql-editor')[0].innerHTML
+        let new_title = document.getElementById('TitleInput').value
         await fetch('/wiki/update', {
             method: 'POST',
             headers: {
@@ -68,11 +71,12 @@
             },
             body: JSON.stringify({
                 title: "<%= title %>",
+                new_title: new_title,
                 content: text
             }),
             redirect: "follow"
         })
-        location.reload()
+        location.href = `/wiki/page/${new_title}`
 
     }
 

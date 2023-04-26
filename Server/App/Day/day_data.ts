@@ -1,4 +1,5 @@
 import {Data} from "../../Modules/Database";
+import {Wiki} from "../Wiki/wiki_data";
 
 export const Day = {
     async get_completed_by_day(username: string) {
@@ -74,5 +75,9 @@ export const Day = {
                  group by date(created_on)
                  order by date(created_on);`,
             [username]);
+    },
+
+    async get_journal(username: string) {
+        return Wiki.search("journal", username, 40);
     }
 }

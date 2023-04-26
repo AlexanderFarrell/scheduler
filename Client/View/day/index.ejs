@@ -1,14 +1,36 @@
 <div class="CenterContent">
     <h1>Days</h1>
-    <div class="table" style="grid-template-columns: auto auto auto">
-        <div class="tableHeader">Date</div>
-        <div class="tableHeader">Completed</div>
-        <div class="tableHeader">Score</div>
+    <div class="Flex">
+        <div id="scorecard" class="One Container">
+            <h2>Scorecard</h2>
+            <div class="table" style="grid-template-columns: auto auto auto">
+                <div class="tableHeader">Date</div>
+                <div class="tableHeader">Completed</div>
+                <div class="tableHeader">Score</div>
 
-        <% for (var i = 0; i < scores.length; i++) { %>
-            <div><%= scores[i].date.toLocaleDateString()%></div>
-            <div><%= scores[i].completed_count%></div>
-            <div><%= scores[i].score%></div>
-        <% } %>
+                <% for (var i = 0; i < scores.length; i++) { %>
+                    <div><%= scores[i].date.toLocaleDateString()%></div>
+                    <div><%= scores[i].completed_count%></div>
+                    <div><%= scores[i].score%></div>
+                <% } %>
+            </div>
+        </div>
+        <div class="One Container">
+            <h2>Journal</h2>
+            <% for (var i = 0; i < journal.length; i++ ) { %>
+                <a href="/wiki/page/<%= journal[i].title %>">
+                    <div style="display: grid; grid-template-columns: auto 1fr">
+                        <img src="/images/icon/doc.svg" alt="<%= journal[i].title %>">
+                        <div>
+                            <%= journal[i].title %>
+                        </div>
+                    </div>
+                </a>
+            <% } %>
+        </div>
     </div>
+    <div class="Container">
+        <h2>Track</h2>
+    </div>
+
 </div>

@@ -7,5 +7,6 @@ day_api.use(IsLoggedIn);
 
 day_api.get('/', async (req, res) => {
     let scores = await Day.get_scores_by_day(req.session['username']);
-    RenderTemplate(req, res, "Day", "day/index.ejs", {scores: scores})
+    let journal = await Day.get_journal(req.session['username'])
+    RenderTemplate(req, res, "Day", "day/index.ejs", {scores: scores, journal: journal})
 })
