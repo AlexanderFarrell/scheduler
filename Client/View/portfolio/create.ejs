@@ -8,7 +8,8 @@
 
             <form action="/portfolio/project/create" method="post" class="CenterContent">
                 <% if (locals.parent) { %>
-                    <input type="hidden" value="<%= parent %>" name="parent">
+                    <label for="parent">Parent: </label>
+                    <input type="text" disabled value="<%= parent %>" name="parent" id="parent">
                 <% } %>
                 <div class="inputField">
                     <label for="title">Title: </label>

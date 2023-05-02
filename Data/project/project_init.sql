@@ -28,10 +28,12 @@ create table project (
                          created_on timestamptz default now(),
                          parent_id int references project(id),
                          category_id int references project_category(id)
-
 --     wiki_page int references wiki(id)
 --     notes text not null default ''
 );
+
+alter table project
+add column description text not null default '';
 
 create table analysis (
     id serial primary key,

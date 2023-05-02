@@ -1,17 +1,25 @@
+<div class="CenterY">
+    <form class="auth" action="/auth/login" method="post" autocomplete="on">
+        <img class="DesktopOnly" src="/images/M02a.png" style="margin: 0 33%; width: 33%">
+        <h1>Login to Scheduler</h1>
+        <label>
+            Username:
+            <input id="a" type="text" name="username" autocomplete="username" tabindex="1">
+        </label>
+        <label>
+            Password:
+            <input type="password" name="password" autocomplete="current-password" tabindex="2">
+        </label>
+        <div class="Row2">
+            <a href="/auth">
+                <div class="Button">Back</div>
+            </a>
+            <input type="submit" value="Login" tabindex="3">
+        </div>
+        <div style="text-align: center"><%- m %></div>
+    </form>
+</div>
 
-<form class="auth" action="/auth/login" method="post" autocomplete="on">
-    <h1>Login</h1>
-    <label>
-        Username:
-        <input id="a" type="text" name="username" autocomplete="username" tabindex="1">
-    </label>
-    <label>
-        Password:
-        <input type="password" name="password" autocomplete="current-password" tabindex="2">
-    </label>
-    <input type="submit" value="Login" tabindex="3">
-    <div style="text-align: center"><%- m %></div>
-</form>
 <script>
     document.getElementById('a').focus()
 </script>

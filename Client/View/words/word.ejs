@@ -1,16 +1,19 @@
 
 <div class="CenterContent">
     <%- include("header.ejs")%>
-    <h4 class="highlight">
-        <%- word.title %>
-    </h4>
-    <h5>
-        <%- word.date.toLocaleDateString()%>
-    </h5>
-    <p>
-        <%- word.content %>
-    </p>
-    <form action="/words/edit" id="Edit" method="post" style="display: none">
+    <div class="CenterReading">
+        <h4 class="highlight">
+            <%- word.title %>
+        </h4>
+        <h5>
+            <%- word.date.toLocaleDateString()%>
+        </h5>
+        <p id="WordContent">
+            <%- word.content %>
+        </p>
+    </div>
+
+    <form action="/words/edit" id="Edit" method="post" class="CenterReading" style="display: none">
         <input type="hidden" name="id" value="<%= word.id%>">
         <label>
             Word: <input type="text" name="title" tabindex="1" id="word_start" value="<%= word.title%>">
@@ -24,5 +27,21 @@
         </label>
         <input type="submit" value="Save Changes">
     </form>
-    <button id="EditButton" onclick="Toggle('Edit'); Toggle('EditButton')">Edit</button>
+    <div class="CenterReading Row2">
+        <button id="EditButton" onclick="Toggle('Edit'); Toggle('EditButton')">Edit</button>
+        <button onclick="RepeatWord()">Repeat</button>
+    </div>
+    <div class="CenterReading" id="Repeat">
+    </div>
+
 </div>
+<script>
+    function RepeatWord() {
+        let word = document.getElementById("WordContent").outerHTML
+        let container = document.getElementById("Repeat")
+
+        for (let i = 0; i < 100; i++) {
+            container.innerHTML += word
+        }
+    }
+</script>

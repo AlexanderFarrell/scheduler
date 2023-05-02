@@ -4,12 +4,30 @@
         <div class="Two Container">
             <h2>Projects</h2>
             <div style="text-align: center">By Category</div>
+            <% for (var i = 0; i < categories.length; i++) { %>
+            <a href="/portfolio/project/category/<%= categories[i].title %>">
+                <div class="Button"><%= categories[i].title %></div>
+            </a>
+            <% } %>
         </div>
-        <div class="Four Container">
-            <h2>Recent Documents</h2>
+        <% if (locals.word) { %>
+            <div class="Four Container">
+                <h2>Recent Word</h2>
+                <div>
+                    <h3><%= word[0]['title']%></h3>
+                    <p style="text-align: center"><%= new Date(word[0]['date']).toLocaleDateString()%></p>
+                    <p><%= word[0]['content']%></p>
+                </div>
+            </div>
+        <% } %>
+    </div>
+    <div class="Four Container">
+        <h2>Recent Documents</h2>
+        <div class="Row4">
+            <% for (var j = 0; j < docs.length; j++) { %>
+                <%- include('wiki/doc_icon.ejs', {doc: docs[j]}) %>
+            <% } %>
         </div>
     </div>
-    <div class="Container">
-        <h2>Recent Word</h2>
-    </div>
+
 </div>

@@ -6,7 +6,7 @@ body {
   color: #d2d2d2;
   stroke: white;
   fill: white;
-  font-family: 'Roboto', sans-serif;
+  font-family: $font_regular;
   display: grid;
   grid-template-rows: auto 1fr auto;
 }
@@ -17,6 +17,7 @@ body {
 
 header {
   background: $theme-color;
+  border-bottom: rgba(255, 255, 255, 0.25) 1px solid;
 }
 
 nav {
@@ -74,6 +75,7 @@ input[type="text"], input[type="number"], input[type="date"], input[type="passwo
   background-color: #1e1e1e;
   outline: none;
   border: 1px $theme-color solid;
+  font-family: $font_regular;
   border-radius: 4px;
   color: white;
 }

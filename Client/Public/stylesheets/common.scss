@@ -3,12 +3,22 @@
   width: 2rem;
 }
 
+.NoBackground {
+  background: none;
+}
+
 .SmallButton {
   width: auto !important;
   padding: 5px 10px;
   align-content: center;
   align-items: center;
   font-size: 1.5rem;
+}
+
+.CenterY {
+  display: grid;
+  align-items: center;
+  height: 100vh;
 }
 
 .SideContent {
@@ -29,7 +39,10 @@
 
 .SideBar {
   //padding: 10px;
+  background: $theme-color-dark;
+  border-right: rgba(255, 255, 255, 0.22) 1px solid;
   font-size: 0.8rem;
+  height: 100%;
 }
 
 .SideBar > div > a {

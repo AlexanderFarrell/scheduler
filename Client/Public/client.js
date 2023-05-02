@@ -1,10 +1,12 @@
-function Toggle(id) {
-    let ele = document.getElementById(id)
-    if (ele.style.display === "none") {
-        ele.style.display = "block";
-    } else {
-        ele.style.display = "none";
-    }
+function Toggle(...ids) {
+    ids.forEach(id => {
+        let ele = document.getElementById(id)
+        if (ele.style.display === "none") {
+            ele.style.display = "block";
+        } else {
+            ele.style.display = "none";
+        }
+    })
 }
 
 function CreateTabs(starting_id, ids, tab_ids) {

@@ -1,4 +1,4 @@
-<a href="/portfolio/project/<%= project.title%>">
+<a href="/portfolio/project/<%= project.title%>" title="<%= project.description %>">
     <div class="Button">
         <div style="display: grid; grid-template-columns: 1fr auto">
             <div style="text-align: left; ">
@@ -13,5 +13,11 @@
                 </div>
             </div>
         </div>
+        <% if (locals.show_description && project.description.length > 2) { %>
+            <br>
+        <div style="font-size: 12px; text-align: justify; line-height: 1.2rem">
+            <%= project.description %>
+        </div>
+        <% } %>
     </div>
 </a>

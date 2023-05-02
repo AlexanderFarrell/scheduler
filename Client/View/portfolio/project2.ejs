@@ -1,0 +1,72 @@
+<div class="SideContent">
+    <div class="SideBar DesktopOnly">
+        <%- include('sidebar.ejs')%>
+
+    </div>
+    <div>
+        <% if (locals.project) { %>
+            <div class="DesktopOnly Flex CenterContent" style="justify-content: center; justify-items: center">
+                <a href="/portfolio/project/<%= project.title %>">
+                    <div class="Button">Summary</div>
+                </a>
+                <a href="/portfolio/project/<%= project.title %>/documents">
+                    <div class="Button">Documents</div>
+                </a>
+                <a href="/portfolio/project/<%= project.title %>/deliverables">
+                    <div class="Button">Deliverables</div>
+                </a>
+                <a href="/portfolio/project/<%= project.title %>/related">
+                    <div class="Button">Related</div>
+                </a>
+                <a href="/portfolio/project/<%= project.title %>/news">
+                    <div class="Button">News</div>
+                </a>
+            </div>
+            <div class="MobileOnly">
+                <div class=" CenterContent ">
+                    <a href="/portfolio">
+<!--                        <div class="Button">H</div>-->
+                        <button class="SmallButton">
+                            <img src="/images/icon/back.svg" alt="Create Project" class="Icon">
+                        </button>
+                    </a>
+                    <a href="/portfolio/project/<%= project.title %>">
+<!--                        <div class="Button">S</div>-->
+                        <button class="SmallButton">
+                            <img src="/images/icon/home.svg" alt="Create Project" class="Icon">
+                        </button>
+                    </a>
+                    <a href="/portfolio/project/<%= project.title %>/documents">
+                        <button class="SmallButton">
+                            <img src="/images/icon/doc.svg" alt="Create Project" class="Icon">
+                        </button>
+                    </a>
+                    <a href="/portfolio/project/<%= project.title %>/deliverables">
+
+                        <button class="SmallButton">
+                            <img src="/images/icon/schedule.svg" alt="Create Project" class="Icon">
+                        </button>
+                    </a>
+                    <a href="/portfolio/project/<%= project.title %>/related">
+                        <button class="SmallButton">
+                            <img src="/images/icon/items.svg" alt="Create Project" class="Icon">
+                        </button>
+                    </a>
+                    <a href="/portfolio/project/<%= project.title %>/news">
+                        <button class="SmallButton">
+                            <img src="/images/icon/news.svg" alt="Create Project" class="Icon">
+                        </button>
+                    </a>
+                </div>
+            </div>
+
+            <h1><%= project.title %></h1>
+            <%- include('tabs/' + tab) %>
+        <% } else if (locals.error) {  %>
+
+        <% } else { %>
+
+        <% } %>
+    </div>
+
+</div>

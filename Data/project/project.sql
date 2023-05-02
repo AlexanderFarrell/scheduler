@@ -55,3 +55,46 @@ create table project_link (
     constraint u_parent_child unique (project_child_id, project_parent_id)
 );
 
+create view scorecard_day as
+select sum(p.priority) as score,
+       count(d.completed) as completed_count,
+       date(d.completed) as date
+from deliverable d
+         inner join project p on p.id = d.project_id
+where d.completed is not null
+group by date(d.completed)
+order by date(d.completed) desc;
+
+create view scorecard_category as
+select sum(p.priority) as score,
+       count(d.completed) as count,
+       date(d.completed) as date,
+       pc.title as category
+from deliverable d
+         inner join project p on p.id = d.project_id
+         inner join project_category pc on pc.id = p.category_id
+-- where pc.title='Education'
+    where d.completed is not null
+group by pc.title, date(d.completed)
+order by date(d.completed), pc.title;
+
+drop view scorecard_day;
+
+select * from scorecard_day;
+select * from scorecard_category;
+
+
+
+
+select sum(p.priority) as score,
+       count(d.completed) as count,
+--        date(d.completed) as date,
+       pc.title as category
+from deliverable d
+         inner join project p on p.id = d.project_id
+         inner join project_category pc on pc.id = p.category_id
+-- where pc.title='Education'
+where d.completed is not null
+group by pc.title
+-- group by pc.title, date(d.completed)
+order by pc.title;

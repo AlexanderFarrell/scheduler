@@ -1,0 +1,36 @@
+<div class="CenterReading">
+    <div class="">
+<!--        <h2>Deliverables</h2>-->
+        <% if (project.deliverables != null && project.deliverables.length > 0) { %>
+            <% for (var j = 0; j < project.deliverables.length; j++) { %>
+                <form action="/portfolio/deliverable/track" method="post" id="d<%= j %>">
+                    <input type="hidden" name="project" value="<%= project.title %>">
+                    <input type="hidden" name="title" value="<%= project.deliverables[j].title%>">
+                    <input type="checkbox" name="completed" value="on" <%= project.deliverables[j].completed != null ? 'checked' : '' %>
+                           onchange="document.getElementById('d<%= j %>').submit()">
+                    <span>
+                                <%= project.deliverables[j].title %>
+                            </span>
+                    <% if (project.deliverables[j].completed != null) { %>
+                        <span>
+                                <%= new Date(project.deliverables[j].completed).toLocaleString()%>
+                            </span>
+                    <% } %>
+                </form>
+
+            <% } %>
+        <% } else { %>
+            <div style="text-align: center">No deliverables yet for this project. </div>
+        <% } %>
+        <br><br>
+        <form class="CenterReading" id="deliverable_add" method="post" action="/portfolio/deliverable">
+            <input type="hidden" name="project" value="<%= project.title %>">
+            <div class="inputField">
+                <label for="deliverable_title">Add Deliverable: </label>
+                <input type="text" name="title" id="deliverable_title">
+            </div>
+            <input type="submit" value="Add">
+        </form>
+        <!--                <button id="add" onclick="Toggle('deliverable_add'); Toggle('add')">Add</button>-->
+    </div>
+</div>

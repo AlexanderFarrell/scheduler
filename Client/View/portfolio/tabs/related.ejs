@@ -1,0 +1,38 @@
+<div class="CenterContent">
+    <div class="">
+        <!--                            <h2>Sub-Projects</h2>-->
+        <form action="/portfolio/project/parent" id="link" method="post" style="display: none">
+            <h3>Link Project</h3>
+            <input type="hidden" value="<%= project.title %>" name="parent">
+            <div class="inputField">
+                <label>Child</label>
+                <input type="text" name="project">
+                <div class="Row2">
+                    <button onclick="Toggle('link'); Toggle('options')">Cancel</button>
+                    <input type="submit" value="Link">
+                </div>
+            </div>
+        </form>
+        <div class="Flex">
+            <div class="One" id="options">
+                <button onclick="Toggle('link'); Toggle('options')">Link</button>
+                <a href="/portfolio/project/create?parent=<%= project.title %>&category=<%= project.category %>">
+                    <div class="Button">
+                        Create
+                    </div>
+                </a>
+            </div>
+            <div class="Five">
+                <div>
+                    <%- include('../list_projects.ejs', {projects: project.children.todo, message: 'In Progress'})%>
+                </div>
+                <div>
+                    <%- include('../list_projects.ejs', {projects: project.children.completed, message: 'Completed'})%>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

@@ -77,7 +77,5 @@ export const Day = {
             [username]);
     },
 
-    async get_journal(username: string) {
-        return Wiki.search("journal", username, 40);
-    }
+
 }

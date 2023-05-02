@@ -8,6 +8,7 @@ export const Project = {
         let project = await Data.QueryFirst(
             `select p.id as id,
                         p.title as title,
+                        description,
                         time,
                         status,
                         maintenance, 
@@ -64,10 +65,12 @@ export const Project = {
         return await Data.QueryRows(
             `select p.title as title,
                         c.title as category,
+                        p.description as description,
                         status
                 from project p
                 left join project_category c on p.category_id = c.id
                 where p.account_id=(select id from account where username=$1)
+                    and created_on >= now() - '1 day'::interval
 --                     and p.status='In Development'
 --                     and parent_id is null
                     order by created_on desc `,
@@ -96,6 +99,15 @@ export const Project = {
                     priority=$5
                     where id=$6`,
             title, status, time, maintenance, priority, project['id']
+        ));
+    },
+
+    async set_description(project, description: string) {
+        await (Data.Execute(
+            `update project
+                  set description=$1
+                  where id=$2`,
+            description, project['id']
         ));
     },
 
@@ -164,16 +176,36 @@ export const Project = {
         );
     },
 
-    async get_in_progress(username: string) {
+    async get_in_progress(username: string, with_parent: boolean = false) {
         return await Data.QueryRows(
             `select p.title as title,
                         c.title as category,
+                    p.description as description,
                         status
                 from project p
                 left join project_category c on p.category_id = c.id
                 where c.account_id=(select id from account where username=$1)
                     and p.status='In Development'
-                    and parent_id is null
+                    ${with_parent ? "and parent_id is not null" : "and parent_id is null"}
+                    --and parent_id is null
+                    order by priority desc `,
+            [username]
+        );
+    },
+
+    async get_in_progress_category(username: string, category: string, with_parent: boolean = false) {
+        return await Data.QueryRows(
+            `select p.title as title,
+                        c.title as category,
+                    p.description as description,
+                        status
+                from project p
+                left join project_category c on p.category_id = c.id
+                where c.account_id=(select id from account where username=$1)
+                  and p.category_id=(select id from project_category where c.title=$2)
+                    and p.status='In Development'
+                    ${with_parent ? "and parent_id is not null" : "and parent_id is null"}
+                    --and parent_id is null
                     order by priority desc `,
             [username]
         );
@@ -183,12 +215,30 @@ export const Project = {
         return await Data.QueryRows(
             `select p.title as title,
                         c.title as category,
+                    p.description as description,
                         status
                 from project p
                 left join project_category c on p.category_id = c.id
                 where c.account_id=(select id from account where username=$1)
                     and p.status='On-Going'
-                and parent_id is null
+                  and parent_id is null
+                    order by priority desc `,
+            [username]
+        );
+    },
+
+    async get_on_going_category(username: string) {
+        return await Data.QueryRows(
+            `select p.title as title,
+                        c.title as category,
+                    p.description as description,
+                        status
+                from project p
+                left join project_category c on p.category_id = c.id
+                where c.account_id=(select id from account where username=$1)
+                  and p.category_id=(select id from project_category where c.title=$2)
+                    and p.status='On-Going'
+                  and parent_id is null
                     order by priority desc `,
             [username]
         );
@@ -250,13 +300,15 @@ export const Project = {
             `
                 select p.title as title,
                        pc.title as category,
-                       status
+                       p.description as description,
+                       status,
+                       parent_id as parent
                 from project p
                 inner join project_category pc on pc.id = p.category_id
 --                          inner join project_category_link pcl on project.id = pcl.project_id
                 where p.category_id = (select id from project_category where title=$1)
                   and p.account_id=(select id from account where username=$2)
-                and p.parent_id is null
+                --and p.parent_id is null
                 order by p.priority desc ;`,
             [category, username]
         ))

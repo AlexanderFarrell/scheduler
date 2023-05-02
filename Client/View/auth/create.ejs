@@ -1,29 +1,37 @@
+<div class="CenterY">
+    <form class="auth" action="/auth/create" method="post" autocomplete="on">
+        <h1>Create Account</h1>
+        <label>
+            First Name:
+            <input id="a" type="text" name="first_name" autocomplete="given-name">
+        </label>
+        <label>
+            Last Name:
+            <input id="a" type="text" name="last_name" autocomplete="family-name">
+        </label>
+        <label>
+            Username:
+            <input id="a" type="text" name="username" autocomplete="username">
+        </label>
+        <label>
+            Password:
+            <input type="password" name="password" autocomplete="new-password">
+        </label>
+        <label>
+            Verify Password:
+            <input type="password" name="verify" autocomplete="new-password">
+        </label>
+        <div class="Row2">
+            <a href="/auth">
+                <div class="Button">Back</div>
+            </a>
+            <input type="submit" value="Login">
+        </div>
 
-<form class="auth" action="/auth/create" method="post" autocomplete="on">
-    <h1>Create Account</h1>
-    <label>
-        First Name:
-        <input id="a" type="text" name="first_name" autocomplete="given-name">
-    </label>
-    <label>
-        Last Name:
-        <input id="a" type="text" name="last_name" autocomplete="family-name">
-    </label>
-    <label>
-        Username:
-        <input id="a" type="text" name="username" autocomplete="username">
-    </label>
-    <label>
-        Password:
-        <input type="password" name="password" autocomplete="new-password">
-    </label>
-    <label>
-        Verify Password:
-        <input type="password" name="verify" autocomplete="new-password">
-    </label>
-    <input type="submit" value="Login">
-    <div style="text-align: center"><%- m %></div>
-</form>
+        <div style="text-align: center"><%- m %></div>
+    </form>
+</div>
+
 <script>
     document.getElementById('a').focus()
 </script>

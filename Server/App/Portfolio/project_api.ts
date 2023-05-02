@@ -42,12 +42,25 @@ project_router.post('/create', async (req, res) => {
 
 project_router.post('/update', async (req, res) => {
     try {
-        console.log(req.body)
+        // console.log(req.body)
         if (ContainsBodyArgs(req, res, 'status', 'time', 'maintenance', 'priority', 'category', 'title')) {
             let project = await Project.get(req.body['project'], req.session['username'])
             await Project.update(project, req.body['title'], req.body['status'], req.body['time'], req.body['maintenance'], req.body['priority'])
             await Project.set_category(project, req.body['category'], req.session['username'])
             res.redirect('/portfolio/project/' + req.body['title'])
+        }
+    } catch (e) {
+        console.error(e)
+        res.redirect('/portfolio/project/' + req.body['project'])
+    }
+})
+
+project_router.post('/update/description', async (req, res) => {
+    try {
+        if (ContainsBodyArgs(req, res, 'description')) {
+            let project = await Project.get(req.body['project'], req.session['username'])
+            await Project.set_description(project, req.body['description'])
+            res.redirect('/portfolio/project/' + req.body['project'])
         }
     } catch (e) {
         console.error(e)
@@ -84,9 +97,32 @@ project_router.post('/parent/delete', async (req, res) => {
 
 project_router.get('/category/:category', async (req, res) => {
     let projects = await Project.get_by_category(req.params['category'], req.session['username']);
-    RenderTemplate(req, res, req.params['category'] + " Projects", 'portfolio/results.ejs', {
-        projects, message: req.params['category'] + " Projects"
+    let on_going = []
+    let in_dev = []
+    let not_in_dev = []
+    let completed = []
+
+    projects.forEach(project => {
+        if (project['status'] === "On-Going") {
+            on_going.push(project)
+        } else if (project['status'] === "In Development") {
+            in_dev.push(project)
+        } else if (project['status'] == "Completed" || project['status'] === 'Retired') {
+            completed.push(project)
+        } else {
+            not_in_dev.push(project)
+        }
     })
+    let data = {
+        projects,
+        message: req.params['category'] + " Projects",
+        on_going,
+        in_dev,
+        not_in_dev,
+        completed,
+        category: req.params['category']
+    }
+    RenderTemplate(req, res, req.params['category'] + " Projects", 'portfolio/category_view.ejs', data)
 })
 
 project_router.post('/category', async (req, res) => {
@@ -98,6 +134,46 @@ project_router.post('/category', async (req, res) => {
 })
 
 project_router.get('/:name', async (req, res) => {
+    await render_project_tab(req, res, 'summary.ejs')
+    // let title = "error";
+    // let data = {};
+    // try {
+    //     let project = await Project.get(req.params['name'], req.session['username']);
+    //     if (project != null) {
+    //         title = project['title'];
+    //         data['project'] = project;
+    //     } else {
+    //         data['error'] = "Project Not Found";
+    //     }
+    // } catch (e) {
+    //     console.error(e);
+    //     data['error'] = "Error loading project";
+    // }
+    //
+    // RenderTemplate(req, res, `${title} - Projects`, 'portfolio/project.ejs', data);
+})
+
+project_router.get('/:name/summary', async (req, res) => {
+    await render_project_tab(req, res, 'summary.ejs')
+})
+
+project_router.get('/:name/documents', async (req, res) => {
+    await render_project_tab(req, res, 'documents.ejs')
+})
+
+project_router.get('/:name/deliverables', async (req, res) => {
+    await render_project_tab(req, res, 'deliverables.ejs')
+})
+
+project_router.get('/:name/related', async (req, res) => {
+    await render_project_tab(req, res, 'related.ejs')
+})
+
+project_router.get('/:name/news', async (req, res) => {
+    await render_project_tab(req, res, 'news.ejs')
+})
+
+async function render_project_tab(req, res, tab) {
     let title = "error";
     let data = {};
     try {
@@ -105,6 +181,7 @@ project_router.get('/:name', async (req, res) => {
         if (project != null) {
             title = project['title'];
             data['project'] = project;
+            data['tab'] = tab;
         } else {
             data['error'] = "Project Not Found";
         }
@@ -113,5 +190,5 @@ project_router.get('/:name', async (req, res) => {
         data['error'] = "Error loading project";
     }
 
-    RenderTemplate(req, res, `${title} - Projects`, 'portfolio/project.ejs', data);
-})
+    RenderTemplate(req, res, `${title} - Projects`, `portfolio/project2.ejs`, data);
+}

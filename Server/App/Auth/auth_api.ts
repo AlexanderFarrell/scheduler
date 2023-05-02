@@ -1,11 +1,17 @@
 import {Router} from "express";
-import {ContainsBodyArgs, RenderTemplate} from "../../Modules/ServerHelper";
+import {ContainsBodyArgs, IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
 import {Account} from "./auth_data";
 
 export const auth_api = Router();
 
 auth_api.get("/", (req, res) => {
     RenderTemplate(req, res, "Scheduler", "auth/index.ejs", {hideHeader: true})
+})
+
+auth_api.get('/account', (req, res) => {
+    IsLoggedIn(req, res, () => {
+        RenderTemplate(req, res, "Account", "auth/account.ejs")
+    })
 })
 
 auth_api.get('/create', (req, res) => {

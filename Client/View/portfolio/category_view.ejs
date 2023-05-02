@@ -1,0 +1,72 @@
+<div class="SideContent">
+    <%- include('sidebar.ejs')%>
+    <div>
+        <div style="display: grid; grid-template-columns: 1fr auto auto; grid-gap: 10px" class="CenterContent">
+            <h1><%= message %></h1>
+
+            <a href="/portfolio/analysis?sort=Only+Priority&category=<%= category%>&min_priority=-500>">
+                <div class="Button">
+                    <img src="/images/icon/science.svg" class="Icon">
+                </div>
+            </a>
+            <a href="/portfolio/project/create?category=<%= category %>">
+                <div class="Button">
+                    <img src="/images/icon/add.svg" class="Icon">
+                </div>
+            </a>
+        </div>
+        <div class="Flex CenterContent">
+            <div class="One">
+                <%- include("list_projects.ejs", {message: "Development", projects: in_dev}) %>
+            </div>
+            <div class="One">
+                <%- include("list_projects.ejs", {message: "Production", projects: on_going}) %>
+            </div>
+        </div>
+        <div class="Flex CenterContent">
+            <div class="One">
+                <%- include("list_projects.ejs", {message: "Potential", projects: not_in_dev}) %>
+            </div>
+            <div class="One">
+                <%- include("list_projects.ejs", {message: "Completed", projects: completed}) %>
+            </div>
+        </div>
+        <div class="CenterContent">
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <h1>Analytics</h1>
+            <div id="PieChart" style="height: 500px; color: white"></div>
+            <script>
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['Task', 'Hours per Day'],
+                        ['Development', <%= in_dev.length %>],
+                        ['Production',  <%= on_going.length %>],
+                        ['Completed',  <%= completed.length %>],
+                        ['Potential', <%= not_in_dev.length %>]
+                    ]);
+
+                    var options = {
+                        // title: 'My Daily Activities',
+                        backgroundColor: {
+                            fill: 'none'
+                        },
+                        titleTextStyle: {
+                            color: "white"
+                        },
+                        legend: {
+                            textStyle: {
+                                color: "white"
+                            }
+                        }
+                    };
+
+                    var chart = new google.visualization.PieChart(document.getElementById('PieChart'));
+
+                    chart.draw(data, options);
+                }
+            </script>
+        </div>
+    </div>
+</div>

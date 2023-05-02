@@ -21,7 +21,8 @@ portfolio_api.get("/", async (req, res) => {
     try {
         // data['projects'] = await Project.Get(req.session['username']);
         data['unsorted'] = await Project.get_without_category(req.session['username']);
-        data['projects'] = await Project.get_in_progress(req.session['username']);
+        data['projects_root'] = await Project.get_in_progress(req.session['username'], false);
+        data['projects'] = await Project.get_in_progress(req.session['username'], true);
         data['on_going'] = await Project.get_on_going(req.session['username']);
         data['categories'] = await Project.get_categories(req.session['username']);
     } catch (e) {

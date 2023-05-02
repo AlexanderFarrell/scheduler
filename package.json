@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node Server/Server.js",
+    "start-prod": "nodemon Server/Server.js",
     "start-dev": "nodemon Server/Server.js --debug"
   },
   "dependencies": {

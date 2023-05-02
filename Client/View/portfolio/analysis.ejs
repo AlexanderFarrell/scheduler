@@ -7,11 +7,11 @@
                 <div class="Row3">
                     <div class="inputField">
                         <label>Sort By:</label>
-                        <%- include('../select.ejs', {name: "sort", val: locals.sort || "time" , items: ["Only Priority", "Time", "Status", "Maintenance"]})%>
+                        <%- include('../Common/select.ejs', {name: "sort", val: locals.sort || "time" , items: ["Only Priority", "Time", "Status", "Maintenance"]})%>
                     </div>
                     <div class="inputField">
                         <label>Categories:</label>
-                        <%- include('../select.ejs', {name: "category", val: locals.category || "All" , items: categories})%> %>
+                        <%- include('../Common/select.ejs', {name: "category", val: locals.category || "All" , items: categories})%> %>
                     </div>
                     <div class="inputField">
                         <label>Min Priority</label>

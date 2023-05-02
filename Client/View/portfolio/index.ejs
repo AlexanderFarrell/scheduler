@@ -11,10 +11,11 @@
             </div>
             <div class="Flex">
                 <div class="One">
-                    <%- include("list_projects.ejs", {message: "In Progress"})%>
+                    <%- include("list_projects.ejs", {message: "TODO", projects: projects})%>
                 </div>
                 <div class="One">
-                    <%- include("list_projects.ejs", {message: "On-Going", projects: on_going})%>
+                    <%- include("list_projects.ejs", {message: "Production", projects: on_going})%>
+                    <%- include("list_projects.ejs", {message: "Development", projects: projects_root})%>
                 </div>
             </div>
         </div>

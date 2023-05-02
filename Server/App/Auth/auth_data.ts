@@ -7,7 +7,7 @@ export const Account = {
     password_minimum: 8,
     password_maximum: 71,
     salt_rounds: 10,
-    creation_enabled: true,
+    creation_enabled: false,
 
     async create(username: string, password: string, first_name: string, last_name: string) {
         if (!Account.creation_enabled) {

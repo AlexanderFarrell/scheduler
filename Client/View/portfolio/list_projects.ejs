@@ -1,6 +1,6 @@
 <% if (locals.projects) { %>
     <h2><%= (locals.message) ? locals.message : "Projects" %></h2>
-    <div id="projects" class="CenterContent">
+    <div id="projects" class="CenterContent <%= (locals.classes) ? locals.classes : ""%>">
         <% for (var i = 0; i < projects.length; i++) { %>
             <%- include('project_item.ejs', {project: projects[i]})%>
         <% } %>

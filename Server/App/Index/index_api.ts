@@ -1,5 +1,9 @@
 import {Router} from "express";
 import {IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
+import {project_router} from "../Portfolio/project_api";
+import {Project} from "../Portfolio/project_data";
+import {Word} from "../Word/word_data";
+import {Wiki} from "../Wiki/wiki_data";
 
 export const index_api = Router();
 
@@ -13,8 +17,15 @@ index_api.get('/', (req, res) => {
     }
 })
 
-index_api.get('/home', (req, res) => {
-    RenderTemplate(req, res, 'Home', "index.ejs");
+index_api.get('/home', async (req, res) => {
+    let data = {
+        categories: await Project.get_categories(req.session['username']),
+        word: (await Word.get_most_recent(req.session['username'])),
+        docs: (await Wiki.get_recent(req.session['username'], 8))
+    }
+    console.log(data)
+
+    RenderTemplate(req, res, 'Home', "index.ejs", data);
 }) ;
 
 // export class Home implements IApp {

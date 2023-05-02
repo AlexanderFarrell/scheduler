@@ -1,0 +1,58 @@
+<div class="CenterContent">
+    <div class="">
+        <h2>Wiki Pages</h2>
+        <% if (project.documents.length > 0) { %>
+            <div id="documents">
+                <% for (var i = 0; i < project.documents.length; i++) { %>
+                    <%- include('../../wiki/doc_icon.ejs', {doc: project.documents[i]}) %>
+                <% } %>
+            </div>
+
+        <% } else { %>
+            <p>Add documents by pressing generate.</p>
+        <% } %>
+        <br>
+        <div id="DocumentGeneration" style="display: none;">
+            <form action="/portfolio/wiki" method="post">
+                <input type="hidden" name="project" value="<%= project.title %>">
+                <input type="hidden" name="title" value="Documentation">
+                <input type="hidden" name="kind" value="Main">
+                <input type="submit" value="Generate WikiApp">
+            </form>
+            <form action="/portfolio/wiki" method="post">
+                <input type="hidden" name="project" value="<%= project.title %>">
+                <input type="hidden" name="title" value="Project Charter">
+                <input type="hidden" name="kind" value="PC">
+                <input type="submit" value="Generate Charter">
+            </form>
+            <form action="/portfolio/wiki" method="post">
+                <input type="hidden" name="project" value="<%= project.title %>">
+                <input type="hidden" name="title" value="Project Management Plan">
+                <input type="hidden" name="kind" value="PMP">
+                <input type="submit" value="Generate Project Mgmt. Plan">
+            </form>
+            <form action="/portfolio/wiki" method="post">
+                <input type="hidden" name="project" value="<%= project.title %>">
+                <input type="hidden" name="title" value="Requirement Specification">
+                <input type="hidden" name="kind" value="RS">
+                <input type="submit" value="Generate Requirement Spec.">
+            </form>
+            <form action="/portfolio/wiki" method="post">
+                <input type="hidden" name="project" value="<%= project.title %>">
+                <input type="hidden" name="title" value="Design Document">
+                <input type="hidden" name="kind" value="Design">
+                <input type="submit" value="Generate Design WikiDao">
+            </form>
+            <form action="/portfolio/wiki" method="post">
+                <input type="hidden" name="project" value="<%= project.title %>">
+                <input type="hidden" name="title" value="Notes">
+                <input type="hidden" name="kind" value="Notes">
+                <input type="submit" value="Generate Notes">
+            </form>
+            <button class="SmallButton" id="A" onclick="Toggle('DocumentGeneration'); Toggle('G')">Hide</button>
+        </div>
+        <button class="SmallButton" id="G" onclick="Toggle('DocumentGeneration'); Toggle('G')">Generate</button>
+
+    </div>
+
+</div>
