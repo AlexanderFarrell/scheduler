@@ -13,17 +13,23 @@
         <% if (locals.word) { %>
             <div class="Four Container">
                 <h2>Recent Word</h2>
-                <div>
-                    <h3><%= word[0]['title']%></h3>
-                    <p style="text-align: center"><%= new Date(word[0]['date']).toLocaleDateString()%></p>
-                    <p><%= word[0]['content']%></p>
-                </div>
+                <% if (locals.word.length > 0) { %>
+                    <div>
+                        <h3><%= word[0]['title']%></h3>
+                        <p style="text-align: center"><%= new Date(word[0]['date']).toLocaleDateString()%></p>
+                        <p><%= word[0]['content']%></p>
+                    </div>
+                <% } else { %>
+                    <div>
+                        Add words to get started
+                    </div>
+                <% } %>
             </div>
         <% } %>
     </div>
     <div class="Four Container">
         <h2>Recent Documents</h2>
-        <div class="Row4">
+        <div class="Row4 FlexMobile">
             <% for (var j = 0; j < docs.length; j++) { %>
                 <%- include('wiki/doc_icon.ejs', {doc: docs[j]}) %>
             <% } %>

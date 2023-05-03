@@ -3,9 +3,9 @@ import {IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
 import {Data} from "../../Modules/Database";
 import {Deliverable} from "./Deliverable";
 import {analysis_router} from "./analysis_api";
-import {stakeholder_router} from "./stakeholder_api";
+import {stakeholder_router} from "./stakeholder/stakeholder_api";
 import {project_router} from "./project_api";
-import {resources_router} from "./resource_api";
+import {resources_router} from "./resources/resource_api";
 import {Project} from "./project_data";
 
 export const portfolio_api = Router();

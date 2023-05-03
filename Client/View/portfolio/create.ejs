@@ -8,8 +8,9 @@
 
             <form action="/portfolio/project/create" method="post" class="CenterContent">
                 <% if (locals.parent) { %>
-                    <label for="parent">Parent: </label>
-                    <input type="text" disabled value="<%= parent %>" name="parent" id="parent">
+                    <label for="parent_n">Parent: </label>
+                    <input type="hidden" value="<%= parent %>" name="parent" id="parent">
+                    <input type="text" disabled value="<%= parent %>" name="parent_n" id="parent_n">
                 <% } %>
                 <div class="inputField">
                     <label for="title">Title: </label>

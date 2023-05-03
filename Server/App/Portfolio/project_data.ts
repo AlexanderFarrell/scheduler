@@ -330,6 +330,31 @@ export const Project = {
                 from project_category
                 where account_id=(select id from account where username=$1)`,
             [username]);
+    },
+
+    async get_category_counts(username: string) {
+        return await Data.QueryRows(
+            `select c.title as category,
+                        count(*) as count
+                 from project p 
+                 inner join project_category c on c.id = p.category_id
+                 where p.account_id=(select id from account where username=$1)
+                 group by c.title`,
+            [username]
+        )
+    },
+
+    async get_category_counts_by_status(username: string, status: string) {
+        return await Data.QueryRows(
+            `select c.title as category,
+                        count(*) as count
+                 from project p 
+                 inner join project_category c on c.id = p.category_id
+                 where p.account_id=(select id from account where username=$1)
+                 and status=$2
+                 group by c.title`,
+            [username, status]
+        )
     }
 
     // async get_all_by_user(username: string) {

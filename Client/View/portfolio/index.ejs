@@ -2,7 +2,14 @@
     <%- include('sidebar.ejs')%>
     <div>
         <div class="CenterContent">
-            <h1>Portfolio</h1>
+            <div style="display: grid; grid-template-columns: 1fr auto auto; grid-gap: 10px" class="CenterContent">
+                <h1>Portfolio</h1>
+                <a href="/portfolio/project/create">
+                    <div class="Button">
+                        <img src="/images/icon/add.svg" class="Icon">
+                    </div>
+                </a>
+            </div>
             <%- include("list_category.ejs")%>
             <div>
                 <% if (locals.unsorted && unsorted.length > 0) { %>
@@ -18,6 +25,7 @@
                     <%- include("list_projects.ejs", {message: "Development", projects: projects_root})%>
                 </div>
             </div>
+            <div id="PieChart" style="height: 500px"></div>
         </div>
 
     </div>
