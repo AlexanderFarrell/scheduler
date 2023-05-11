@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SetupSession = exports.RenderTemplate = exports.IsLoggedIn = exports.SendAsDownload = exports.IsNotNull = exports.MarkdownToHTML = exports.ContainsBodyArgs = void 0;
+exports.SetupSession = exports.RenderTemplate = exports.SendAsDownload = exports.IsNotNull = exports.MarkdownToHTML = exports.ContainsBodyArgs = void 0;
 var session = require("express-session");
 var marked_1 = require("marked");
 function ContainsBodyArgs(req, res) {
@@ -39,15 +39,6 @@ function SendAsDownload(res, filename, content) {
     res.send(content);
 }
 exports.SendAsDownload = SendAsDownload;
-function IsLoggedIn(req, res, next) {
-    if (req.session.username != undefined) {
-        next();
-    }
-    else {
-        res.redirect('/auth/login');
-    }
-}
-exports.IsLoggedIn = IsLoggedIn;
 function RenderTemplate(req, res, title, content, data) {
     if (data === void 0) { data = {}; }
     data['title'] = title;

@@ -39,11 +39,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.index_api = void 0;
 var express_1 = require("express");
 var ServerHelper_1 = require("../../Modules/ServerHelper");
-var project_data_1 = require("../Portfolio/project_data");
+var auth_middleware_1 = require("../Auth/auth_middleware");
+var project_data_1 = require("../Portfolio/Project/project_data");
 var word_data_1 = require("../Word/word_data");
 var wiki_data_1 = require("../Wiki/wiki_data");
 exports.index_api = (0, express_1.Router)();
-exports.index_api.use(ServerHelper_1.IsLoggedIn);
+exports.index_api.use(auth_middleware_1.IsLoggedIn);
 exports.index_api.get('/', function (req, res) {
     if (req.session['username'] != undefined) {
         res.redirect('/home');
@@ -69,7 +70,6 @@ exports.index_api.get('/home', function (req, res) { return __awaiter(void 0, vo
             case 3:
                 data = (_a.docs = (_b.sent()),
                     _a);
-                console.log(data);
                 (0, ServerHelper_1.RenderTemplate)(req, res, 'Home', "index.ejs", data);
                 return [2 /*return*/];
         }

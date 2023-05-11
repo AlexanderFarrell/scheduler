@@ -1,0 +1,53 @@
+<div class="SideContent">
+    <%- include('../sidebar.ejs')%>
+    <div>
+        <div class="Flex">
+            <form action="/portfolio/resources/finance" method="post" class="One">
+                <a href="/portfolio/resources/finance">
+                    <div class="Button">Back</div>
+                </a>
+                <div class="Container">
+                    <h2>Add</h2>
+                    <div class="inputField">
+                        <label for="Customer">Customer:</label>
+                        <input id="Customer" type="text" name="customer">
+                    </div>
+                    <div class="inputField">
+                        <label for="Amo">Amount:</label>
+                        <input id="Amo" type="number" name="amount" step="0.01">
+                    </div>
+                    <div class="inputField">
+                        <label for="Date">Date:</label>
+                        <input id="Date" type="date" name="date">
+                    </div>
+                    <div class="inputField">
+                        <label for="Description">Description:</label>
+                        <input id="Description" type="text" name="description" value="Tutoring">
+                    </div>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+            <div class="Two">
+                <h2>Recent Transactions</h2>
+                <div class="Row4">
+                    <div>Amount</div>
+                    <div>Customer</div>
+                    <div>Date</div>
+                    <div>Description</div>
+                </div>
+                <% for (var i = 0; i < payments.length; i++) { %>
+                    <div class="Row4">
+                        <div>$ <%= payments[i].amount.toLocaleString() %></div>
+                        <div><%= payments[i].customer %></div>
+                        <div><%= new Date(payments[i].date).toLocaleDateString('en-US') %></div>
+                        <div><%= payments[i].description %></div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    document.getElementById("Customer").focus()
+</script>

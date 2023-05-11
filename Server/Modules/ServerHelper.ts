@@ -31,14 +31,6 @@ export function SendAsDownload(res, filename: string, content: string) {
     res.send(content);
 }
 
-export function IsLoggedIn(req, res, next) {
-    if (req.session.username != undefined) {
-        next()
-    } else {
-        res.redirect('/auth/login');
-    }
-}
-
 export function RenderTemplate(req, res, title, content, data={}) {
     data['title'] = title;
     data['content'] = content;

@@ -1,5 +1,5 @@
 import {Data} from "../../../Modules/Database";
-import {Finance} from "./finance_data";
+import {Finance} from "./finance/finance_data";
 
 
 export const Resource = {

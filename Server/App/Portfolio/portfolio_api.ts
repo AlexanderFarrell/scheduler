@@ -1,20 +1,21 @@
 import {Router} from 'express';
-import {IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
+import {RenderTemplate} from "../../Modules/ServerHelper";
+import {IsLoggedIn} from "../Auth/auth_middleware";
 import {Data} from "../../Modules/Database";
-import {Deliverable} from "./Deliverable";
-import {analysis_router} from "./analysis_api";
-import {stakeholder_router} from "./stakeholder/stakeholder_api";
-import {project_router} from "./project_api";
-import {resources_router} from "./resources/resource_api";
-import {Project} from "./project_data";
+import {Deliverable} from "./Project/Deliverable";
+import {analysis_router} from "./Analysis/analysis_api";
+import {stakeholder_router} from "./Stakeholder/stakeholder_api";
+import {project_router} from "./Project/project_api";
+import {resources_router} from "./Resources/resource_api";
+import {Project} from "./Project/project_data";
 
 export const portfolio_api = Router();
 portfolio_api.use(IsLoggedIn);
 
-portfolio_api.use('/stakeholder', stakeholder_router);
-portfolio_api.use('/resources', resources_router);
-portfolio_api.use('/project', project_router);
-portfolio_api.use('/analysis', analysis_router);
+portfolio_api.use('/Stakeholder', stakeholder_router);
+portfolio_api.use('/Resources', resources_router);
+portfolio_api.use('/Project', project_router);
+portfolio_api.use('/Analysis', analysis_router);
 
 portfolio_api.get("/", async (req, res) => {
     let data = {};

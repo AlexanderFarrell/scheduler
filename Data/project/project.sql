@@ -30,7 +30,7 @@ and project.account_id=(select id from account where username='test');
 
 
 -- where pcl.project_id=(select id
---                       from project
+--                       from Project
 --                       where title='WikiApp'
 --                         and account_id=
 --                             (select id
@@ -45,7 +45,7 @@ create table project_wiki_link(
 
 drop table project;
 
--- alter table project
+-- alter table Project
 -- drop column wiki_page;
 
 create table project_link (

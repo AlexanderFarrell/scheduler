@@ -1,0 +1,90 @@
+<div class="SideContent">
+    <%- include('../sidebar.ejs')%>
+    <div>
+
+        <style>
+            #SalesPerCustomer {
+                display: grid;
+                grid-template-columns: auto auto auto auto auto auto auto auto;
+            }
+        </style>
+        <h1>Projector</h1>
+        <div id="Form" class="CenterContent">
+            <label for="Income">Income: </label>
+            <input type="number" id="Income">
+            <button onclick="Calculate()">Calculate</button>
+        </div>
+        <div id="SalesPerCustomer">
+
+        </div>
+        <div id="SalesPerTime">
+
+        </div>
+        <script>
+            function Calculate() {
+                let income = parseInt(document.getElementById("Income").value)
+                ComputeSalesToCustomer(income)
+                ComputeSalesToTime(income)
+            }
+
+            function ComputeSalesToCustomer(income) {
+                const divisions = Math.floor(Math.log10(income))
+                const parent = document.getElementById("SalesPerCustomer")
+
+                parent.innerHTML = [
+                    GetDiv("customers"),
+                    GetDiv("price"),
+                    GetDiv("annualCustomers"),
+                    GetDiv("monthlyCustomers"),
+                    GetDiv("weeklyCustomers"),
+                    GetDiv("dailyCustomers"),
+                    GetDiv("dailyExSundayCustomers"),
+                    GetDiv("dailyWeekdayCustomers")
+                ].join('')
+
+                for (let i = 0; i < divisions + 1; i++) {
+                    let customers = Math.pow(10, i);
+                    let salePerCustomer = income / customers;
+
+                    let annualCustomers = Math.ceil(customers)
+                    let monthlyCustomers = Math.ceil(customers/12)
+                    let weeklyCustomers = Math.ceil(customers/52.14)
+                    let dailyCustomers = Math.ceil(customers/365.24)
+                    let dailyExSundayCustomers = Math.ceil(customers/313.11)
+                    let dailyWeekdayCustomers = Math.ceil(customers/260.97)
+
+                    let html = [
+                        GetDiv(customers),
+                        GetDiv(salePerCustomer),
+                        GetDiv(annualCustomers),
+                        GetDiv(monthlyCustomers),
+                        GetDiv(weeklyCustomers),
+                        GetDiv(dailyCustomers),
+                        GetDiv(dailyExSundayCustomers),
+                        GetDiv(dailyWeekdayCustomers)
+                    ].join('')
+
+                    parent.innerHTML += html
+                }
+            }
+
+            function GetDiv(val) {
+                return `<div>${val}</div>`
+            }
+
+            function ComputeSalesToTime(income) {
+                const parent = document.getElementById("SalesPerTime")
+                parent.innerHTML = "<h1>Per Time</h1>"
+                let year = `Annual: $${income}`
+                let month = `Monthly: $${(income/12).toFixed(2)}`
+                let weekly = `Weekly: $${(income/52.14).toFixed(2)}`
+                let daily = `Daily: $${(income/365.25).toFixed(2)}`
+                let dailyExSunday = `Daily (No Sundays): $${(income/313.11).toFixed(2)}`
+                let dailyWeekday = `Daily (Weekday): $${(income/260.97).toFixed(2)}`
+
+                let html = [year, month, weekly, daily, dailyExSunday, dailyWeekday].join('<br>')
+                parent.innerHTML += html
+            }
+        </script>
+    </div>
+</div>

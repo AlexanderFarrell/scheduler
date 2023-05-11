@@ -1,6 +1,6 @@
-import {Data} from "../../Modules/Database";
-import {Wiki} from "../Wiki/wiki_data";
-import {doc_templates} from "./doc_templates";
+import {Data} from "../../../Modules/Database";
+import {Wiki} from "../../Wiki/wiki_data";
+import {doc_templates} from "../doc_templates";
 
 export const Project = {
 
@@ -44,14 +44,14 @@ export const Project = {
                      order by d.completed desc, 
                               d.created_on`,
                 [project['id']])
-            // project['children'] = await Project.get_children(project);
+            // Project['children'] = await Project.get_children(Project);
             project['children'] = {
                 todo: await Project.get_children_to_do(project),
                 completed: await Project.get_children_completed(project)
             }
             if (project['parent_id'] != null) {
                 project['parent_title'] = (await Data.QueryFirst(
-                    'select title from project where id=$1',
+                    'select title from Project where id=$1',
                     [project['parent_id']]
                 ))['title'];
             }
@@ -305,7 +305,7 @@ export const Project = {
                        parent_id as parent
                 from project p
                 inner join project_category pc on pc.id = p.category_id
---                          inner join project_category_link pcl on project.id = pcl.project_id
+--                          inner join project_category_link pcl on Project.id = pcl.project_id
                 where p.category_id = (select id from project_category where title=$1)
                   and p.account_id=(select id from account where username=$2)
                 --and p.parent_id is null
@@ -360,7 +360,7 @@ export const Project = {
     // async get_all_by_user(username: string) {
     //     return await Data.QueryRows(
     //         `select *
-    //             from project
+    //             from Project
     //             where account_id=(select id from account
     //                                         where username=$1)
     //             order by priority desc

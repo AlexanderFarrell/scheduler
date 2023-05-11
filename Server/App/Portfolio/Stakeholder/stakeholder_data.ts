@@ -4,7 +4,7 @@ export const Stakeholder = {
     async GetCustomers(username: string) {
         return await Data.QueryRows(
             `select *
-                from customer
+                from stakeholder
                 where account_id=(select id from account where username=$1)
                 order by name`,
             [username]
@@ -13,10 +13,19 @@ export const Stakeholder = {
     async GetFamily(username: string) {
         return await Data.QueryRows(
             `select *
-                from customer
+                from stakeholder
                 where account_id=(select id from account where username=$1)
                 order by name`,
             [username]
+        )
+    },
+    async GetStakeholder(username: string, name: string) {
+        return await Data.QueryFirst(
+            `select *
+                  from stakeholder
+                  where account_id=(select id from account where username=$1)
+                    and name=$2;`,
+            [username, name]
         )
     }
 }

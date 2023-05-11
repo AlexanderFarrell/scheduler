@@ -7,7 +7,7 @@ inner join project p on p.id = d.project_id
 where date(d.completed) = '2023-04-10';
 
 
--- Gets a score of deliverables completed based on priority of the project
+-- Gets a score of deliverables completed based on priority of the Project
 select sum(p.priority) as score
 from deliverable d
          inner join project p on p.id = d.project_id

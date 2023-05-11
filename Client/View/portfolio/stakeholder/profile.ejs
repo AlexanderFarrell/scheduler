@@ -1,0 +1,23 @@
+<% if (locals.stakeholder) { %>
+    <div class="SideContent">
+        <%- include('../sidebar.ejs')%>
+        <div>
+            <h1><%= stakeholder.name %></h1>
+            <% if (locals.payments && payments.length > 0) { %>
+                <div class="One Container CenterReading">
+                    <h2>Payments</h2>
+                    <div class="Row2">
+                        <div>Date</div>
+                        <div>Amount</div>
+                    </div>
+                    <% for (var i = 0; i < payments.length; i++) { %>
+                        <div class="Row2">
+                            <div><%= new Date(payments[i].date).toLocaleDateString()%></div>
+                            <div>$ <%= payments[i].amount.toLocaleString('en-US') %></div>
+                        </div>
+                    <% } %>
+                </div>
+            <% } %>>
+        </div>
+    </div>
+<% } %>

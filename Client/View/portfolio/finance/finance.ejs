@@ -1,0 +1,183 @@
+<div class="SideContent">
+    <%- include('../sidebar.ejs')%>
+    <div>
+        <h1>Resources - Finance</h1>
+        <div class="Flex ">
+            <div class="One">
+                <!--        <form action="/portfolio/resources/payment" method="post" class="Container">-->
+                <!--            <h2>Add</h2>-->
+                <!--            <div class="inputField">-->
+                <!--                <label for="Customer">Customer:</label>-->
+                <!--                <input id="Customer" type="text" name="customer">-->
+                <!--            </div>-->
+                <!--            <div class="inputField">-->
+                <!--                <label for="Amo">Amount:</label>-->
+                <!--                <input id="Amo" type="number" name="amount" step="0.01">-->
+                <!--            </div>-->
+                <!--            <div class="inputField">-->
+                <!--                <label for="Date">Date:</label>-->
+                <!--                <input id="Date" type="date" name="date">-->
+                <!--            </div>-->
+                <!--            <div class="inputField">-->
+                <!--                <label for="Description">Description:</label>-->
+                <!--                <input id="Description" type="text" name="description" value="Tutoring">-->
+                <!--            </div>-->
+                <!--            <input type="submit" value="Submit">-->
+                <!--        </form>-->
+                <a href="/portfolio/resources/finance/add">
+                    <div class="Button">Add</div>
+                </a>
+                <a href="/portfolio/resources/finance/projector">
+                    <div class="Button">Projector</div>
+                </a>
+                <div class="Container">
+                    <div id="month_chart"></div>
+                    <div id="week_chart"></div>
+                </div>
+            </div>
+            <div class="One Container">
+                <h2>Annual Revenue</h2>
+                <div class="Row2">
+                    <div>Year</div>
+                    <div>Revenue</div>
+                </div>
+                <% for (var i = 0; i < annual.length; i++) { %>
+                    <div class="Row2">
+                        <div><%= annual[i].year %></div>
+                        <div>$ <%= annual[i].sum.toLocaleString('en-US') %></div>
+                    </div>
+                <% } %>
+
+                <h2>Monthly Revenue</h2>
+                <div class="Row3">
+                    <div>Month</div>
+                    <div>Year</div>
+                    <div>Revenue</div>
+                </div>
+                <% for (var i = 0; i < monthly.length; i++) { %>
+                    <div class="Row3">
+                        <a href="/portfolio/resources/finance/y/<%= weekly[i].year %>/m/<%= monthly[i].month %>">
+                            <div><%= monthly[i].month %></div>
+                        </a>
+                        <div><%= monthly[i].year %></div>
+                        <div>$ <%= monthly[i].sum.toLocaleString('en-US') %></div>
+                    </div>
+                <% } %>
+
+                <h2>Weekly Revenue</h2>
+                <div class="Row3">
+                    <div>Week</div>
+                    <div>Year</div>
+                    <div>Revenue</div>
+                </div>
+                <% for (var i = 0; i < weekly.length; i++) { %>
+                    <div class="Row3">
+                        <a href="/portfolio/resources/finance/y/<%= weekly[i].year %>/w/<%= weekly[i].week %>">
+                            <div><%= weekly[i].week %></div>
+                        </a>
+                        <div><%= weekly[i].year %></div>
+                        <div>$ <%= weekly[i].revenue.toLocaleString('en-US') %></div>
+                    </div>
+                <% } %>
+            </div>
+            <div class="One Container">
+                <h2>Students</h2>
+                <div class="Row2">
+                    <div>Revenue</div>
+                    <div>Amount</div>
+                </div>
+                <% for (var i = 0; i < customer.length; i++) { %>
+                    <div class="Row2">
+                        <a href="/portfolio/Stakeholder/n/<%= customer[i].customer %>">
+                            <div><%= customer[i].customer %></div>
+                        </a>
+                        <div>$ <%= customer[i].revenue.toLocaleString('en-US') %></div>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    // document.getElementById("Date").valueAsDate = new Date()
+    // document.getElementById("Customer").focus()
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        let monthData = google.visualization.arrayToDataTable([
+            ['Year', 'Sales'],
+            <% for (var i = monthly.length-1; i >= 0; i--) { %>
+            [
+                '<%=  /*monthly.length - i*/
+                    monthly[i].month + ", " + monthly[i].year
+                %>',
+                <%= monthly[i].sum %>
+            ],
+            <% } %>
+        ]);
+        let weekData = google.visualization.arrayToDataTable([
+            ['Year', 'Sales'],
+            <% for (var i = weekly.length-1; i >= 0; i--) { %>
+            [
+                '<%=  /*monthly.length - i*/
+                    weekly[i].week % 52 + ", " + weekly[i].year
+                %>',
+                <%= weekly[i].revenue %>
+            ],
+            <% } %>
+        ]);
+
+        let month_chart = new google.visualization.LineChart(document.getElementById('month_chart'));
+        let week_chart = new google.visualization.LineChart(document.getElementById('week_chart'));
+
+        month_chart.draw(monthData, {
+            title: 'Monthly Revenue',
+            curveType: 'function',
+            backgroundColor: {
+                fill: 'none'
+            },
+            titleTextStyle: {
+                color: "white"
+            },
+            hAxis: {
+                textStyle: {
+                    color: "white"
+                }
+            },
+            vAxis: {
+                textStyle: {
+                    color: "white"
+                }
+            },
+            colors: ['springgreen']
+        });
+
+        week_chart.draw(weekData, {
+            title: 'Weekly Revenue',
+            curveType: 'function',
+            backgroundColor: {
+                fill: 'none'
+            },
+            titleTextStyle: {
+                color: "white"
+            },
+            hAxis: {
+                textStyle: {
+                    color: "white"
+                }
+            },
+            vAxis: {
+                textStyle: {
+                    color: "white"
+                }
+            },
+            colors: ['springgreen']
+        });
+    }
+</script>

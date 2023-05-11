@@ -1,7 +1,8 @@
 import {Router} from "express";
-import {IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
-import {project_router} from "../Portfolio/project_api";
-import {Project} from "../Portfolio/project_data";
+import {RenderTemplate} from "../../Modules/ServerHelper";
+import {IsLoggedIn} from "../Auth/auth_middleware";
+import {project_router} from "../Portfolio/Project/project_api";
+import {Project} from "../Portfolio/Project/project_data";
 import {Word} from "../Word/word_data";
 import {Wiki} from "../Wiki/wiki_data";
 
@@ -23,10 +24,9 @@ index_api.get('/home', async (req, res) => {
         word: (await Word.get_most_recent(req.session['username'])),
         docs: (await Wiki.get_recent(req.session['username'], 8))
     }
-    console.log(data)
 
     RenderTemplate(req, res, 'Home', "index.ejs", data);
-}) ;
+});
 
 // export class Home implements IApp {
 //     GetName(): string {

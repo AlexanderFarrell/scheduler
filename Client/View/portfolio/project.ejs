@@ -44,15 +44,15 @@
                                     </div>
                                     <div class="inputField">
                                         <label for="status">Status: </label>
-                                        <%- include('../Common/select.ejs', {name: "status", val: project.status, items: ["Not Started", "In Development", "On Hold", "Completed", "On-Going", "Retired"]})%>
+                                        <%- include('../common/select.ejs', {name: "status", val: project.status, items: ["Not Started", "In Development", "On Hold", "Completed", "On-Going", "Retired"]})%>
                                     </div>
                                     <div class="inputField">
                                         <label for="time">Time: </label>
-                                        <%- include('../Common/select.ejs', {name: "time", val: project.time, items: ["Small", "Medium", "Large"]})%>
+                                        <%- include('../common/select.ejs', {name: "time", val: project.time, items: ["Small", "Medium", "Large"]})%>
                                     </div>
                                     <div class="inputField">
                                         <label for="maintenance">Maintenance: </label>
-                                        <%- include('../Common/select.ejs', {name: "maintenance", val: project.maintenance, items: ["None", "Small", "Medium", "Large"]})%>
+                                        <%- include('../common/select.ejs', {name: "maintenance", val: project.maintenance, items: ["None", "Small", "Medium", "Large"]})%>
                                     </div>
                                     <div class="inputField">
                                         <label for="priority">Priority: </label>
@@ -139,7 +139,7 @@
                             <% if (project.documents.length > 0) { %>
                                 <div id="documents">
                                     <% for (var i = 0; i < project.documents.length; i++) { %>
-                                        <%- include('../wiki/doc_icon.ejs', {doc: project.documents[i]}) %>
+                                        <%- include('../wiki/doc_icon.ejs', {doc: Project.documents[i]}) %>
                                     <% } %>
                                 </div>
 

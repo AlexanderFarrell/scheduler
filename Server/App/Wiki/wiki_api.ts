@@ -1,5 +1,6 @@
 import {Router} from "express";
-import {ContainsBodyArgs, IsLoggedIn, RenderTemplate, SendAsDownload} from "../../Modules/ServerHelper";
+import {ContainsBodyArgs, RenderTemplate, SendAsDownload} from "../../Modules/ServerHelper";
+import {IsLoggedIn} from "../Auth/auth_middleware";
 import {Wiki} from "./wiki_data";
 
 export const wiki_api = Router();

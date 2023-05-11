@@ -7955,7 +7955,7 @@
                         return 0;
                     }
                     // Binary search.
-                    // Performance analysis: http://neil.fraser.name/news/2007/10/09/
+                    // Performance Analysis: http://neil.fraser.name/news/2007/10/09/
                     var pointermin = 0;
                     var pointermax = Math.min(text1.length, text2.length);
                     var pointermid = pointermax;
@@ -7987,7 +7987,7 @@
                         return 0;
                     }
                     // Binary search.
-                    // Performance analysis: http://neil.fraser.name/news/2007/10/09/
+                    // Performance Analysis: http://neil.fraser.name/news/2007/10/09/
                     var pointermin = 0;
                     var pointermax = Math.min(text1.length, text2.length);
                     var pointermid = pointermax;

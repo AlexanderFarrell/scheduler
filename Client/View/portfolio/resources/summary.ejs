@@ -1,0 +1,33 @@
+<div class="CenterContent">
+    <h1>Resources - Summary</h1>
+    <div class="Flex">
+        <div class="One"></div>
+        <div class="One"></div>
+        <div class="One Container">
+            <h2>Annual Revenue</h2>
+            <div class="Row2">
+                <div>Year</div>
+                <div>Revenue</div>
+            </div>
+            <% for (var i = 0; i < annual.length; i++) { %>
+                <div class="Row2">
+                    <div><%= annual[i].year %></div>
+                    <div>$ <%= annual[i].sum.toLocaleString('en-US') %></div>
+                </div>
+            <% } %>
+            <h2>Monthly Revenue</h2>
+            <div class="Row3">
+                <div>Month</div>
+                <div>Year</div>
+                <div>Revenue</div>
+            </div>
+            <% for (var i = 0; i < monthly.length; i++) { %>
+                <div class="Row3">
+                    <div><%= monthly[i].month %></div>
+                    <div><%= monthly[i].year %></div>
+                    <div>$ <%= monthly[i].sum.toLocaleString('en-US') %></div>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>

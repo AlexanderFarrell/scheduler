@@ -38,6 +38,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SetupDatabaseProduction = exports.SetupDatabaseProductionHeroku = exports.SetupDatabaseDevelopment = exports.Data = void 0;
 var pg_1 = require("pg");
+//
+// import * as pg from "pg";
+// import parseDate from "postgres-date";
+//
+// pg.types.setTypeParser(1082, function (val) {
+//     return val === null ? null : parseDate(val)
+// })
 exports.Data = null;
 function SetupDatabaseDevelopment(config) {
     exports.Data = new Database(Database.ConstructUri(config.database_dev.username, config.database_dev.password, config.database_dev.host, config.database_dev.port, config.database_dev.database));

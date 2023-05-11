@@ -2,11 +2,12 @@
     <%- include('sidebar.ejs')%>
     <div class="CenterContent">
         <h1>Stakeholders</h1>
-        <h2>Customers</h2>
         <% for (var i = 0; i < customers.length; i++) { %>
+        <a href="/portfolio/Stakeholder/n/<%= customers[i].name %>">
             <div>
                 <%= customers[i].name %>
             </div>
+        </a>
         <% } %>
     </div>
 </div>

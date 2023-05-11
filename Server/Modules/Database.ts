@@ -1,4 +1,11 @@
 import { Pool } from "pg";
+//
+// import * as pg from "pg";
+// import parseDate from "postgres-date";
+//
+// pg.types.setTypeParser(1082, function (val) {
+//     return val === null ? null : parseDate(val)
+// })
 
 export let Data: Database = null;
 

@@ -17,7 +17,7 @@
                 <% } %>
                 <% if (project.category != null) { %>
                     <div>Category</div>
-<!--                    <a href="/portfolio/analysis?sort=Only+Priority&category=<%= project.category%>&min_priority=-500>">-->
+<!--                    <a href="/portfolio/Analysis?sort=Only+Priority&category=<%= project.category%>&min_priority=-500>">-->
                     <a href="/portfolio/project/category/<%= project.category%>">
                         <%= project.category %>
                     </a>
@@ -45,15 +45,15 @@
                 </div>
                 <div class="inputField">
                     <label for="status">Status: </label>
-                    <%- include('../../Common/select.ejs', {name: "status", val: project.status, items: ["Not Started", "In Development", "On Hold", "Completed", "On-Going", "Retired"]})%>
+                    <%- include('../../common/select.ejs', {name: "status", val: project.status, items: ["Not Started", "In Development", "On Hold", "Completed", "On-Going", "Retired"]})%>
                 </div>
                 <div class="inputField">
                     <label for="time">Time: </label>
-                    <%- include('../../Common/select.ejs', {name: "time", val: project.time, items: ["Small", "Medium", "Large"]})%>
+                    <%- include('../../common/select.ejs', {name: "time", val: project.time, items: ["Small", "Medium", "Large"]})%>
                 </div>
                 <div class="inputField">
                     <label for="maintenance">Maintenance: </label>
-                    <%- include('../../Common/select.ejs', {name: "maintenance", val: project.maintenance, items: ["None", "Small", "Medium", "Large"]})%>
+                    <%- include('../../common/select.ejs', {name: "maintenance", val: project.maintenance, items: ["None", "Small", "Medium", "Large"]})%>
                 </div>
                 <div class="inputField">
                     <label for="priority">Priority: </label>

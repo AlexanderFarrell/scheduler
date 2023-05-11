@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {ContainsBodyArgs, IsNotNull, RenderTemplate} from "../../Modules/ServerHelper";
+import {ContainsBodyArgs, IsNotNull, RenderTemplate} from "../../../Modules/ServerHelper";
 import {Project} from "./project_data";
 
 export const project_router = Router()
@@ -26,9 +26,9 @@ project_router.post('/create', async (req, res) => {
             let child = await Project.get(title, req.session['username']);
             await Project.set_parent(child, req.session['username'], req.body['parent'] as string);
 
-            // res.redirect('/portfolio/project/create?category=' + category)
+            // res.redirect('/portfolio/Project/create?category=' + category)
             res.redirect(`/portfolio/project/create?category=${category}&parent=${req.body['parent'] as string}` )
-            // res.redirect('/portfolio/project/' + req.body['parent'])
+            // res.redirect('/portfolio/Project/' + req.body['parent'])
         } else {
             // res.redirect('/portfolio')
             res.redirect('/portfolio/project/create?category=' + category)
@@ -36,7 +36,7 @@ project_router.post('/create', async (req, res) => {
 
     } catch (e) {
         console.error(e);
-        RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', {error: "Error saving new project."})
+        RenderTemplate(req, res, 'Portfolio', 'portfolio/create.ejs', {error: "Error saving new Project."})
     }
 })
 
@@ -138,19 +138,19 @@ project_router.get('/:name', async (req, res) => {
     // let title = "error";
     // let data = {};
     // try {
-    //     let project = await Project.get(req.params['name'], req.session['username']);
-    //     if (project != null) {
-    //         title = project['title'];
-    //         data['project'] = project;
+    //     let Project = await Project.get(req.params['name'], req.session['username']);
+    //     if (Project != null) {
+    //         title = Project['title'];
+    //         data['Project'] = Project;
     //     } else {
     //         data['error'] = "Project Not Found";
     //     }
     // } catch (e) {
     //     console.error(e);
-    //     data['error'] = "Error loading project";
+    //     data['error'] = "Error loading Project";
     // }
     //
-    // RenderTemplate(req, res, `${title} - Projects`, 'portfolio/project.ejs', data);
+    // RenderTemplate(req, res, `${title} - Projects`, 'portfolio/Project.ejs', data);
 })
 
 project_router.get('/:name/summary', async (req, res) => {
@@ -187,7 +187,7 @@ async function render_project_tab(req, res, tab) {
         }
     } catch (e) {
         console.error(e);
-        data['error'] = "Error loading project";
+        data['error'] = "Error loading Project";
     }
 
     RenderTemplate(req, res, `${title} - Projects`, `portfolio/project2.ejs`, data);

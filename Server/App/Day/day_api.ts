@@ -1,7 +1,8 @@
 import e = require("express");
-import {IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
+import {RenderTemplate} from "../../Modules/ServerHelper";
+import {IsLoggedIn} from "../Auth/auth_middleware";
 import {Day} from "./day_data";
-import {Journal} from "./Journal/journal_data";
+import {Journal} from "../Planner/Journal/journal_data";
 
 export const day_api = e.Router();
 day_api.use(IsLoggedIn);

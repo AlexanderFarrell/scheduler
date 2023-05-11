@@ -1,0 +1,32 @@
+<div class="SideContent">
+    <%- include('../sidebar.ejs')%>
+    <div>
+        <div class="One Container CenterReading">
+            <h2><%= message %></h2>
+            <p>Total Payments: $<%= total %></p>
+            <a href="/portfolio/resources/finance">
+                Back
+            </a>
+            <a href="<%= previous %>">
+                Previous
+            </a>
+            <a href="<%= next %>">
+                Next
+            </a>
+            <div class="Row3">
+                <div>Date</div>
+                <div>Amount</div>
+                <div>Customer</div>
+            </div>
+            <% for (var i = 0; i < payments.length; i++) { %>
+                <div class="Row3">
+                    <div><%= new Date(payments[i].date).toLocaleDateString()%></div>
+                    <div>$ <%= payments[i].amount.toLocaleString('en-US') %></div>
+                    <a href="/portfolio/Stakeholder/n/<%= payments[i].customer %>">
+                        <div><%= payments[i].customer %></div>
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>

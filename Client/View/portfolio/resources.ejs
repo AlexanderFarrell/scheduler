@@ -1,13 +1,12 @@
 <div class="SideContent">
     <%- include('sidebar.ejs')%>
     <div class="">
-        <h1>Resources</h1>
         <div class="DesktopOnly Flex CenterContent" style="justify-content: center; justify-items: center">
             <a href="/portfolio/resources">
                 <div class="Button">Summary</div>
             </a>
-            <a>
-                <div class="Button disabledButton">Finances</div>
+            <a href="/portfolio/resources/finance">
+                <div class="Button">Finances</div>
             </a>
             <a>
                 <div class="Button disabledButton">Assets</div>
@@ -19,89 +18,9 @@
                 <div class="Button disabledButton">Skills</div>
             </a>
         </div>
-        <div class="Flex ">
-            <div class="One Container">
-                <form action="/portfolio/resources/payment" method="post">
-                    <h2>Add</h2>
-                    <div class="inputField">
-                        <label for="Customer">Customer:</label>
-                        <input id="Customer" type="text" name="customer">
-                    </div>
-                    <div class="inputField">
-                        <label for="Amo">Amount:</label>
-                        <input id="Amo" type="number" name="amount" step="0.01">
-                    </div>
-                    <div class="inputField">
-                        <label for="Date">Date:</label>
-                        <input id="Date" type="date" name="date">
-                    </div>
-                    <div class="inputField">
-                        <label for="Description">Description:</label>
-                        <input id="Description" type="text" name="description" value="Tutoring">
-                    </div>
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-            <div class="One Container">
-                <h2>Annual Revenue</h2>
-                <div class="Row2">
-                    <div>Year</div>
-                    <div>Revenue</div>
-                </div>
-                <% for (var i = 0; i < annual.length; i++) { %>
-                    <div class="Row2">
-                        <div><%= annual[i].year %></div>
-                        <div>$ <%= annual[i].sum.toLocaleString('en-US') %></div>
-                    </div>
-                <% } %>
-
-                <h2>Monthly Revenue</h2>
-                <div class="Row3">
-                    <div>Month</div>
-                    <div>Year</div>
-                    <div>Revenue</div>
-                </div>
-                <% for (var i = 0; i < monthly.length; i++) { %>
-                    <div class="Row3">
-                        <div><%= monthly[i].month %></div>
-                        <div><%= monthly[i].year %></div>
-                        <div>$ <%= monthly[i].sum.toLocaleString('en-US') %></div>
-                    </div>
-                <% } %>
-            </div>
-            <div class="One Container">
-                <h2>Students</h2>
-                <div class="Row2">
-                    <div>Revenue</div>
-                    <div>Amount</div>
-                </div>
-                <% for (var i = 0; i < customer.length; i++) { %>
-                    <div class="Row2">
-                        <div><%= customer[i].customer %></div>
-                        <div>$ <%= customer[i].revenue.toLocaleString('en-US') %></div>
-                    </div>
-                <% } %>
-
-            </div>
+        <div>
+            <%- include("Resources/" + tab) %>
         </div>
-        <div class="Flex">
-            <div class="One">
-
-            </div>
-            <div class="Two">
-                <h2>Recent Transactions</h2>
-
-                <% for (var i = 0; i < payments.length; i++) { %>
-                    <div class="Row4">
-                        <div><%= new Date(payments[i].date).toLocaleDateString('en-US') %></div>
-                        <div><%= payments[i].amount.toLocaleString() %></div>
-                        <div><%= payments[i].description %></div>
-                        <div><%= payments[i].customer %></div>
-                    </div>
-                <% } %>
-            </div>
-        </div>
-
     </div>
 </div>
 <script>

@@ -1,6 +1,7 @@
 import {Router} from "express";
-import {ContainsBodyArgs, IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
+import {ContainsBodyArgs, RenderTemplate} from "../../Modules/ServerHelper";
 import {Word} from "./word_data";
+import {IsLoggedIn} from "../Auth/auth_middleware";
 
 export const word_api = Router();
 
