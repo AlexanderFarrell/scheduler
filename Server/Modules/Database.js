@@ -38,13 +38,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SetupDatabaseProduction = exports.SetupDatabaseProductionHeroku = exports.SetupDatabaseDevelopment = exports.Data = void 0;
 var pg_1 = require("pg");
-//
-// import * as pg from "pg";
-// import parseDate from "postgres-date";
-//
-// pg.types.setTypeParser(1082, function (val) {
-//     return val === null ? null : parseDate(val)
-// })
 exports.Data = null;
 function SetupDatabaseDevelopment(config) {
     exports.Data = new Database(Database.ConstructUri(config.database_dev.username, config.database_dev.password, config.database_dev.host, config.database_dev.port, config.database_dev.database));
@@ -74,62 +67,10 @@ var Database = /** @class */ (function () {
     Database.ConstructUri = function (username, password, host, port, database) {
         return "postgres://".concat(username, ":").concat(password, "@").concat(host, ":").concat(port, "/").concat(database);
     };
-    Database.prototype.TryGet = function (res, error_message, sql) {
-        if (error_message === void 0) { error_message = "Error retrieving Data from Server."; }
-        var args = [];
-        for (var _i = 3; _i < arguments.length; _i++) {
-            args[_i - 3] = arguments[_i];
-        }
-        return __awaiter(this, void 0, void 0, function () {
-            var _a, _b, e_1;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
-                    case 0:
-                        _c.trys.push([0, 2, , 3]);
-                        _b = (_a = res).json;
-                        return [4 /*yield*/, this.Query(sql, args)];
-                    case 1:
-                        _b.apply(_a, [(_c.sent()).rows]);
-                        return [3 /*break*/, 3];
-                    case 2:
-                        e_1 = _c.sent();
-                        res.status(500).json({ message: error_message });
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    Database.prototype.TrySet = function (res, error_message, sql) {
-        if (error_message === void 0) { error_message = "Error sending Data to Server."; }
-        var args = [];
-        for (var _i = 3; _i < arguments.length; _i++) {
-            args[_i - 3] = arguments[_i];
-        }
-        return __awaiter(this, void 0, void 0, function () {
-            var e_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this.Execute(sql, args)];
-                    case 1:
-                        _a.sent();
-                        res.sendStatus(200);
-                        return [3 /*break*/, 3];
-                    case 2:
-                        e_2 = _a.sent();
-                        res.status(500).json({ message: error_message });
-                        return [3 /*break*/, 3];
-                    case 3: return [2 /*return*/];
-                }
-            });
-        });
-    };
     Database.prototype.QueryRows = function (sql, args) {
         if (args === void 0) { args = []; }
         return __awaiter(this, void 0, void 0, function () {
-            var e_3;
+            var e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -137,8 +78,8 @@ var Database = /** @class */ (function () {
                         return [4 /*yield*/, this.Pool.query(sql, args)];
                     case 1: return [2 /*return*/, (_a.sent()).rows];
                     case 2:
-                        e_3 = _a.sent();
-                        console.error("Database Error: " + e_3.message);
+                        e_1 = _a.sent();
+                        console.error("Database Error: " + e_1.message);
                         throw new Error("Unable to retrieve Data from database");
                     case 3: return [2 /*return*/];
                 }
@@ -148,7 +89,7 @@ var Database = /** @class */ (function () {
     Database.prototype.QueryFirst = function (sql, args) {
         if (args === void 0) { args = []; }
         return __awaiter(this, void 0, void 0, function () {
-            var data, e_4;
+            var data, e_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -158,8 +99,8 @@ var Database = /** @class */ (function () {
                         data = (_a.sent()).rows;
                         return [2 /*return*/, (data.length > 0) ? data[0] : null];
                     case 2:
-                        e_4 = _a.sent();
-                        console.error("Database Error: " + e_4.message);
+                        e_2 = _a.sent();
+                        console.error("Database Error: " + e_2.message);
                         throw new Error("Unable to retrieve Data from database");
                     case 3: return [2 /*return*/];
                 }
@@ -172,7 +113,7 @@ var Database = /** @class */ (function () {
             args[_i - 1] = arguments[_i];
         }
         return __awaiter(this, void 0, void 0, function () {
-            var e_5;
+            var e_3;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -180,8 +121,8 @@ var Database = /** @class */ (function () {
                         return [4 /*yield*/, this.Pool.query(sql, args)];
                     case 1: return [2 /*return*/, _a.sent()];
                     case 2:
-                        e_5 = _a.sent();
-                        console.error("Database Error: " + e_5.message);
+                        e_3 = _a.sent();
+                        console.error("Database Error: " + e_3.message);
                         throw new Error("Unable to retrieve Data from database");
                     case 3: return [2 /*return*/];
                 }
@@ -194,7 +135,7 @@ var Database = /** @class */ (function () {
             args[_i - 1] = arguments[_i];
         }
         return __awaiter(this, void 0, void 0, function () {
-            var e_6;
+            var e_4;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -204,13 +145,16 @@ var Database = /** @class */ (function () {
                         _a.sent();
                         return [3 /*break*/, 3];
                     case 2:
-                        e_6 = _a.sent();
-                        console.error("Database Error: " + e_6.message);
+                        e_4 = _a.sent();
+                        console.error("Database Error: " + e_4.message);
                         throw new Error("Unable to retrieve Data from database");
                     case 3: return [2 /*return*/];
                 }
             });
         });
+    };
+    Database.prototype.ToSQLDate = function (date) {
+        return "".concat(date.getFullYear(), "-").concat(date.getMonth() + 1, "-").concat(date.getDate());
     };
     return Database;
 }());

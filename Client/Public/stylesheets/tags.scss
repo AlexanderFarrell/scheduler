@@ -78,6 +78,11 @@ input[type="text"], input[type="number"], input[type="date"], input[type="passwo
   font-family: $font_regular;
   border-radius: 4px;
   color: white;
+  transition: 0.2s;
+}
+
+input[type="text"]:hover, input[type="number"]:hover, input[type="date"]:hover, input[type="password"]:hover, textarea:hover {
+  border: 1px $theme-color-very-light solid;
 }
 
 button, input[type="submit"], input[type="reset"], .Button {
@@ -105,10 +110,25 @@ input[type="reset"] {
 }
 
 input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   font-size: inherit;
   width: 1em;
   height: 1em;
   padding: 10px;
+  border-radius: 4px;
+  border: 2px solid $theme-color-dark;
+  transition: 0.2s;
+}
+
+input[type="checkbox"]:checked {
+  background-color: $emphasis;
+}
+
+input[type="checkbox"]:hover {
+  background-color: $theme-color-light;
+  border: 2px solid $theme-color-very-light;
 }
 
 select {

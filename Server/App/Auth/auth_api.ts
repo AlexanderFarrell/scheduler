@@ -1,6 +1,7 @@
 import {Router} from "express";
-import {ContainsBodyArgs, IsLoggedIn, RenderTemplate} from "../../Modules/ServerHelper";
+import {ContainsBodyArgs, RenderTemplate} from "../../Modules/ServerHelper";
 import {Account} from "./auth_data";
+import {IsLoggedIn} from "./auth_middleware";
 
 export const auth_api = Router();
 

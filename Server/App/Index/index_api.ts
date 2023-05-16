@@ -38,7 +38,7 @@ index_api.get('/home', async (req, res) => {
 //
 //         router.use(IsLoggedIn);
 //         router.get('/', (req, res) => {
-//             RenderTemplate(req, res, 'Home', "index.ejs");
+//             RenderTemplate(req, res, 'Home', "planner.ejs");
 //         }) ;
 //
 //         return router;

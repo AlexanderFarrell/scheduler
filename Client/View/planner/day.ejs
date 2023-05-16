@@ -1,0 +1,109 @@
+<div class="CenterContent">
+    <div style="display: grid; grid-template-columns: 1fr auto">
+        <h2><%= message %></h2>
+    </div>
+    <%- include('subheader.ejs')%>
+    <% if (locals.today_date) { %>
+        <div class="Flex">
+<!--            <div class="One">-->
+<!--                <form action="/planner" method="post" class="One">-->
+<!--                    <h2>Add Checkbox Goal</h2>-->
+<!--                    <div class="inputField One">-->
+<!--                        <label for="title">Goal: </label>-->
+<!--                        <input name="title" id="title" type="text">-->
+<!--                    </div>-->
+<!--                    <input name="amount" id="amount" type="hidden" value="1">-->
+<!--                    <input type="hidden" name="kind" value="daily">-->
+<!--                    <input type="hidden" name="date" value="<%= today_date.toISOString() %>">-->
+<!--                    <input type="submit" value="Add">-->
+<!--                </form>-->
+<!--                <form action="/planner" method="post" class="One">-->
+<!--                    <h2>Add Number Goal</h2>-->
+<!--                    <div class="inputField One">-->
+<!--                        <label for="title">Goal: </label>-->
+<!--                        <input name="title" id="title" type="text">-->
+<!--                    </div>-->
+<!--                    <div class="inputField One">-->
+<!--                        <label for="amount">Amount: </label>-->
+<!--                        <input name="amount" id="amount" type="number">-->
+<!--                    </div>-->
+<!--                    <input type="hidden" name="date" value="<%= today_date.toISOString() %>">-->
+<!--                    <input type="hidden" name="kind" value="daily">-->
+<!--                    <input type="submit" value="Add">-->
+<!--                </form>-->
+<!--            </div>-->
+
+            <div class="Two">
+                <div style="display: grid; grid-template-columns: 1fr auto auto; grid-gap: 5px">
+<!--                    <h2>Goals</h2>-->
+<!--                    <button onclick="ToggleClass('Add')" class="SmallButton">-->
+<!--                        <img src="/images/icon/add.svg" alt="EditButton" class="Icon">-->
+<!--                    </button>-->
+                </div>
+                <div class="Add Row2" style="justify-content: center; justify-items: center; display: none;">
+                    <button class="SmallButton" onclick="ToggleClass('Add'); ToggleClass('AddNumber');">
+                        Add Number Goal
+                    </button>
+                    <button class="SmallButton" onclick="ToggleClass('Add'); Toggle('AddCheckbox');">
+                        Add Checkbox Goal
+                    </button>
+                </div>
+                <form style="display: grid; grid-template-columns: 1fr 4rem auto; align-items: center; grid-gap: 5px" action="/planner" method="post">
+                    <input name="title" id="title_checkbox" type="text" placeholder="Goal">
+                    <input name="amount" id="title_checkbox" type="number" placeholder="amount" value="1" min="1" step="1">
+                    <input type="hidden" name="kind" value="daily" id="kind_checkbox">
+                    <input type="hidden" name="date" id="date_checkbox" value="<%= today_date.toISOString() %>">
+                    <input type="submit" style="background-image: url('/images/icon/add.svg'); background-size: 100% 100%; width: 40px" value="">
+                </form>
+                <div class="Goals">
+                    <% for (var i = 0; i < daily_goals.length; i++) { %>
+                        <%- include('goal.ejs', {goal: daily_goals[i], i: i})%>
+                    <% } %>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    <% } %>
+</div>
+<script>
+    document.getElementById("title_checkbox").focus()
+    // console.log("Hello")
+    // Action("AddCheckbox", AddGoal)
+    //
+    // function AddGoal(event) {
+    //     event.preventDefault();
+    //     let formData = new FormData(event.target);
+    //     let title = formData.get('title')
+    //     let amount = formData.get('amount')
+    //     let kind = formData.get('kind')
+    //     let date = formData.get('date')
+    //
+    //     let submitData = {title, amount, kind, date}
+    //     console.log(submitData)
+    //
+    //     PostData('/planner', submitData)
+    //         .then(() => {
+    //             let goal = `
+    //             <div id="">
+    //
+    //             </div>
+    //             `
+    //         })
+    //         .catch((error) => {
+    //             event.target.innerHTML += "Error"
+    //         })
+    //
+    //     return false
+    // }
+    //
+    // function Action(form, on) {
+    //     document.getElementById(form).addEventListener("submit", function (event) {
+    //         event.preventDefault()
+    //         on(event)
+    //     })
+    //     console.log("action")
+    // }
+</script>

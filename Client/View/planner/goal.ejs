@@ -1,0 +1,26 @@
+<% if (goal.max === 1) { %>
+    <div class="Goal CheckboxGoal" id="goal<%= goal.goal_id %>">
+        <div><%= goal.title %></div>
+        <input type="checkbox"
+                <% if (goal.status === 1) { __append('checked')}%>
+        onclick="SetGoal('<%= goal.goal_id %>', this.checked ? 1 : 0)">
+        <button class="DeleteButton" style="display: none" onclick="DeleteGoal('<%= goal.goal_id %>')">
+            Delete
+        </button>
+<!--        <form method="post" action="/planner/delete/<%= goal.goal_id %>"><input type="submit" value="Delete"></form>-->
+    </div>
+<% } else { %>
+    <div class="Goal NumberGoal" id="goal<%= goal.goal_id %>">
+        <div><%= goal.title %></div>
+        <input type="number" value="<%= goal.status %>"
+            onchange="SetGoal('<%= goal.goal_id %>', this.value)">
+        <div>
+            /
+        </div>
+        <input type="number" value="<%= goal.max %>"
+               onchange="SetGoalMax('<%= goal.goal_id %>', this.value)">
+        <button class="DeleteButton" style="display: none" onclick="DeleteGoal('<%= goal.goal_id %>')">
+            Delete
+        </button>
+    </div>
+<% } %>

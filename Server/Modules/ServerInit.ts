@@ -9,7 +9,10 @@ import {SetupDatabaseDevelopment, SetupDatabaseProduction, SetupDatabaseProducti
 import * as fs from "fs";
 import {SetupSession} from "./ServerHelper";
 
+// Initializes an express app with boilerplate code, such as a database, static file server, sessions, etc.
 export class ServerInit {
+
+
     public static GetExpressApp(): Application {
         let runtime_mode = process.env.RUNTIME_MODE || 'production';
         if (process.argv.includes("--debug")) {

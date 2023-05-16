@@ -1,39 +1,6 @@
-<div class="CenterContent">
-    <h1>Planner</h1>
-    <div class="Flex">
-        <form action="/planner" method="post" class="One">
-            <h2>Add Goal</h2>
-            <div class="inputField One">
-                <label for="title">Goal: </label>
-                <input name="title" id="title" type="text">
-            </div>
-            <div class="inputField One">
-                <label for="amount">Amount: </label>
-                <input name="amount" id="amount" type="number">
-            </div>
-            <input type="hidden" name="kind" value="daily">
-            <input type="submit" value="Add">
-        </form>
-        <div class="Two">
-            <h2>Goals</h2>
-            <% for (var i = 0; i < daily_goals.length; i++) { %>
-                <div class="Row2 Container">
-                    <h3><%= daily_goals[i].title %></h3>
-                    <div class="Row3" style="text-align: center">
-                        <input type="number" name="completed" step="1" value="<%= daily_goals[i].status%>">
-                        <div>
-                            /
-                        </div>
-                        <div>
-                            <%= daily_goals[i].max %>
-                        </div>
-                    </div>
-<!--                    <div><%= new Date(daily_goals[i].day).toLocaleDateString() %></div>-->
-                </div>
-            <% } %>
-        </div>
+<div class="SideContent">
+    <%- include('sidebar.ejs') %>
+    <div>
+        <%- include(page) %>
     </div>
-
-
-
 </div>

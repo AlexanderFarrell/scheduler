@@ -52,14 +52,13 @@
   padding-bottom: 0.5em !important;
 }
 
-#DisplayPage > div > ul > li {
+#DisplayPage > div > ul > li, #DisplayPage > div > ol > li {
   padding-bottom: 0.5em !important;
 }
 
-#DisplayPage > div > ul {
+#DisplayPage > div > ul, #DisplayPage > div > ol {
   margin-left: 2em;
 }
-
 
 #DisplayPage > div > ul > .ql-indent-1 {
   margin-left: 2em;
@@ -86,6 +85,34 @@
 }
 
 #DisplayPage > div > ul > .ql-indent-7 {
+  margin-left: 14em;
+}
+
+#DisplayPage > div > ol > .ql-indent-1 {
+  margin-left: 2em;
+}
+
+#DisplayPage > div > ol > .ql-indent-2 {
+  margin-left: 4em;
+}
+
+#DisplayPage > div > ol > .ql-indent-3 {
+  margin-left: 6em;
+}
+
+#DisplayPage > div > ol > .ql-indent-4 {
+  margin-left: 8em;
+}
+
+#DisplayPage > div > ol > .ql-indent-5 {
+  margin-left: 10em;
+}
+
+#DisplayPage > div > ol > .ql-indent-6 {
+  margin-left: 12em;
+}
+
+#DisplayPage > div > ol > .ql-indent-7 {
   margin-left: 14em;
 }
 

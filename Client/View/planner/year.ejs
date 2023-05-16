@@ -1,0 +1,29 @@
+<h2><%= message %></h2>
+<div class="CenterContent">
+    <%- include('subheader.ejs')%>
+
+</div>
+<div class="CenterContent">
+    <div class="Row2">
+        <div>
+            <h1>Months</h1>
+            <% for (var i = 0; i < monthNames.length; i++) { %>
+                <a href="/planner/y/<%= year %>/m/<%= i+1 %>">
+                    <%= monthNames[i] %>
+                </a>
+            <br>
+            <% } %>
+        </div>
+        <div>
+            <h1>Weeks</h1>
+            <div class="Row3">
+                <% for (var i = 0; i < 52; i++) { %>
+                    <a href="/planner/y/<%= year %>/w/<%= i+1 %>">
+                        Week <%= i+1 %>
+                    </a>
+                <% } %>
+            </div>
+
+        </div>
+    </div>
+</div>

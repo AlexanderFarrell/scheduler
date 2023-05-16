@@ -85,7 +85,7 @@ exports.index_api.get('/home', function (req, res) { return __awaiter(void 0, vo
 //
 //         router.use(IsLoggedIn);
 //         router.get('/', (req, res) => {
-//             RenderTemplate(req, res, 'Home', "index.ejs");
+//             RenderTemplate(req, res, 'Home', "planner.ejs");
 //         }) ;
 //
 //         return router;

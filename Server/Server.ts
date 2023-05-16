@@ -1,3 +1,7 @@
+// The main entry point for the server application.
+//
+// The server is divided into modules. Each module's api is added here.
+
 import {ServerInit} from "./Modules/ServerInit";
 import {index_api} from "./App/Index/index_api";
 import {portfolio_api} from "./App/Portfolio/portfolio_api";
@@ -6,8 +10,6 @@ import {wiki_api} from "./App/Wiki/wiki_api";
 import {day_api} from "./App/Day/day_api";
 import {auth_api} from "./App/Auth/auth_api";
 import {planner_api} from "./App/Planner/planner_api";
-
-// let back = new PaServer();
 
 const app = ServerInit.GetExpressApp();
 
@@ -20,13 +22,3 @@ app.use('/day', day_api);
 app.use('/planner', planner_api);
 
 ServerInit.Run(app);
-
-// back.Start(new AuthApp());
-// back.Start(new Home());
-// back.Start(new Index());
-// back.Start(new Portfolio());
-// back.Start(new WordApp());
-// back.Start(new WikiApp());
-// back.Start(new DayApp());
-
-// back.Run();

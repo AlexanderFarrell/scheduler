@@ -1,0 +1,70 @@
+<div class="CenterContent">
+    <h2><%= message %></h2>
+    <% if (locals.yesterday && locals.tomorrow) { %>
+        <a href="<%= yesterday %>">
+            Yesterday
+        </a> -
+        <a href="<%= tomorrow %>">
+            Tomorrow
+        </a> -
+    <% } %>
+    <% if (locals.week) { %>
+        <a href="/planner/y/<%= year %>/w/<%= week %>">
+            Week <%= week %>
+        </a> -
+    <% } %>
+    <% if (locals.month) { %>
+        <a href="/planner/y/<%= year %>/m/<%= month %>">
+            <%= monthName %>
+        </a> -
+    <% } %>
+    <% if (locals.year) { %>
+        <a href="/planner/y/<%= year %>">
+            <%= year %>
+        </a>
+    <% } %>
+
+
+    <% if (locals.today_date) { %>
+        <div class="Flex">
+            <div class="One">
+                <form action="/planner" method="post" class="One">
+                    <h2>Add Checkbox Goal</h2>
+                    <div class="inputField One">
+                        <label for="title">Goal: </label>
+                        <input name="title" id="title" type="text">
+                    </div>
+                    <input name="amount" id="amount" type="hidden" value="1">
+                    <input type="hidden" name="kind" value="daily">
+                    <input type="hidden" name="date" value="<%= today_date.toISOString() %>">
+                    <input type="submit" value="Add">
+                </form>
+                <form action="/planner" method="post" class="One">
+                    <h2>Add Number Goal</h2>
+                    <div class="inputField One">
+                        <label for="title">Goal: </label>
+                        <input name="title" id="title" type="text">
+                    </div>
+                    <div class="inputField One">
+                        <label for="amount">Amount: </label>
+                        <input name="amount" id="amount" type="number">
+                    </div>
+                    <input type="hidden" name="date" value="<%= today_date.toISOString() %>">
+                    <input type="hidden" name="kind" value="daily">
+                    <input type="submit" value="Add">
+                </form>
+            </div>
+
+            <div class="Two">
+                <h2>Goals</h2>
+                <div class="Goals">
+                    <% for (var i = 0; i < daily_goals.length; i++) { %>
+                        <%- include('goal.ejs', {goal: daily_goals[i], i: i})%>
+                    <% } %>
+                </div>
+
+            </div>
+        </div>
+    <% } %>
+
+</div>

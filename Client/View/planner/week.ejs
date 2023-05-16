@@ -1,0 +1,10 @@
+<h2><%= message %></h2>
+<div class="CenterContent">
+    <%- include('subheader.ejs')%>
+    <h1>Days</h1>
+    <% for (var i = 0; i < days.length; i++) { %>
+        <div>
+            <%= days[i].toLocaleDateString() %>
+        </div>
+    <% } %>
+</div>

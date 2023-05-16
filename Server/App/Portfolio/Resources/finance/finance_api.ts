@@ -1,6 +1,6 @@
 import {Router} from "express";
 import {Resource} from "../resource_data";
-import {RenderTemplate} from "../../../../Modules/ServerHelper";
+import {monthNames, RenderTemplate} from "../../../../Modules/ServerHelper";
 import {resources_router} from "../resource_api";
 
 export const finance_router = Router()
@@ -93,18 +93,3 @@ finance_router.post('/', async (req, res) => {
     }
     res.redirect("/portfolio/resources/finance/add")
 })
-
-const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-]

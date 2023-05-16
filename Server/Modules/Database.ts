@@ -1,11 +1,4 @@
 import { Pool } from "pg";
-//
-// import * as pg from "pg";
-// import parseDate from "postgres-date";
-//
-// pg.types.setTypeParser(1082, function (val) {
-//     return val === null ? null : parseDate(val)
-// })
 
 export let Data: Database = null;
 
@@ -63,23 +56,6 @@ class Database {
         return `postgres://${username}:${password}@${host}:${port}/${database}`;
     }
 
-    public async TryGet(res, error_message="Error retrieving Data from Server.",  sql, ...args) {
-        try {
-            res.json((await this.Query(sql, args)).rows);
-        } catch (e) {
-            res.status(500).json({message: error_message});
-        }
-    }
-
-    public async TrySet(res, error_message="Error sending Data to Server.",  sql, ...args) {
-        try {
-            await this.Execute(sql, args)
-            res.sendStatus(200);
-        } catch (e) {
-            res.status(500).json({message: error_message});
-        }
-    }
-
     public async QueryRows(sql, args = []) {
         try {
             return (await this.Pool.query(sql, args)).rows;
@@ -115,5 +91,9 @@ class Database {
             console.error("Database Error: " + e.message);
             throw new Error("Unable to retrieve Data from database");
         }
+    }
+
+    public ToSQLDate(date: Date) {
+        return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
     }
 }
