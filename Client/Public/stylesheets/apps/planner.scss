@@ -27,7 +27,7 @@
   grid-template-columns: 2fr 4rem auto 4rem auto;
 }
 
-.Goals>*:nth-child(2n+1) {
+.Goals>*:nth-child(2n+1):not(.Exclude) {
   background: rgba(82, 165, 217, 0.12);
 }
 

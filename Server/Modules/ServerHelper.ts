@@ -86,15 +86,41 @@ export function SetupSession(app) {
 }
 
 export function GetDaysInWeek(year: number, week: number) {
-    let start_date = new Date(year, 0, 1 + (week - 1) * 7);
-    let start_day_of_week = start_date.getDay() - 1;
-    start_date.setDate(start_date.getDate() - start_day_of_week);
+    let start_year_date = new Date(year, 0, 0);
+    let days_back = start_year_date.getDay() - 1;
 
     let days = []
     for (let i = 0; i < 7; i++) {
-        days.push(new Date(year, 0, start_date.getDate() + i))
+        let day = new Date(year);
+        day.setDate((start_year_date.getDate() - days_back) + (week * 7) + i);
+        day.setFullYear(year)
+        days.push(day)
     }
+
     return days;
+
+    // let start_date = new Date(year, 0, 1 + (week - 1) * 7);
+    // let start_day_of_week = start_date.getDay() - 1;
+    // start_date.setDate(start_date.getDate() - start_day_of_week);
+    //
+    // let days = []
+    // for (let i = 0; i < 7; i++) {
+    //     days.push(new Date(year, 0, start_date.getDate() + i))
+    // }
+    // return days;
+}
+
+export function GetDaysInMonth(month, year) {
+    const dates = []
+
+    const startDate = new Date(year, month - 1, 1)
+    const endDate =  new Date(year, month, 0);
+
+    for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+        dates.push(new Date(date));
+    }
+
+    return dates;
 }
 
 export const monthNames = [
@@ -110,4 +136,14 @@ export const monthNames = [
     "October",
     "November",
     "December"
+]
+
+export const WeekDayNames = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
 ]

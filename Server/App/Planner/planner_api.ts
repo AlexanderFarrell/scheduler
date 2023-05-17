@@ -1,5 +1,12 @@
 import {Router} from "express";
-import {GetDaysInWeek, GetTomorrow, GetYesterday, monthNames, RenderTemplate} from "../../Modules/ServerHelper";
+import {
+    GetDaysInMonth,
+    GetDaysInWeek,
+    GetTomorrow,
+    GetYesterday,
+    monthNames,
+    RenderTemplate, WeekDayNames
+} from "../../Modules/ServerHelper";
 import {IsLoggedIn} from "../Auth/auth_middleware";
 import {Planner} from "./planner_data";
 import {Journal} from "./Journal/journal_data";
@@ -63,42 +70,92 @@ planner_api.get('/today', async (req, res) => {
 })
 
 planner_api.get('/y/:year', (req, res) => {
-    let year = req.params['year']
-    RenderTemplate(req, res, 'Planner', 'planner/index.ejs', {
-        message: `${year} - Planner`,
-        page: 'year.ejs',
-        monthNames,
-        year
-    })
+    let year = parseInt(req.params['year'])
+    if (!isNaN(year) && year > -4711) {
+        RenderTemplate(req, res, 'Planner', 'planner/index.ejs', {
+            message: `${year} - Planner`,
+            previous: {name: `Last Year`,
+                link: `/planner/y/${year-1}`},
+            next: {name: `Last Year`,
+                link: `/planner/y/${year+1}`},
+            page: 'year.ejs',
+            monthNames,
+            year
+        })
+    } else {
+        res.sendStatus(400)
+    }
 })
 
 planner_api.get('/y/:year/m/:month', (req, res) => {
-    let year = req.params['year']
-    let month = req.params['month']
-    let name = monthNames[parseInt(month)-1]
-    RenderTemplate(req, res, 'Planner', 'planner/index.ejs', {
-        message: `${name} ${year} - Planner`,
-        page: 'month.ejs',
-        year,
-        month,
-        // @ts-ignore
-        monthName: name
-    })
+    let year = parseInt(req.params['year'])
+    let month = parseInt(req.params['month'])
+
+    if (!isNaN(month) && !isNaN(year)) {
+        let previous = month-1
+        let next = month+1
+        let previousMonthYear = year;
+        let nextMonthYear = year;
+        let name = monthNames[month-1]
+        let days = GetDaysInMonth(month, year)
+
+        if (previous <= 0) {
+            previousMonthYear = year-1
+            previous = 12
+        }
+
+        if (next >= 13) {
+            nextMonthYear = year+1
+            next = 1
+        }
+        RenderTemplate(req, res, 'Planner', 'planner/index.ejs', {
+            message: `Month of ${monthNames[month-1]} ${year}`,
+            previous: {name: `Last Month`,
+                link: `/planner/y/${previousMonthYear}/m/${previous}`},
+            next: {name: `Last Month`,
+                link: `/planner/y/${nextMonthYear}/m/${next}`},
+            page: 'month.ejs',
+            year,
+            month,
+            days,
+            // @ts-ignore
+            monthName: name
+        })
+    } else {
+        res.sendStatus(400)
+    }
+
 })
 
-planner_api.get('/y/:year/w/:week', (req, res) => {
+planner_api.get('/y/:year/w/:week', async (req, res) => {
     let year = parseInt(req.params['year'])
     let week = parseInt(req.params['week'])
     if (!isNaN(year) && !isNaN(week)) {
         let previous = week-1
         let next = week+1
+        let previousWeekYear = year
+        let nextWeekYear = year
+
+        if (previous <= -1) {
+            previousWeekYear = year-1
+            previous = 52
+        }
+
+        if (next >= 53) {
+            nextWeekYear = year+1
+            next = 0
+        }
+
+        let dailyGoals = await Planner.GetDailyGoalsForWeek(req.session['username'], year, week)
         RenderTemplate(req, res, 'Planner', 'planner/index.ejs', {
             message: `Week ${week} of ${year} - Planner`,
             page: 'week.ejs',
             year: year,
-            previous: {name: `Week ${previous}`, link: `/planner/y/${year}/w/${previous}`},
-            next: {name: `Week ${next}`, link: `/planner/y/${year}/w/${next}`},
-            days: GetDaysInWeek(year, week)
+            previous: {name: `Week ${previous}`, link: `/planner/y/${previousWeekYear}/w/${previous}`},
+            next: {name: `Week ${next}`, link: `/planner/y/${nextWeekYear}/w/${next}`},
+            days: GetDaysInWeek(year, week),
+            daily_goals: dailyGoals,
+            WeekDayNames
         })
     } else {
         res.redirect('/planner')
@@ -129,7 +186,8 @@ planner_api.get('/y/:year/m/:month/d/:day', async (req, res) => {
         day,
         monthName: monthNames[month-1],
         page: 'day.ejs',
-        journal
+        journal,
+        WeekDayNames
     }
     RenderTemplate(req, res, 'Planner', 'planner/index.ejs', data)
 })

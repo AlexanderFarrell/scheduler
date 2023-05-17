@@ -3,7 +3,7 @@
     <% if (locals.previous) { %>
         <a href="<%= previous.link %>">
             <button class="SmallButton">
-                <img src="/images/icon/back.svg" class="TextIcon DesktopOnly">
+                <img src="/images/icon/back.svg" class="TextIcon DesktopTabletOnly">
                 <img src="/images/icon/back.svg" class="Icon MobileOnly">
             </button>
         </a>
@@ -11,7 +11,7 @@
     <% if (locals.next) { %>
         <a href="<%= next.link %>">
             <button class="SmallButton">
-                <img src="/images/icon/forward.svg" class="TextIcon DesktopOnly">
+                <img src="/images/icon/forward.svg" class="TextIcon DesktopTabletOnly">
                 <img src="/images/icon/forward.svg" class="Icon MobileOnly">
             </button>
         </a>
@@ -19,7 +19,10 @@
     <% if (locals.week) { %>
         <a href="/planner/y/<%= year %>/w/<%= week %>">
             <button class="SmallButton">
-                <span class="DesktopOnly">Week <%= week %></span>
+                <span class="DesktopTabletOnly">
+                <img src="/images/icon/week.svg" class="TextIcon DesktopTabletOnly">
+                    Week <%= week %>
+                </span>
                 <img src="/images/icon/week.svg" class="Icon MobileOnly">
 
             </button>
@@ -28,7 +31,10 @@
     <% if (locals.month) { %>
         <a href="/planner/y/<%= year %>/m/<%= month-1 %>">
             <button class="SmallButton">
-                <span class="DesktopOnly"><%= monthName %></span>
+                <span class="DesktopTabletOnly">
+                <img src="/images/icon/moon.svg" class="TextIcon DesktopTabletOnly">
+                    <%= monthName %>
+                </span>
                 <img src="/images/icon/moon.svg" class="Icon MobileOnly">
             </button>
         </a>
@@ -36,7 +42,10 @@
     <% if (locals.year) { %>
         <a href="/planner/y/<%= year %>">
             <button class="SmallButton">
-                <span class="DesktopOnly"><%= year %></span>
+                <span class="DesktopTabletOnly">
+                <img src="/images/icon/sun.svg" class="TextIcon DesktopTabletOnly">
+                    <%= year %>
+                </span>
                 <img src="/images/icon/sun.svg" class="Icon MobileOnly">
             </button>
         </a>
@@ -45,14 +54,17 @@
         <% if (locals.journal != null) { %>
             <a href="/wiki/page/<%= journal.wiki_title %>">
                 <button class="SmallButton">
-                    <span class="DesktopOnly">Journal</span>
+                    <span class="DesktopTabletOnly">
+                <img src="/images/icon/notes.svg" class="TextIcon DesktopTabletOnly">
+                        Journal
+                    </span>
                     <img src="/images/icon/notes.svg" class="Icon MobileOnly">
                 </button>
             </a>
         <% } else { %>
             <form action="/planner/journal" method="post" style="display: inline">
                 <input type="hidden" value="<%= today_date.toLocaleDateString()%>" name="date">
-                <span class="DesktopOnly">
+                <span class="DesktopTabletOnly">
                     <input type="submit"  value="Add Journal" style="display: inline; width: auto; padding-top: 5px; padding-bottom: 5px; font-size: 24px;">
                 </span>
                 <input type="submit" class="MobileOnly" value="" style="width: 52px; padding-top: 10px; padding-bottom: 10px; font-size: 24px; background-image: url('/images/icon/add_notes.svg'); background-size: 100% 100%;">
@@ -60,7 +72,7 @@
         <% } %>
 
             <button onclick="ToggleClass('DeleteButton')" class="SmallButton">
-                <img src="/images/icon/edit.svg" alt="EditButton" class="TextIcon DesktopOnly">
+                <img src="/images/icon/edit.svg" alt="EditButton" class="TextIcon DesktopTabletOnly">
                 <img src="/images/icon/edit.svg" alt="EditButton" class="Icon MobileOnly">
             </button>
     <% } %>

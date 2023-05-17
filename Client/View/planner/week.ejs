@@ -2,9 +2,29 @@
 <div class="CenterContent">
     <%- include('subheader.ejs')%>
     <h1>Days</h1>
-    <% for (var i = 0; i < days.length; i++) { %>
-        <div>
-            <%= days[i].toLocaleDateString() %>
-        </div>
-    <% } %>
+        <% for (var i = 0; i < days.length; i++) { %>
+    <a href="/planner/y/<%= days[i].getFullYear()%>/m/<%= days[i].getMonth() + 1%>/d/<%= days[i].getDate()%>">
+        <button class="SmallButton">
+        <span>
+                <%= (days[i].getMonth()+1) + "/" + days[i].getDate() %>
+            </span>
+            <span style="font-size: 0.8rem">
+                <%= WeekDayNames[i]%>
+            </span>
+        </button>
+    </a>
+        <% } %>
+    <div class="Goals">
+        <% if (daily_goals.length > 0) { %>
+            <% var current = new Date(349862) %>
+            <% for (var i = 0; i < daily_goals.length; i++) { %>
+                <% if (current.toLocaleDateString() !== daily_goals[i].day.toLocaleDateString()) { %>
+                    <% current = daily_goals[i].day %>
+                    <h1 class="Exclude"><%= current.toLocaleDateString()%></h1>
+                <% } %>
+                <%- include('goal.ejs', {goal: daily_goals[i], i: i, display_date: true})%>
+            <% } %>
+        <% } %>
+
+    </div>
 </div>

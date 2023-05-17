@@ -1,6 +1,4 @@
 import {Data} from "../../Modules/Database";
-import {marked} from "marked";
-import use = marked.use;
 
 export const Planner = {
     async AddDailyGoal(username: string, title: string, date: Date, amount: number) {
@@ -37,8 +35,20 @@ export const Planner = {
             `select * from daily_goals 
                 where day=$2
                 and account_id=(select id from account where username=$1)
-                order by max desc;`,
+                order by status-max,
+                    max desc;`,
             [username, Data.ToSQLDate(date)]
+        )
+    },
+
+    async GetDailyGoalsForWeek(username: string, year: number, week: number) {
+        return await Data.QueryRows(
+            `select * from daily_goals 
+                where extract(week from day)=$2
+                  and extract(year from day)=$3
+                and account_id=(select id from account where username=$1)
+                order by day;`,
+            [username, week, year]
         )
     },
 

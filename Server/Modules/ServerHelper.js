@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.monthNames = exports.GetDaysInWeek = exports.SetupSession = exports.RenderTemplate = exports.SendAsDownload = exports.GetTomorrow = exports.GetYesterday = exports.IsNotNull = exports.MarkdownToHTML = exports.ContainsBodyArgs = void 0;
+exports.WeekDayNames = exports.monthNames = exports.GetDaysInMonth = exports.GetDaysInWeek = exports.SetupSession = exports.RenderTemplate = exports.SendAsDownload = exports.GetTomorrow = exports.GetYesterday = exports.IsNotNull = exports.MarkdownToHTML = exports.ContainsBodyArgs = void 0;
 var session = require("express-session");
 var marked_1 = require("marked");
 function ContainsBodyArgs(req, res) {
@@ -92,16 +92,37 @@ function SetupSession(app) {
 }
 exports.SetupSession = SetupSession;
 function GetDaysInWeek(year, week) {
-    var start_date = new Date(year, 0, 1 + (week - 1) * 7);
-    var start_day_of_week = start_date.getDay() - 1;
-    start_date.setDate(start_date.getDate() - start_day_of_week);
+    var start_year_date = new Date(year, 0, 0);
+    var days_back = start_year_date.getDay() - 1;
     var days = [];
     for (var i = 0; i < 7; i++) {
-        days.push(new Date(year, 0, start_date.getDate() + i));
+        var day = new Date(year);
+        day.setDate((start_year_date.getDate() - days_back) + (week * 7) + i);
+        day.setFullYear(year);
+        days.push(day);
     }
     return days;
+    // let start_date = new Date(year, 0, 1 + (week - 1) * 7);
+    // let start_day_of_week = start_date.getDay() - 1;
+    // start_date.setDate(start_date.getDate() - start_day_of_week);
+    //
+    // let days = []
+    // for (let i = 0; i < 7; i++) {
+    //     days.push(new Date(year, 0, start_date.getDate() + i))
+    // }
+    // return days;
 }
 exports.GetDaysInWeek = GetDaysInWeek;
+function GetDaysInMonth(month, year) {
+    var dates = [];
+    var startDate = new Date(year, month - 1, 1);
+    var endDate = new Date(year, month, 0);
+    for (var date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+        dates.push(new Date(date));
+    }
+    return dates;
+}
+exports.GetDaysInMonth = GetDaysInMonth;
 exports.monthNames = [
     "January",
     "February",
@@ -115,5 +136,14 @@ exports.monthNames = [
     "October",
     "November",
     "December"
+];
+exports.WeekDayNames = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
 ];
 //# sourceMappingURL=ServerHelper.js.map

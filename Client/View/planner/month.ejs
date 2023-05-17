@@ -2,5 +2,16 @@
 <h2><%= message %></h2>
 <div class="CenterContent">
     <%- include('subheader.ejs')%>
-
+    <div>
+        <h1>Days</h1>
+        <div>
+            <% for (var i = 0; i < days.length; i++) { %>
+                <a href="/planner/y/<%= days[i].getFullYear() %>/m/<%= days[i].getMonth()+1 %>/d/<%= days[i].getDate()%>">
+                    <button class="SmallButton">
+                        <%= days[i].getDate() %>
+                    </button>
+                </a>
+            <% } %>
+        </div>
+    </div>
 </div>
