@@ -3,6 +3,7 @@ import {Wiki} from "../../Wiki/wiki_data";
 import {doc_templates} from "../doc_templates";
 
 export const Project = {
+    news_per_page: 20,
 
     async get(title: string, username: string) {
         let project = await Data.QueryFirst(
@@ -44,6 +45,7 @@ export const Project = {
                      order by d.completed desc, 
                               d.created_on`,
                 [project['id']])
+            project['news'] = await Project.get_news(project)
             // Project['children'] = await Project.get_children(Project);
             project['children'] = {
                 todo: await Project.get_children_to_do(project),
@@ -354,6 +356,45 @@ export const Project = {
                  and status=$2
                  group by c.title`,
             [username, status]
+        )
+    },
+
+    async get_news(project, page: number = 1) {
+        // page -= 1
+        // let limit = Project.news_per_page;
+        // let offset = limit * page;
+        return await Data.QueryRows(
+            "select * from project_news where project_id=$1",
+            [project['id']]
+        );
+    },
+
+    async get_news_all_projects(username: string, page: number = 1) {
+        // page -= 1
+        // let limit = Project.news_per_page;
+        // let offset = limit * page;
+        return await Data.QueryRows(
+            `select n.title as title,
+                        p.title as project,
+                        n.date as date,
+                        n.content as content
+                from project_news n 
+                inner join project p on p.id = n.project_id
+                where account_id=(select id from account where username=$1) 
+                order by n.date desc
+                limit 100`,
+            [username]
+        );
+    },
+
+    async add_news_article(project, title: string, content: string, date: Date) {
+        await Data.Execute(
+            `insert into project_news (title, content, date, project_id) 
+                VALUES ($1,
+                        $2,
+                        $3,
+                        $4)`,
+            title, content, Data.ToSQLDate(date), project['id']
         )
     }
 

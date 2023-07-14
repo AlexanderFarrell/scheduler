@@ -68,7 +68,10 @@ exports.index_api.get('/home', function (req, res) { return __awaiter(void 0, vo
                 _a.word = (_b.sent());
                 return [4 /*yield*/, wiki_data_1.Wiki.get_recent(req.session['username'], 8)];
             case 3:
-                data = (_a.docs = (_b.sent()),
+                _a.docs = (_b.sent());
+                return [4 /*yield*/, project_data_1.Project.get_news_all_projects(req.session['username'])];
+            case 4:
+                data = (_a.news = (_b.sent()),
                     _a);
                 (0, ServerHelper_1.RenderTemplate)(req, res, 'Home', "index.ejs", data);
                 return [2 /*return*/];

@@ -22,7 +22,8 @@ index_api.get('/home', async (req, res) => {
     let data = {
         categories: await Project.get_categories(req.session['username']),
         word: (await Word.get_most_recent(req.session['username'])),
-        docs: (await Wiki.get_recent(req.session['username'], 8))
+        docs: (await Wiki.get_recent(req.session['username'], 8)),
+        news: (await Project.get_news_all_projects(req.session['username']))
     }
 
     RenderTemplate(req, res, 'Home', "index.ejs", data);

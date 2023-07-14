@@ -1,5 +1,14 @@
 <div class="CenterReading">
     <div class="">
+        <form class="CenterReading" id="deliverable_add" method="post" action="/portfolio/deliverable">
+            <input type="hidden" name="project" value="<%= project.title %>">
+            <div class="inputField">
+                <label for="deliverable_title">Add Deliverable: </label>
+                <input type="text" name="title" id="deliverable_title">
+            </div>
+            <input type="submit" value="Add">
+        </form>
+        <br><br>
 <!--        <h2>Deliverables</h2>-->
         <% if (project.deliverables != null && project.deliverables.length > 0) { %>
             <% for (var j = 0; j < project.deliverables.length; j++) { %>
@@ -23,14 +32,9 @@
             <div style="text-align: center">No deliverables yet for this project. </div>
         <% } %>
         <br><br>
-        <form class="CenterReading" id="deliverable_add" method="post" action="/portfolio/deliverable">
-            <input type="hidden" name="project" value="<%= project.title %>">
-            <div class="inputField">
-                <label for="deliverable_title">Add Deliverable: </label>
-                <input type="text" name="title" id="deliverable_title">
-            </div>
-            <input type="submit" value="Add">
-        </form>
         <!--                <button id="add" onclick="Toggle('deliverable_add'); Toggle('add')">Add</button>-->
     </div>
 </div>
+<script>
+    document.getElementById("deliverable_title").focus()
+</script>

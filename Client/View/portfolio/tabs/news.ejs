@@ -1,0 +1,36 @@
+
+<div style="display: grid; grid-template-columns: 1fr auto auto; grid-gap: 10px" class="CenterContent">
+    <h2>News</h2>
+    <div class="Button" onclick="Toggle('AddMenu')">
+        <img src="/images/icon/add.svg" class="Icon">
+    </div>
+</div>
+<form method="post" action="/portfolio/news" id="AddMenu" class="Container CenterContent" style="display: none;">
+    <h2>Add News</h2>
+    <input type="hidden" name="project" value="<%= project.title %>">
+    <div class="inputField">
+        <label for="title">Title: </label>
+        <input type="text" id="title" name="title" required>
+    </div>
+    <div class="inputField">
+        <label for="content">Content: </label>
+        <textarea rows="5" id="content" name="content"></textarea>
+    </div>
+    <div class="inputField">
+        <label for="date">Date: </label>
+        <input type="date" id="date" name="date" required>
+    </div>
+    <input type="submit" value="Save News Article">
+</form>
+<script>
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').value = today;
+</script>
+<div class="CenterContent">
+    <% for (var i = 0; i < project.news.length; i++) { %>
+        <div class="news_article Container">
+            <h3><%= project.news[i].title %> - <%= new Date(project.news[i].date).toLocaleDateString() %></h3>
+            <p><%= project.news[i].content %></p>
+        </div>
+    <% } %>
+</div>

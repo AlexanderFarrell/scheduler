@@ -11,11 +11,14 @@ import {IsLoggedIn} from "../Auth/auth_middleware";
 import {Planner} from "./planner_data";
 import {Journal} from "./Journal/journal_data";
 import {journal_api} from "./Journal/journal_api";
+import {tracker_api} from "./Tracker/tracker_api";
+import {Tracker} from "./Tracker/tracker_data";
 
 export const planner_api = Router();
 
 planner_api.use(IsLoggedIn);
 planner_api.use('/journal', journal_api)
+planner_api.use('/tracker', tracker_api)
 
 planner_api.post('/update', async (req, res) => {
     console.log(req.body)
@@ -151,10 +154,16 @@ planner_api.get('/y/:year/w/:week', async (req, res) => {
             message: `Week ${week} of ${year} - Planner`,
             page: 'week.ejs',
             year: year,
+            week: week,
             previous: {name: `Week ${previous}`, link: `/planner/y/${previousWeekYear}/w/${previous}`},
             next: {name: `Week ${next}`, link: `/planner/y/${nextWeekYear}/w/${next}`},
             days: GetDaysInWeek(year, week),
             daily_goals: dailyGoals,
+            // tracker_vals: await Tracker.Analytics.get_for_week(
+            //     req.session['username'],
+            //     week,
+            //     year
+            // ),
             WeekDayNames
         })
     } else {
@@ -168,10 +177,12 @@ planner_api.get('/y/:year/m/:month/d/:day', async (req, res) => {
     let day = parseInt(req.params['day'])
     let today_date = new Date(year, month-1, day)
     let journal = await Journal.get_entry(req.session['username'], today_date);
+    let tracker_data = await Tracker.get_for_day(req.session['username'], today_date);
     let yesterday= GetYesterday(today_date)
     let tomorrow= GetTomorrow(today_date)
     // @ts-ignore
     let week = today_date.getWeek()
+
 
     let daily_goals = await Planner.GetGoals(req.session['username'], today_date);
     let data = {
@@ -187,6 +198,7 @@ planner_api.get('/y/:year/m/:month/d/:day', async (req, res) => {
         monthName: monthNames[month-1],
         page: 'day.ejs',
         journal,
+        tracker_data,
         WeekDayNames
     }
     RenderTemplate(req, res, 'Planner', 'planner/index.ejs', data)

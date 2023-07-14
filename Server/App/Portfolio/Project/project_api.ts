@@ -173,9 +173,8 @@ project_router.get('/:name/news', async (req, res) => {
     await render_project_tab(req, res, 'news.ejs')
 })
 
-async function render_project_tab(req, res, tab) {
+async function render_project_tab(req, res, tab, data = {}) {
     let title = "error";
-    let data = {};
     try {
         let project = await Project.get(req.params['name'], req.session['username']);
         if (project != null) {

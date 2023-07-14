@@ -1,14 +1,40 @@
 create table tracker_topic (
     id serial primary key,
     name varchar(100) not null,
-    account_id int not null references account(id)
+    account_id int not null references account(id),
+    constraint u_date_value unique(name, account_id)
 );
 
 create table tracker_item (
     id serial primary key,
     topic_id int not null references tracker_topic(id),
-    value int not null
+    date date not null,
+    value int not null,
+    constraint u_date_value_tracker_item unique(date, value)
 );
+
+create view tracker as
+select tt.id as topic_id,
+       ti.id as item_id,
+       account_id,
+       date,
+       tt.name as topic,
+       ti.value as value
+from tracker_topic tt
+inner join tracker_item ti on tt.id = ti.topic_id;
+
+select * from tracker;
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,23 +1,58 @@
+
 <% if (locals.stakeholder) { %>
     <div class="SideContent">
         <%- include('../sidebar.ejs')%>
         <div>
+            <a class="DesktopTabletOnly" href="/portfolio/stakeholder">Back To Stakeholders</a>
             <h1><%= stakeholder.name %></h1>
-            <% if (locals.payments && payments.length > 0) { %>
-                <div class="One Container CenterReading">
-                    <h2>Payments</h2>
-                    <div class="Row2">
-                        <div>Date</div>
-                        <div>Amount</div>
-                    </div>
-                    <% for (var i = 0; i < payments.length; i++) { %>
-                        <div class="Row2">
-                            <div><%= new Date(payments[i].date).toLocaleDateString()%></div>
-                            <div>$ <%= payments[i].amount.toLocaleString('en-US') %></div>
+            <div class="Flex CenterContent">
+<!--                <div class="One">-->
+<!--                    <div class="Container">-->
+<!--                        <h2>Info</h2>-->
+<!--                        <div>Priority: <%= stakeholder.priority %></div>-->
+<!--                    </div>-->
+<!--                    <div class="Container">-->
+<!--                        <h2>Requirements</h2>-->
+<!--                        <div id="requirements">-->
+<!--                            <%= stakeholder.requirements %>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+
+<!--                </div>-->
+<!--                <div class="One Container">-->
+<!--                    <h2>Description</h2>-->
+<!--                    <div id="description">-->
+<!--                        <%= stakeholder.description %>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="One">
+<!--                    <div class="Container">-->
+<!--                        <h2>News</h2>-->
+<!--                        <div id="news">-->
+<!--                            <%= stakeholder.news %>-->
+<!--                        </div>-->
+
+<!--                    </div>-->
+                    <% if (locals.payments && payments.length > 0) { %>
+                        <div class="One Container CenterReading">
+                            <h2>Payments</h2>
+                            <div class="Row2">
+                                <div>Date</div>
+                                <div>Amount</div>
+                            </div>
+                            <% for (var i = 0; i < payments.length; i++) { %>
+                                <div class="Row2">
+                                    <div><%= new Date(payments[i].date).toLocaleDateString()%></div>
+                                    <div>$ <%= payments[i].amount.toLocaleString('en-US') %></div>
+                                </div>
+                            <% } %>
                         </div>
                     <% } %>
                 </div>
-            <% } %>>
+
+            </div>
+
         </div>
     </div>
 <% } %>

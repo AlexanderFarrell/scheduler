@@ -92,5 +92,28 @@ async function DeleteGoal(id) {
     }
 }
 
+async function AddTopic() {
+    let topic = document.getElementById('topic_add').value
+    PostData('/planner/tracker/topic', {
+        topic: topic
+    })
+        .then(() => {
+            // console.log("Hey")
+            window.location.reload()
+        })
+        .catch((e) => {
+            console.log(e)
+        })
+}
 
 
+async function SetTracker(name, value, date) {
+    console.log(name, value, date)
+    value = value > 10 ? 10 : value;
+    value = value < 1 ? 1 : value;
+    PostData('/planner/tracker', {
+        topic: name,
+        value,
+        date
+    })
+}

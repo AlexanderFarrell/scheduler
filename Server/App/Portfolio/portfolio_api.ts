@@ -53,12 +53,25 @@ portfolio_api.post('/wiki', async (req, res) => {
     }
 })
 
+portfolio_api.post('/news', async (req, res) => {
+    try {
+        let project = await Project.get(req.body['project'], req.session['username']);
+        if (project != null) {
+            await Project.add_news_article(project, req.body['title'], req.body['content'], new Date(req.body['date']));
+        }
+        res.redirect('/portfolio/project/' + req.body['project'] + "/news")
+    } catch (e) {
+        console.error(e)
+        res.redirect('/portfolio/project/' + req.body['project'] + "/news")
+    }
+})
+
 portfolio_api.post("/deliverable", async (req, res) => {
     let project = await Project.get(req.body['project'], req.session['username']);
     if (project != null) {
         await Deliverable.AddDeliverable(project, req.body['title']);
     }
-    res.redirect('/portfolio/project/' + project['title'])
+    res.redirect('/portfolio/project/' + project['title'] + "/deliverables" )
 })
 
 portfolio_api.post('/deliverable/track', async (req, res) => {

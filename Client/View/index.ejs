@@ -10,29 +10,48 @@
             </a>
             <% } %>
         </div>
-        <% if (locals.word) { %>
-            <div class="Four Container">
-                <h2>Recent Word</h2>
-                <% if (locals.word.length > 0) { %>
-                    <div>
-                        <h3><%= word[0]['title']%></h3>
-                        <p style="text-align: center"><%= new Date(word[0]['date']).toLocaleDateString()%></p>
-                        <p><%= word[0]['content']%></p>
-                    </div>
-                <% } else { %>
-                    <div>
-                        Add words to get started
-                    </div>
+        <div class="Four Container">
+            <h2>Recent Documents</h2>
+            <div class="Row4 FlexMobile">
+                <% for (var j = 0; j < docs.length; j++) { %>
+                    <%- include('wiki/doc_icon.ejs', {doc: docs[j]}) %>
                 <% } %>
+            </div>
+        </div>
+<!--        <% if (locals.word) { %>-->
+<!--            <div class="Four Container">-->
+<!--                <h2>Recent Word</h2>-->
+<!--                <% if (locals.word.length > 0) { %>-->
+<!--                    <div>-->
+<!--                        <h3><%= word[0]['title']%></h3>-->
+<!--                        <p style="text-align: center"><%= new Date(word[0]['date']).toLocaleDateString()%></p>-->
+<!--                        <p><%= word[0]['content']%></p>-->
+<!--                    </div>-->
+<!--                <% } else { %>-->
+<!--                    <div>-->
+<!--                        Add words to get started-->
+<!--                    </div>-->
+<!--                <% } %>-->
+<!--            </div>-->
+<!--        <% } %>-->
+    </div>
+    <div>
+        <h1>Updates</h1>
+
+        <% for (var i = 0; i < news.length; i++) { %>
+            <div class="news_article Container">
+                <h3><%= news[i].title %> - <%= new Date(news[i].date).toLocaleDateString() %></h3>
+                <a href="/portfolio/Project/<%= news[i].project %>" style="text-align: center"><%= news[i].project %></a>
+                <p><%= news[i].content %></p>
             </div>
         <% } %>
     </div>
-    <div class="Four Container">
-        <h2>Recent Documents</h2>
-        <div class="Row4 FlexMobile">
-            <% for (var j = 0; j < docs.length; j++) { %>
-                <%- include('wiki/doc_icon.ejs', {doc: docs[j]}) %>
-            <% } %>
-        </div>
-    </div>
+<!--    <div class="Four Container">-->
+<!--        <h2>Recent Documents</h2>-->
+<!--        <div class="Row4 FlexMobile">-->
+<!--            <% for (var j = 0; j < docs.length; j++) { %>-->
+<!--                <%- include('wiki/doc_icon.ejs', {doc: docs[j]}) %>-->
+<!--            <% } %>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>

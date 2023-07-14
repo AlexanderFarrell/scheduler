@@ -47,5 +47,29 @@
                 <br>
             </div>
         </div>
+    <div id="Tracker">
+        <h2>Tracker</h2>
+        <div class="tracker_items Goals">
+            <% for (var i = 0; i < tracker_data.length; i++) { %>
+            <div style="display: grid; grid-template-columns: 300px auto">
+                <div><%= tracker_data[i]['name'] %></div>
+                <input type="number" step="1" min="1" max="10"
+                       onchange="SetTracker('<%= tracker_data[i]['name']%>', this.value, '<%= today_date.toLocaleDateString() %>')"
+                <% if (tracker_data[i]['value'] != null) { %>
+                       value="<%= tracker_data[i]['value'] %>"
+                        <% } %>
+                >
+            </div>
+
+            <% } %>
+        </div>
+        <div id="AddTopic" style="display: grid; grid-template-columns: 1fr auto">
+            <input type="text" id="topic_add" placeholder="Add Topic to Track">
+            <button class="SmallButton" onclick="AddTopic()">Add</button>
+        </div>
+    </div>
     <% } %>
 </div>
+<script>
+    document.getElementById('title_checkbox').focus()
+</script>

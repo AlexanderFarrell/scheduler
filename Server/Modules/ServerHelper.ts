@@ -1,6 +1,14 @@
 import * as session from 'express-session';
 import {marked} from 'marked';
 
+// @ts-ignore
+// const RedisStore = connectRedis('connect-redis')(session)
+
+import * as redis from 'redis';
+import RedisStore from "connect-redis";
+const redisClient = redis.createClient()
+redisClient.connect()
+
 export function ContainsBodyArgs(req, res, ...args: string[]): boolean {
     args.forEach(a => {
         if (req.body[a] == undefined) {
@@ -78,9 +86,10 @@ export function RenderTemplate(req, res, title, content, data={}) {
 
 export function SetupSession(app) {
     app.use(session({
+        store: new RedisStore({client: redisClient}),
         secret: app.get('config')['session']['secret'],
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
         //cookie: { secure: true }
     }))
 }

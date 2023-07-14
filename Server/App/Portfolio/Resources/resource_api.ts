@@ -2,6 +2,7 @@ import {Router} from "express";
 import {RenderTemplate} from "../../../Modules/ServerHelper";
 import {Resource} from "./resource_data";
 import {finance_router} from "./finance/finance_api";
+import {assets_router} from "./assets/assets_api";
 
 export const resources_router = Router()
 
@@ -14,4 +15,5 @@ resources_router.get('/', async (req, res) => {
 })
 
 resources_router.use('/finance', finance_router)
+resources_router.use('/assets', assets_router)
 

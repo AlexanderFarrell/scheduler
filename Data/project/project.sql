@@ -26,7 +26,13 @@ where pcl.category_id = (select id from project_category where title='WikiApp')
 and project.account_id=(select id from account where username='test');
 
 
-
+create table project_news(
+    id serial primary key,
+    title varchar(200) not null,
+    content text,
+    date date not null,
+    project_id int not null references project(id)
+);
 
 
 -- where pcl.project_id=(select id

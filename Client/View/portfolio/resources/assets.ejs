@@ -1,0 +1,42 @@
+<div class="SideContent">
+    <%- include('../sidebar.ejs')%>
+    <div>
+        <div class="CenterContent">
+            <div style="display: grid; grid-template-columns: 1fr auto auto; grid-gap: 10px" class="CenterContent">
+                <h1>Assets</h1>
+                <div class="Button" onclick="Toggle('AddMenu')">
+                    <img src="/images/icon/add.svg" class="Icon">
+                </div>
+            </div>
+            <form method="post" action="/portfolio/Resources/assets" id="AddMenu" class="Container" style="display: none;">
+                <h2>Add Asset</h2>
+                <div class="inputField">
+                    <label for="name">Name: </label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="inputField">
+                    <label for="purchase_date">Purchase Date: </label>
+                    <input type="date" id="purchase_date" name="purchase_date" required>
+                </div>
+                <div class="inputField">
+                    <label for="purchase_value">Value at Purchase: </label>
+                    <input type="number" id="purchase_value" name="purchase_value" step="0.01" value="0" required>
+                </div>
+                <input type="submit" value="Save New Asset">
+            </form>
+        </div>
+        <div class="CenterContent " id="assets_list">
+            <p>Net Worth based on Original Purchase Values: $ <%- net_worth %></p>
+            <div class="table" style="grid-template-columns: auto auto auto">
+                <div class="tableHeader">Asset Name</div>
+                <div class="tableHeader">Purchase Date</div>
+                <div class="tableHeader">Original Purchase Value</div>
+                <% for (var i = 0; i < assets.length; i++ ) { %>
+                    <div><%- assets[i].name %></div>
+                    <div><%- new Date(assets[i].purchase_date).toLocaleDateString() %></div>
+                    <div>$<%- assets[i].purchase_value %></div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

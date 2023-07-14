@@ -3,6 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WeekDayNames = exports.monthNames = exports.GetDaysInMonth = exports.GetDaysInWeek = exports.SetupSession = exports.RenderTemplate = exports.SendAsDownload = exports.GetTomorrow = exports.GetYesterday = exports.IsNotNull = exports.MarkdownToHTML = exports.ContainsBodyArgs = void 0;
 var session = require("express-session");
 var marked_1 = require("marked");
+// @ts-ignore
+// const RedisStore = connectRedis('connect-redis')(session)
+var redis = require("redis");
+var connect_redis_1 = require("connect-redis");
+var redisClient = redis.createClient();
+redisClient.connect();
 function ContainsBodyArgs(req, res) {
     var args = [];
     for (var _i = 2; _i < arguments.length; _i++) {
@@ -84,9 +90,10 @@ function RenderTemplate(req, res, title, content, data) {
 exports.RenderTemplate = RenderTemplate;
 function SetupSession(app) {
     app.use(session({
+        store: new connect_redis_1.default({ client: redisClient }),
         secret: app.get('config')['session']['secret'],
         resave: false,
-        saveUninitialized: true,
+        saveUninitialized: false,
         //cookie: { secure: true }
     }));
 }

@@ -25,6 +25,70 @@
                 <%- include('goal.ejs', {goal: daily_goals[i], i: i, display_date: true})%>
             <% } %>
         <% } %>
+    </div>
+    <h2>Tracker</h2>
+    <div id="Tracker">
 
     </div>
 </div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+    google.charts.load('current', {'packages':['corechart']});
+
+    google.charts.setOnLoadCallback(() => {
+
+        GetJson(`/planner/tracker/y/<%= year %>/w/<%= week %>`)
+            .then((data) => {
+                let topics = {}
+
+                data.forEach(datum => {
+                    if (topics[datum.topic] == null) {
+                        topics[datum.topic] = []
+                    }
+
+                    topics[datum.topic].push({
+                        date: new Date(datum.date).toLocaleDateString(),
+                        value: datum.value
+                    })
+                })
+
+                for (let topic in topics) {
+                    let items = topics[topic]
+                    let table = [
+                        ['date', 'value']
+                    ]
+                    items.forEach(item => {table.push([item['date'], item['value']])})
+                    let chart_div = document.createElement('div')
+                    let chart = new google.visualization.LineChart(chart_div)
+                    chart.draw(google.visualization.arrayToDataTable(table), {
+                        title: topic,
+                        curveType: 'function',
+                        backgroundColor: {
+                            fill: 'none'
+                        },
+                        titleTextStyle: {
+                            color: "white"
+                        },
+                        hAxis: {
+                            textStyle: {
+                                color: "white"
+                            }
+                        },
+                        vAxis: {
+                            textStyle: {
+                                color: "white"
+                            },
+                            viewWindowMode: 'explicit',
+                            viewWindow: {
+                                max: 10,
+                                min: 1
+                            }
+                        },
+                        colors: ['springgreen']
+                    });
+                    document.getElementById('Tracker').appendChild(chart_div)
+                }
+            })
+    })
+
+</script>
