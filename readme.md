@@ -2,6 +2,8 @@
 
 Scheduler is the first version of the planner, wiki and portfolio tool I personally use. It runs as a full stack application, and supports docker!
 
+![Projects](Dev/Screenshots/project.jpg)
+
 # Get Started
 
 Scheduler 1 can be configured by:
@@ -51,5 +53,10 @@ Wiki and Projects
 Personal wiki hooked up to projects
 ![Personal Wiki](Dev/Screenshots/wiki.jpg)
 
-Project Screen
-![Projects](Dev/Screenshots/project.jpg)
+# Disclaimer
+
+Zealot Source Code is made available on GitHub and is Copyright 2023-2025 by Alexander Farrell. While this code is made avaiable here on GitHub, I must say that by using or deploying, you agree that you do so at your own risk. 
+
+This application is not intended to give business or financial advise of any kind. While it contains modules for such, this was at one point for my own personal use, and you are responsible for any damages with using them. 
+
+At some point, this might be made open source. But this is an older project that I'd like to share the code from.
