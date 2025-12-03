@@ -9,6 +9,8 @@ Scheduler 1 can be configured by:
 - Running in Docker
 - Running manually
 
+## Running in Docker
+
 A [docker-compose.yml](./Dev/docker-compose.yml) file is available for deploying automatically in Docker Compose or Swarm.
 
 To deploy:
