@@ -42,11 +42,11 @@ BEGIN
 END;
 $$;
 
-select * from account;
+-- select * from account;
 
-call add_payment(50.00, 'Amy', now(), 'Tutoring', 'TestAlex');
+-- call add_payment(50.00, 'Amy', now(), 'Tutoring', 'TestAlex');
 
-select * from payment;
+-- select * from payment;
 
 create or replace view revenue_by_customer as
 select c.name as customer,
@@ -73,8 +73,6 @@ order by date;
 select * from revenue_by_customer
     order by revenue
 desc ;
-
-drop view revenue_by_month;
 
 create or replace view revenue_by_month as
     select extract(month from date) as month,

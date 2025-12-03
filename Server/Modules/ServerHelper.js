@@ -7,7 +7,9 @@ var marked_1 = require("marked");
 // const RedisStore = connectRedis('connect-redis')(session)
 var redis = require("redis");
 var connect_redis_1 = require("connect-redis");
-var redisClient = redis.createClient();
+const redisURL = process.env.REDIS_URL ||
+    `redis://${process.env.REDIS_HOST || '127.0.0.1'}:${process.env.REDIS_PORT || '6379'}`
+var redisClient = redis.createClient({url: redisURL});
 redisClient.connect();
 function ContainsBodyArgs(req, res) {
     var args = [];

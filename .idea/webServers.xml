@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7392af04-5e75-4949-b318-f6aa4c8f676a" name="Production - Mac" url="http://localhost">
+        <fileTransfer mountedRoot="/Volumes/Alexander External SSD/Developer/Apps/Scheduler" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>

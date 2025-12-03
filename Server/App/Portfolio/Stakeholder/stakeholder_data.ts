@@ -27,5 +27,11 @@ export const Stakeholder = {
                     and name=$2;`,
             [username, name]
         )
+    },
+    async AddStakeholder(name: string, description: string, type: string) {
+        await Data.Execute(
+            `insert into stakeholder (name, description, account_id) 
+                values ($1, $2, $3);`
+        )
     }
 }

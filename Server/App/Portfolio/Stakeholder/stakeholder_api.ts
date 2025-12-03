@@ -10,6 +10,11 @@ stakeholder_router.get('/', async (req, res) => {
     RenderTemplate(req, res, 'Stakeholders', 'portfolio/Stakeholder.ejs', {customers})
 })
 
+stakeholder_router.get('/add', async (req, res) => {
+    // let customers = await Stakeholder.GetCustomers(req.session['username']);
+    RenderTemplate(req, res, 'Stakeholders', 'portfolio/stakeholder/stakeholder_add.ejs')
+})
+
 stakeholder_router.get('/n/:name', async (req, res) => {
     let name = req.params['name'];
     let stakeholder = await Stakeholder.GetStakeholder(req.session['username'], name);

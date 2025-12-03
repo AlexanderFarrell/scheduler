@@ -81,8 +81,8 @@ create or replace view weekly_goals as
     from goal
     inner join weekly_goal wg on goal.id = wg.goal_id;
 
-select * from daily_goals;
-call add_daily_goal('Take Out Trash', 0, 1, date(now()), 'AlexanderFarrell');
+-- select * from daily_goals;
+-- call add_daily_goal('Take Out Trash', 0, 1, date(now()), 'AlexanderFarrell');
 
-select * from weekly_goals;
-call add_weekly_goal('Take Out Trash', 0, 1, date_part('week', now())::integer, date_part('year', now())::integer, 'AlexanderFarrell');
+-- select * from weekly_goals;
+-- call add_weekly_goal('Take Out Trash', 0, 1, date_part('week', now())::integer, date_part('year', now())::integer, 'AlexanderFarrell');

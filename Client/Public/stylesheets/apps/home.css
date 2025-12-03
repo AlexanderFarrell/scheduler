@@ -1,0 +1,12 @@
+.HomeButtons > a {
+  color: white;
+}
+
+.HomeButtons > a > div {
+  text-align: center;
+  padding: 10px;
+  display: grid;
+  align-items: center;
+}
+
+/*# sourceMappingURL=home.css.map */

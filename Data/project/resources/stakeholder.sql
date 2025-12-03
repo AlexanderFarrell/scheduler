@@ -5,6 +5,14 @@ create table stakeholder
     description text,
     account_id  integer not null references account(id)
 );
+create type stakeholder_type as enum (
+    'Individual',
+    'Group'
+);
+alter table stakeholder
+add column type stakeholder_type not null default 'Individual';
+
+
 
 create table stakeholder_project_link
 (

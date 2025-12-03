@@ -1,7 +1,12 @@
 <div class="SideContent">
     <%- include('sidebar.ejs')%>
     <div class="CenterContent">
-        <h1>Stakeholders</h1>
+        <div style="display: grid; grid-template-columns: 1fr auto">
+            <h1>Stakeholders</h1>
+            <a href="/portfolio/Resources/add">
+
+            </a>
+        </div>
         <% for (var i = 0; i < customers.length; i++) { %>
         <a href="/portfolio/Stakeholder/n/<%= customers[i].name %>">
             <div>

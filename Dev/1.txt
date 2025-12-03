@@ -1,0 +1,36 @@
+
+> scheduler@1.0.0 start
+> node Server/Server.js
+
+Setting Up App: Idea
+	 App "Idea" is running.
+Setting Up App: AuthApp
+	 App "AuthApp" is running.
+Setting Up App: Home
+	 App "Home" is running.
+Setting Up App: Index
+	 App "Index" is running.
+Setting Up App: Planner
+	 App "Planner" is running.
+Setting Up App: Portfolio
+	 App "Portfolio" is running.
+Setting Up App: Words
+	 App "Words" is running.
+Listening on 3000
+View at http://localhost:3000 if local.
+[0mGET / [36m302[0m 15.113 ms - 54[0m
+[0mGET /auth [32m200[0m 17.690 ms - 1125[0m
+[0mGET /style.css [32m200[0m 4.140 ms - 4352[0m
+[0mGET /favicon.ico [33m404[0m 4.272 ms - 150[0m
+[0mGET /auth/login [32m200[0m 6.963 ms - 1288[0m
+[0mGET /style.css [36m304[0m 1.898 ms - -[0m
+[0mGET /auth/create [32m200[0m 6.064 ms - 1427[0m
+[0mGET /style.css [36m304[0m 0.808 ms - -[0m
+[0mPOST /auth/create [36m302[0m 169.855 ms - 46[0m
+[0mGET / [36m302[0m 0.499 ms - 54[0m
+[0mGET /home [32m200[0m 1.363 ms - 1375[0m
+[0mGET /style.css [36m304[0m 0.198 ms - -[0m
+[0mGET /portfolio [32m200[0m 14.445 ms - 1181[0m
+[0mGET /style.css [36m304[0m 0.748 ms - -[0m
+[0mGET /portfolio/create [32m200[0m 6.380 ms - 2736[0m
+[0mGET /style.css [36m304[0m 0.881 ms - -[0m

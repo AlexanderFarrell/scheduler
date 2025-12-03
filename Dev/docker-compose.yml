@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  postgres:
+    build:
+      context: ./../Data
+      dockerfile: Dockerfile
+    image: scheduler1db
+    environment:
+      POSTGRES_USER: scheduler
+      POSTGRES_PASSWORD: scheduler
+      POSTGRES_DB: scheduler
+    ports:
+      - "5435:5432"
+    volumes:
+      - scheduler1_data:/var/lib/postgresql/data
+      - ../Data:/docker-entrypoint-initdb.d:ro
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server"]
+    ports: 
+     - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  scheduler1:
+    build:
+      context: ./../       # directory with your Node app
+      dockerfile: Dockerfile
+    image: scheduler1
+    environment:
+      # Postgres connection
+      DATABASE_HOST: scheduler1db
+      DATABASE_PORT: 5432
+      DATABASE_USER: scheduler
+      DATABASE_PASSWORD: scheduler
+      DATABASE_NAME: scheduler
+
+      # Redis connection
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+
+      # Whatever your app needs
+      NODE_ENV: production
+      PORT: 3000
+    ports:
+      - "16789:3000"
+
+
+volumes:
+  scheduler1_data:
+  redis-data:

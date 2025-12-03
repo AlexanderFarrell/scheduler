@@ -1,0 +1,25 @@
+.navButton:hover {
+  background-color: rgba(255, 255, 255, 0.09);
+}
+
+a > .navButton {
+  text-decoration: none !important;
+}
+
+.HomeButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  place-items: center;
+  place-content: center;
+}
+
+.HomeButton {
+  transform: scale(0.95);
+  transition: 0.2s;
+}
+
+.HomeButton:hover {
+  transform: scale(0.99);
+}
+
+/*# sourceMappingURL=template.css.map */

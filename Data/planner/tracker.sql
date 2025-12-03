@@ -23,7 +23,7 @@ select tt.id as topic_id,
 from tracker_topic tt
 inner join tracker_item ti on tt.id = ti.topic_id;
 
-select * from tracker;
+-- select * from tracker;
 
 
 

@@ -1,0 +1,29 @@
+17750:C 29 Jan 2024 12:16:05.025 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+17750:C 29 Jan 2024 12:16:05.025 * Redis version=7.2.0, bits=64, commit=00000000, modified=0, pid=17750, just started
+17750:C 29 Jan 2024 12:16:05.025 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+17750:M 29 Jan 2024 12:16:05.025 * Increased maximum number of open files to 10032 (it was originally set to 256).
+17750:M 29 Jan 2024 12:16:05.025 * monotonic clock: POSIX clock_gettime
+17750:M 29 Jan 2024 12:16:05.026 * Running mode=standalone, port=6379.
+17750:M 29 Jan 2024 12:16:05.026 # WARNING: The TCP backlog setting of 511 cannot be enforced because kern.ipc.somaxconn is set to the lower value of 128.
+17750:M 29 Jan 2024 12:16:05.026 * Server initialized
+17750:M 29 Jan 2024 12:16:05.026 * Loading RDB produced by version 7.2.0
+17750:M 29 Jan 2024 12:16:05.026 * RDB age 1460530 seconds
+17750:M 29 Jan 2024 12:16:05.026 * RDB memory usage when created 1.12 Mb
+17750:M 29 Jan 2024 12:16:05.026 * Done loading RDB, keys loaded: 0, keys expired: 0.
+17750:M 29 Jan 2024 12:16:05.026 * DB loaded from disk: 0.000 seconds
+17750:M 29 Jan 2024 12:16:05.026 * Ready to accept connections tcp
+17750:M 29 Jan 2024 13:16:06.086 * 1 changes in 3600 seconds. Saving...
+17750:M 29 Jan 2024 13:16:06.087 * Background saving started by pid 18145
+18145:C 29 Jan 2024 13:16:06.096 * DB saved on disk
+18145:C 29 Jan 2024 13:16:06.097 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+17750:M 29 Jan 2024 13:16:06.190 * Background saving terminated with success
+17750:M 29 Jan 2024 14:16:07.090 * 1 changes in 3600 seconds. Saving...
+17750:M 29 Jan 2024 14:16:07.092 * Background saving started by pid 18599
+18599:C 29 Jan 2024 14:16:07.100 * DB saved on disk
+18599:C 29 Jan 2024 14:16:07.102 * Fork CoW for RDB: current 0 MB, peak 0 MB, average 0 MB
+17750:M 29 Jan 2024 14:16:07.192 * Background saving terminated with success
+17750:signal-handler (1707931893) Received SIGTERM scheduling shutdown...
+17750:M 14 Feb 2024 12:31:33.111 * User requested shutdown...
+17750:M 14 Feb 2024 12:31:33.111 * Saving the final RDB snapshot before exiting.
+17750:M 14 Feb 2024 12:31:33.132 * DB saved on disk
+17750:M 14 Feb 2024 12:31:33.133 # Redis is now ready to exit, bye bye...

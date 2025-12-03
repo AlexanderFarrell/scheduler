@@ -1,0 +1,20 @@
+
+> scheduler@1.0.0 start
+> node Server/Server.js
+
+Setting Up App: Idea
+	 App "Idea" is running.
+Setting Up App: AuthApp
+	 App "AuthApp" is running.
+Setting Up App: Home
+	 App "Home" is running.
+Setting Up App: Index
+	 App "Index" is running.
+Setting Up App: Planner
+	 App "Planner" is running.
+Setting Up App: Portfolio
+	 App "Portfolio" is running.
+Setting Up App: Words
+	 App "Words" is running.
+Listening on 3000
+View at http://localhost:3000 if local.

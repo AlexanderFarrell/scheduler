@@ -1,0 +1,63 @@
+.Idea {
+  background-color: rgba(255, 255, 255, 0.05);
+  display: grid;
+  grid-template-columns: 1fr 50px;
+}
+
+.Idea > * {
+  padding: 5px;
+}
+
+#PlannerContent {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  grid-gap: 20px;
+  padding: 10px;
+}
+
+#Goals {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-gap: 20px;
+}
+
+#GoalList {
+  display: grid;
+  grid-gap: 5px;
+  align-content: start;
+}
+
+#AddGoal {
+  display: grid;
+  grid-gap: 5px;
+}
+
+.Goal {
+  display: grid;
+  grid-template-columns: 1.5em 1fr;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#PlanList {
+  display: grid;
+  grid-gap: 5px;
+}
+
+.Plan {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-gap: 20px;
+  text-align: right;
+}
+
+.Plan > input {
+  background-color: #1e1e1e;
+  outline: none;
+  color: white;
+}
+
+#subheader {
+  background: #155779;
+}
+
+/*# sourceMappingURL=legacy.css.map */

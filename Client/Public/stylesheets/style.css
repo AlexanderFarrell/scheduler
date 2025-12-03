@@ -1,0 +1,661 @@
+body {
+  margin: 0;
+  font-size: 20px;
+  min-height: 100vh;
+  background: #001a28;
+  color: #d2d2d2;
+  stroke: white;
+  fill: white;
+  font-family: "Ubuntu", sans-serif;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+header {
+  background: #1e7bab;
+  border-bottom: rgba(255, 255, 255, 0.25) 1px solid;
+}
+
+nav {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+}
+
+footer {
+  padding: 10px;
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+  margin: 0;
+  padding: 0.5em;
+}
+
+p {
+  margin: 0;
+  line-height: 2rem;
+  padding: 0 0.8em 2rem;
+}
+
+a {
+  color: #49b0e5;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #93dbff;
+}
+
+img {
+  width: 100%;
+}
+
+pre {
+  width: 100%;
+}
+
+label {
+  display: block;
+  padding: 5px;
+}
+
+input[type=text], input[type=number], input[type=date], input[type=password], textarea {
+  width: 100% !important;
+  display: block;
+  box-sizing: border-box;
+  font-size: 20px;
+  padding: 5px;
+  background-color: #1e1e1e;
+  outline: none;
+  border: 1px #1e7bab solid;
+  font-family: "Ubuntu", sans-serif;
+  border-radius: 4px;
+  color: white;
+  transition: 0.2s;
+}
+
+input[type=text]:hover, input[type=number]:hover, input[type=date]:hover, input[type=password]:hover, textarea:hover {
+  border: 1px #93dbff solid;
+}
+
+button, input[type=submit], input[type=reset], .Button {
+  background-color: #09405d;
+  text-align: center;
+  color: white;
+  outline: none;
+  border: none;
+  padding: 10px;
+  font-size: inherit;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.1s background-color;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+input[type=date] {
+  text-align: center;
+}
+
+input[type=reset] {
+  background-color: #09405d;
+}
+
+input[type=checkbox] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-size: inherit;
+  width: 1em;
+  height: 1em;
+  padding: 10px;
+  border-radius: 4px;
+  border: 2px solid #09405d;
+  transition: 0.2s;
+}
+
+input[type=checkbox]:checked {
+  background-color: #5bfc55;
+}
+
+input[type=checkbox]:hover {
+  background-color: #49b0e5;
+  border: 2px solid #93dbff;
+}
+
+select {
+  background: #1e1e1e;
+  color: white;
+}
+
+button:hover, input[type=submit]:hover, input[type=reset]:hover, .Button:hover {
+  background-color: #1e7bab;
+}
+
+button:active, input[type=submit]:active, input[type=reset]:active, .Button:active {
+  background-color: #09405d;
+  font-weight: bold;
+}
+
+button:focus, input[type=submit]:focus, input[type=reset]:focus, .Button:focus {
+  outline: white solid 1px;
+}
+
+.Icon {
+  width: 2rem;
+}
+
+.NoBackground {
+  background: none;
+}
+
+.SmallButton {
+  width: auto !important;
+  padding: 5px 10px;
+  align-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.CenterY {
+  display: grid;
+  align-items: center;
+  height: 100vh;
+}
+
+.SideContent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: 100%;
+  max-height: 100vh;
+  grid-gap: 10px;
+}
+
+.BigButton {
+  padding: 20px;
+}
+
+.SideBar {
+  background: #09405d;
+  border-right: rgba(255, 255, 255, 0.22) 1px solid;
+  font-size: 0.8rem;
+  height: 100%;
+}
+
+.SideBar > div > a {
+  display: block;
+  width: 100%;
+}
+
+.SideBar > div > a > button {
+  width: 100%;
+  text-align: left;
+}
+
+.SideBar > div > a > button > .Icon {
+  width: 0.8rem;
+}
+
+.Small {
+  font-size: 10px;
+}
+
+.highlight {
+  color: #487fbe;
+}
+
+.table {
+  display: grid;
+  border-radius: 2px;
+}
+
+.table > * {
+  padding: 5px;
+}
+
+.scrollViewHorizontal {
+  overflow-x: auto;
+}
+
+.HideScroll::-webkit-scrollbar {
+  display: none;
+}
+
+.HideScroll {
+  scrollbar-width: none;
+}
+
+.scrollView {
+  overflow: auto;
+}
+
+.DarkBackground {
+  background: #09405d;
+}
+
+.tableHeader {
+  background: #1e7bab !important;
+}
+
+.navButton {
+  padding: 10px;
+  color: white !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  transition: 0.1s background-color ease-in;
+}
+
+.disabledButton {
+  background: #3d3d3d;
+  cursor: not-allowed;
+}
+
+.Flex {
+  display: flex;
+  gap: 10px;
+}
+
+.Container {
+  border: 1px solid #09405d;
+  box-shadow: 1px 1px 5px rgb(0, 0, 0);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.RowOneTwo {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+.One {
+  flex: 1;
+}
+
+.Two {
+  flex: 2;
+}
+
+.Three {
+  flex: 3;
+}
+
+.Four {
+  flex: 4;
+}
+
+.Five {
+  flex: 5;
+}
+
+.MobileOnly {
+  display: none;
+}
+
+.Row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.Row3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.Row4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.Row5 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 5px;
+}
+
+.CenterContent {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.CenterReading {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inputField {
+  display: grid;
+  grid-gap: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.inputField > *:nth-child(1) {
+  font-weight: bold;
+  text-align: left;
+  padding: 5px;
+}
+
+.TabletOnly {
+  display: none;
+}
+
+@media only screen and (max-width: 1024px) {
+  .DesktopOnly {
+    display: none;
+  }
+  .TabletOnly {
+    display: initial;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .Flex {
+    display: block;
+  }
+  .FlexMobile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .DesktopOnly {
+    display: none;
+  }
+  .MobileOnly {
+    display: initial;
+  }
+  .Container {
+    margin-bottom: 30px;
+  }
+  .CenterContent {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .SideContent {
+    display: block;
+  }
+  .BigButton {
+    padding: 10px;
+  }
+  .TabletOnly {
+    display: none;
+  }
+  .DesktopTabletOnly {
+    display: none;
+  }
+}
+.navButton:hover {
+  background-color: rgba(255, 255, 255, 0.09);
+}
+
+a > .navButton {
+  text-decoration: none !important;
+}
+
+#MobileMenu {
+  background: #09405d;
+}
+
+#AccountDropdown {
+  position: relative;
+}
+
+#AccountMenu {
+  position: absolute;
+  right: 0;
+  bottom: calc(-3rem - 20px);
+  background: #1e7bab;
+  padding: 10px;
+}
+
+.auth {
+  display: grid;
+  grid-gap: 10px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.HomeButtons > a {
+  color: white;
+}
+
+.HomeButtons > a > div {
+  text-align: center;
+  padding: 10px;
+  display: grid;
+  align-items: center;
+}
+
+.HomeName {
+  font-size: 20px;
+}
+
+.HomeButtons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 150px));
+  place-items: center;
+  place-content: center;
+}
+
+.HomeButton {
+  transform: scale(0.95);
+  transition: 0.2s;
+}
+
+.HomeButton:hover {
+  transform: scale(0.99);
+}
+
+.HomeIcon {
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 5px;
+  font-size: 100px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+#documents {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 150px);
+  justify-content: space-between;
+  grid-gap: 20px;
+}
+
+.DocIcon > img {
+  width: 100px;
+}
+
+.DocIcon {
+  text-align: center;
+}
+
+.ql-container {
+  font-size: 20px !important;
+}
+
+.ql-stroke {
+  stroke: white !important;
+  color: white;
+}
+
+.ql-fill .ql-picker-label {
+  fill: white;
+  color: white;
+}
+
+.ql-picker-item {
+  color: white !important;
+  background: #1e1e1e;
+}
+
+.ql-picker-options {
+  background: #1e1e1e;
+}
+
+.ql-picker {
+  color: white;
+}
+
+.ql-snow .ql-picker {
+  color: white !important;
+}
+
+#DisplayPage > div > p {
+  padding-bottom: 0.5em !important;
+}
+
+#DisplayPage > div > ul > li, #DisplayPage > div > ol > li {
+  padding-bottom: 0.5em !important;
+}
+
+#DisplayPage > div > ul, #DisplayPage > div > ol {
+  margin-left: 2em;
+}
+
+#DisplayPage > div > ul > .ql-indent-1 {
+  margin-left: 2em;
+}
+
+#DisplayPage > div > ul > .ql-indent-2 {
+  margin-left: 4em;
+}
+
+#DisplayPage > div > ul > .ql-indent-3 {
+  margin-left: 6em;
+}
+
+#DisplayPage > div > ul > .ql-indent-4 {
+  margin-left: 8em;
+}
+
+#DisplayPage > div > ul > .ql-indent-5 {
+  margin-left: 10em;
+}
+
+#DisplayPage > div > ul > .ql-indent-6 {
+  margin-left: 12em;
+}
+
+#DisplayPage > div > ul > .ql-indent-7 {
+  margin-left: 14em;
+}
+
+#DisplayPage > div > ol > .ql-indent-1 {
+  margin-left: 2em;
+}
+
+#DisplayPage > div > ol > .ql-indent-2 {
+  margin-left: 4em;
+}
+
+#DisplayPage > div > ol > .ql-indent-3 {
+  margin-left: 6em;
+}
+
+#DisplayPage > div > ol > .ql-indent-4 {
+  margin-left: 8em;
+}
+
+#DisplayPage > div > ol > .ql-indent-5 {
+  margin-left: 10em;
+}
+
+#DisplayPage > div > ol > .ql-indent-6 {
+  margin-left: 12em;
+}
+
+#DisplayPage > div > ol > .ql-indent-7 {
+  margin-left: 14em;
+}
+
+#DisplayPage h2 {
+  text-align: inherit;
+}
+
+#DisplayPage h3 {
+  text-align: inherit;
+}
+
+#DisplayPage h4 {
+  text-align: inherit;
+}
+
+#DisplayPage h5 {
+  text-align: inherit;
+}
+
+#DisplayPage h6 {
+  text-align: inherit;
+}
+
+.HideBr > div > p > br {
+  display: none;
+}
+
+.project {
+  background: rgba(0, 255, 60, 0.06);
+  padding-top: 10px;
+}
+
+#projects {
+  max-width: 500px;
+}
+
+.Goal {
+  display: grid;
+  grid-gap: 5px;
+  padding: 5px;
+}
+
+.GoalEdit {
+  display: grid;
+  grid-template-columns: 2fr 1fr auto 1fr auto;
+  text-align: center;
+}
+
+.Goal > div {
+  padding: 2px;
+}
+
+.Goal > input {
+  text-align: center;
+}
+
+.CheckboxGoal {
+  grid-template-columns: 1fr 4rem auto;
+  align-content: center;
+  align-items: center;
+}
+
+.NumberGoal {
+  grid-template-columns: 2fr 4rem auto 4rem auto;
+}
+
+.Goals > *:nth-child(2n+1):not(.Exclude) {
+  background: rgba(82, 165, 217, 0.12);
+}
+
+.Goal:hover {
+  color: #5bfc55;
+}
+
+#PlannerNavigation {
+  gap: 5px;
+  width: 100%;
+}
+
+/*# sourceMappingURL=style.css.map */
