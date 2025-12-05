@@ -20,7 +20,7 @@
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
     "postgres-date": "^2.1.0",
-    "redis": "^4.6.6"
+    "redis": "^4.7.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
