@@ -7,7 +7,7 @@
     "start-dev": "nodemon Server/Server.js --debug"
   },
   "dependencies": {
-    "@types/marked": "^4.0.8",
+    "@types/marked": "^4.3.2",
     "bcrypt": "^5.0.1",
     "connect-redis": "^7.1.0",
     "cookie-parser": "^1.4.6",
