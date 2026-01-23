@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@types/marked": "^4.0.8",
-    "bcrypt": "^5.0.1",
+    "bcrypt": "^6.0.0",
     "connect-redis": "^7.1.0",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.6",
